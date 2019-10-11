@@ -11,10 +11,10 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Assets/AssetHolder.hpp"
-#include "Assets/AssetManager.hpp"
-#include "Assets/AssetPathResolver.hpp"
-#include "Assets/Assets.hpp"
+#include "Asset/AssetHolder.hpp"
+#include "Asset/AssetManager.hpp"
+#include "Asset/AssetPathResolver.hpp"
+#include "Asset/Assets.hpp"
 #include <SFML/Graphics.hpp>
 #include <catch2/catch.hpp>
 #include <iostream>

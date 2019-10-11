@@ -13,9 +13,9 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Assets/AssetHolder.hpp"
-#include "Assets/AssetPathResolver.hpp"
-#include "Assets/Assets.hpp"
+#include "Asset/AssetHolder.hpp"
+#include "Asset/AssetPathResolver.hpp"
+#include "Asset/Assets.hpp"
 
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -29,7 +29,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include <sstream>
 
 namespace nanowars {
-namespace assets {
+namespace asset {
 
     using rapidjson::Document;
     using std::map;

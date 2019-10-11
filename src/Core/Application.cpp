@@ -15,7 +15,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Core/Constants.hpp"
 #include "Core/ApplicationInitializer.hpp"
 #include "Config/UserConfiguration.hpp"
-#include "Assets/AssetPathResolver.hpp"
+#include "Asset/AssetPathResolver.hpp"
 
 namespace nanowars {
 namespace core {

@@ -14,7 +14,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 #include "Config/ConfigManager.hpp"
 #include "Screens/Screen.hpp"
-#include "Assets/AssetManager.hpp"
+#include "Asset/AssetManager.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <memory>
@@ -24,7 +24,7 @@ namespace nanowars {
 namespace core {
 
     using namespace screens;
-    using namespace assets;
+    using namespace asset;
 
     using std::vector;
     using std::unique_ptr;

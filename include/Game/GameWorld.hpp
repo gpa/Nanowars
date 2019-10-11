@@ -16,7 +16,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Game/GameObject.hpp"
 #include "Game/GameWorldContactManager.hpp"
 #include "Game/Factories/GameObjectFactory.hpp"
-#include "Assets/AssetHolder.hpp"
+#include "Asset/AssetHolder.hpp"
 
 #include "Math/AABB.hpp"
 
@@ -44,7 +44,7 @@ namespace game {
     using math::AABB;
 
     using namespace factories;
-    using namespace assets;
+    using namespace asset;
 
     class GameWorld
     {

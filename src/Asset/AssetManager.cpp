@@ -11,10 +11,10 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Assets/AssetManager.hpp"
+#include "Asset/AssetManager.hpp"
 
 namespace nanowars {
-namespace assets {
+namespace asset {
 
     AssetManager::AssetManager(AssetPathResolver assetPathResolver)
         : m_assetPathResolver(assetPathResolver)

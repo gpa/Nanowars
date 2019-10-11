@@ -14,7 +14,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Config/PersistentConfigManager.hpp"
-#include "Assets/AssetManager.hpp"
+#include "Asset/AssetManager.hpp"
 #include "Screens/Screen.hpp"
 #include "Debug/DebugConsole.hpp"
 
@@ -34,7 +34,7 @@ namespace core {
     using std::unique_ptr;
     using std::vector;
 
-    using namespace assets;
+    using namespace asset;
     using namespace config;
     using namespace screens;
 

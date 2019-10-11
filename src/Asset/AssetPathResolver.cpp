@@ -11,22 +11,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#pragma once
-
-#include "Assets/Assets.hpp"
-#include <string>
+#include "Asset/AssetPathResolver.hpp"
 
 namespace nanowars {
-namespace assets {
+namespace asset {
 
-    using std::string;
-    class AssetPathResolver
+    string AssetPathResolver::getPath(TextureAsset textureAsset) const
     {
-    public:
-        virtual string getPath(TextureAsset textureAsset) const;
-        virtual string getPath(SoundAsset textureAsset) const;
-        virtual string getPath(SchemaAsset textureAsset) const;
-        virtual string getPath(FontAsset textureAsset) const;
-    };
+        const char* files[] = { "landscape1.png", "rockets.png" };
+        return "data/textures/" + string(files[(int)textureAsset]);
+    }
+
+    string AssetPathResolver::getPath(SoundAsset textureAsset) const
+    {
+        return "";
+    }
+
+    string AssetPathResolver::getPath(SchemaAsset textureAsset) const
+    {
+        const char* files[] = { "rocket1.json" };
+        return "data/schemas/" + string(files[(int)textureAsset]);
+    }
+
+    string AssetPathResolver::getPath(FontAsset textureAsset) const
+    {
+        return "";
+    }
 }
 }

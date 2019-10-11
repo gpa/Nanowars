@@ -11,11 +11,11 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Assets/AssetHolder.hpp"
-#include "Assets/AssetManager.hpp"
+#include "Asset/AssetHolder.hpp"
+#include "Asset/AssetManager.hpp"
 
 namespace nanowars {
-namespace assets {
+namespace asset {
     AssetHolder::AssetHolder(AssetManager& assetManager)
         : m_assetManager(assetManager)
     {

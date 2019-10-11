@@ -16,7 +16,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Algorithms/ImageToMapGenerator.hpp"
 #include "Util/ImageAccessorSfmlImpl.hpp"
 #include "Util/Box2DConverter.hpp"
-#include "Assets/Assets.hpp"
+#include "Asset/Assets.hpp"
 
 #include "Core/Constants.hpp"
 #include <vector>

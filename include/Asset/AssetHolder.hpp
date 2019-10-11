@@ -13,7 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Assets/Assets.hpp"
+#include "Asset/Assets.hpp"
 
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -27,12 +27,12 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include <boost/variant.hpp>
 
 namespace nanowars {
-namespace assets {
+namespace asset {
 
+    using rapidjson::Document;
     using std::vector;
     using std::set;
     using std::shared_ptr;
-    using rapidjson::Document;
     using sf::Image;
     using sf::Texture;
     using sf::SoundBuffer;

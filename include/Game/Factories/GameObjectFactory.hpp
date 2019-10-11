@@ -15,7 +15,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Game/GameObject.hpp"
 #include "Math/Vector2.hpp"
-#include "Assets/AssetHolder.hpp"
+#include "Asset/AssetHolder.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
 #include <rapidjson/document.h>
@@ -23,7 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace game {
 
-    using namespace assets;
+    using namespace asset;
 
     class GameWorld;
     namespace factories {

@@ -13,26 +13,20 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
+#include "Asset/Assets.hpp"
+#include <string>
+
 namespace nanowars {
-namespace assets {
+namespace asset {
 
-    enum TextureAsset
+    using std::string;
+    class AssetPathResolver
     {
-        TextureAsset_Landscape1 = 0,
-        TextureAsset_Rockets
-    };
-
-    enum SoundAsset
-    {
-    };
-
-    enum FontAsset
-    {
-    };
-
-    enum SchemaAsset
-    {
-        SchemaAsset_Rocket1
+    public:
+        virtual string getPath(TextureAsset textureAsset) const;
+        virtual string getPath(SoundAsset textureAsset) const;
+        virtual string getPath(SchemaAsset textureAsset) const;
+        virtual string getPath(FontAsset textureAsset) const;
     };
 }
 }
