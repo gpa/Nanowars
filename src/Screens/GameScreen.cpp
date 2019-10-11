@@ -15,6 +15,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Game/Factories/RocketFactory.hpp"
 #include "Game/Factories/LandscapeFactory.hpp"
 #include "Game/Factories/BulletFactory.hpp"
+#include "Algorithms/LaunchPadFinder.hpp"
 
 namespace nanowars {
 namespace screens {
@@ -31,8 +32,11 @@ namespace screens {
         m_gameWorld.registerFactory<Rocket>(std::make_shared<RocketFactory>());
         m_gameWorld.registerFactory<Bullet>(std::make_shared<BulletFactory>());
 
-        Rocket* rocket = m_gameWorld.spawn<Rocket>();
         Landscape* landscape = m_gameWorld.spawn<Landscape>();
+        Rocket* rocket = m_gameWorld.spawn<Rocket>();
+
+        auto launchPadPositions = algorithms::LaunchPadFinder::getBestLaunchPodPositions(landscape->getBody());
+        rocket->getBody().SetTransform(launchPadPositions[0], 0.0f);
 
         m_followingCamera.follow(rocket);
         m_keyboardRocketController.setRocket(rocket);

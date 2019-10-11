@@ -25,12 +25,10 @@ namespace util {
     template <typename T>
     class Matrix
     {
-        unique_ptr<T[]> m_array;
-        int m_width;
 
     public:
         Matrix(Vector2u size)
-            : m_width(size.x)
+            : m_size(size)
             , m_array(new T[size.x * size.y])
         {
             for (long i = 0; i < size.x * size.y; ++i)
@@ -44,8 +42,14 @@ namespace util {
         inline void setAt(int x, int y, T value) const { m_array[index(x, y)] = value; }
         inline void setAt(Vector2u pos, T value) const { m_array[index(pos.x, pos.y)] = value; }
 
+        inline Vector2u getSize() const { return m_size; }
+
     protected:
-        inline int index(int x, int y) const { return x + m_width * y; }
+        inline int index(int x, int y) const { return x + m_size.x * y; }
+
+    private:
+        unique_ptr<T[]> m_array;
+        Vector2u m_size;
     };
 }
 }

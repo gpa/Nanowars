@@ -39,12 +39,12 @@ namespace algorithms {
         return m_seed;
     }
 
-    float Randomizer::random(float begin, float end)
+    float Randomizer::getRandom(float begin, float end)
     {
         return static_cast<float>(std::rand()) / RAND_MAX * (end - begin) + begin;
     }
 
-    int Randomizer::random(int begin, int end)
+    int Randomizer::getRandom(int begin, int end)
     {
         return std::rand() % (end - begin + 1) + begin;
     }

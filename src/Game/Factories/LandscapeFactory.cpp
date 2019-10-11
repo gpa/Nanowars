@@ -14,6 +14,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Game/Factories/LandscapeFactory.hpp"
 #include "Game/GameObjects/Landscape.hpp"
 #include "Algorithms/ImageToMapGenerator.hpp"
+#include "Algorithms/CaveGenerator.hpp"
 #include "Util/ImageAccessorSfmlImpl.hpp"
 #include "Util/Box2DConverter.hpp"
 #include "Asset/Assets.hpp"
@@ -36,13 +37,17 @@ namespace game {
         {
             Landscape* landscape = static_cast<Landscape*>(&gameObject);
 
-            auto& texture = assetHolder.getUniqueTexture(TextureAsset_Landscape1);
-            Image img = texture.copyToImage();
+            CaveGenerator caveGenerator;
+            Image image = caveGenerator.getRandomTexturedCave(Vector2u(2000, 1000), assetHolder);
+
+            shared_ptr<Texture> texture = std::make_shared<Texture>();
+            texture->loadFromImage(image);
+            assetHolder.holdCustomUntracked(texture);
 
             b2Vec2 scale = { 25.0f, 40.0f };
 
             ImageToMapGenerator ImageToMapGenerator(Vector2f(0.05f, 0.05f), 0.5f);
-            auto collisionRings = ImageToMapGenerator.getCollisionRings(ImageAccessorSfmlImpl(img));
+            auto collisionRings = ImageToMapGenerator.getCollisionRings(ImageAccessorSfmlImpl(image));
 
             for (auto& collisionRing : collisionRings)
             {
@@ -58,10 +63,10 @@ namespace game {
 
             landscape->getBody().SetType(b2BodyType::b2_staticBody);
 
-            landscape->initializeDestructableBehavior(img);
+            landscape->initializeDestructableBehavior(image);
 
             auto& sprite = landscape->getSprite();
-            sprite.setTexture(texture);
+            sprite.setTexture(*(texture.get()));
             sprite.setOrigin(0, 0);
             sprite.setScale(scale.x, scale.y);
         }

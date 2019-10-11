@@ -11,31 +11,21 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Asset/AssetPathResolver.hpp"
+#include "Math/Vector2.hpp"
+#include <Box2D/Box2D.h>
+#include <vector>
 
 namespace nanowars {
-namespace asset {
+namespace algorithms {
 
-    string AssetPathResolver::getPath(TextureAsset textureAsset) const
-    {
-        const char* files[] = { "rockets.png" };
-        return "data/textures/" + string(files[(int)textureAsset]);
-    }
+    using math::Vector2f;
+    using std::vector;
 
-    string AssetPathResolver::getPath(SoundAsset textureAsset) const
+    class LaunchPadFinder
     {
-        return "";
-    }
-
-    string AssetPathResolver::getPath(SchemaAsset textureAsset) const
-    {
-        const char* files[] = { "rocket1.json" };
-        return "data/schemas/" + string(files[(int)textureAsset]);
-    }
-
-    string AssetPathResolver::getPath(FontAsset textureAsset) const
-    {
-        return "";
-    }
+    public:
+        // Finds the best place to spawn rockets on a randomly generated map
+        static vector<Vector2f> getBestLaunchPodPositions(b2Body& landscape);
+    };
 }
 }

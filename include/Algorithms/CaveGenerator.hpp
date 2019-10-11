@@ -13,25 +13,32 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include <cstdlib>
-#include <ctime>
+#include "Util/Matrix.hpp"
+#include "Math/Vector2.hpp"
+#include "Asset/AssetHolder.hpp"
+
+#include <SFML/Graphics/Image.hpp>
 
 namespace nanowars {
 namespace algorithms {
 
-    class Randomizer
+    using util::Matrix;
+    using math::Vector2u;
+    using asset::AssetHolder;
+    using sf::Image;
+
+    class CaveGenerator
     {
     public:
-        static void setSeed(unsigned int seed);
-        static unsigned int getSeed();
+        CaveGenerator();
 
-        static float getRandom(float begin, float end);
-        static int getRandom(int begin, int end);
+        Matrix<bool> getRandomCave(Vector2u size);
+        Image getRandomTexturedCave(Vector2u size, AssetHolder& assetHolder);
 
     private:
-        static unsigned int m_seed;
-
-        static unsigned int initSeed();
+        Matrix<bool> scale(Matrix<bool>& matrix, Vector2u scale);
+        void initMatrices(Matrix<bool>& matrix1, Matrix<bool>& matrix2, float wallProbability);
+        void performGeneration(Matrix<bool>& matrix, Matrix<bool>& matrix2, int r1CutOff, int r2CutOff);
     };
 }
 }
