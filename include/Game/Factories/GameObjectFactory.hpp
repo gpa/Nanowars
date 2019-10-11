@@ -15,7 +15,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Game/GameObject.hpp"
 #include "Math/Vector2.hpp"
-#include "Assets/AssetContainer.hpp"
+#include "Assets/AssetHolder.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
 #include <rapidjson/document.h>
@@ -31,7 +31,7 @@ namespace game {
         class GameObjectFactory
         {
         public:
-            virtual void build(GameWorld& gameWorld, AssetContainer& assetContainer, GameObject& gameObject) = 0;
+            virtual void build(GameWorld& gameWorld, AssetHolder& assetHolder, GameObject& gameObject) = 0;
 
         protected:
             static constexpr auto scaleProperty = "scale";

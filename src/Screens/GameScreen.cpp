@@ -21,8 +21,8 @@ namespace screens {
 
     using namespace factories;
 
-    GameScreen::GameScreen(AssetContainer assetContainer)
-        : m_gameWorld(assetContainer.getNewContainer())
+    GameScreen::GameScreen(AssetHolder&& assetHolder)
+        : m_gameWorld(assetHolder.getNewHolder())
         , m_followingCamera(40.0f)
         , m_keyboardRocketController(KeyboardRocketControllerConfiguration())
     {

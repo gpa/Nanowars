@@ -19,7 +19,7 @@ namespace nanowars {
 namespace game {
     namespace factories {
 
-        void BulletFactory::build(GameWorld& gameWorld, AssetContainer& assetContainer, GameObject& gameObject)
+        void BulletFactory::build(GameWorld& gameWorld, AssetHolder& assetHolder, GameObject& gameObject)
         {
             Bullet* bullet = static_cast<Bullet*>(&gameObject);
             b2Body& body = bullet->getBody();

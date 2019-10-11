@@ -23,10 +23,10 @@ namespace assets {
     class AssetPathResolver
     {
     public:
-        virtual string getPath(TextureAsset textureAsset);
-        virtual string getPath(SoundAsset textureAsset);
-        virtual string getPath(SchemaAsset textureAsset);
-        virtual string getPath(FontAsset textureAsset);
+        virtual string getPath(TextureAsset textureAsset) const;
+        virtual string getPath(SoundAsset textureAsset) const;
+        virtual string getPath(SchemaAsset textureAsset) const;
+        virtual string getPath(FontAsset textureAsset) const;
     };
 }
 }

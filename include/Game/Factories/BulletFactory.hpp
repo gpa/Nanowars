@@ -22,7 +22,7 @@ namespace game {
         class BulletFactory : public GameObjectFactory
         {
         public:
-            void build(GameWorld& gameWorld, AssetContainer& assetContainer, GameObject& gameObject) override;
+            void build(GameWorld& gameWorld, AssetHolder& assetHolder, GameObject& gameObject) override;
         };
     }
 }

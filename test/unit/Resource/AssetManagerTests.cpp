@@ -11,7 +11,7 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Assets/AssetContainer.hpp"
+#include "Assets/AssetHolder.hpp"
 #include "Assets/AssetManager.hpp"
 #include "Assets/AssetPathResolver.hpp"
 #include "Assets/Assets.hpp"
@@ -24,20 +24,20 @@ using namespace std;
 
 TEST_CASE("Asset manager reuses and frees assets correctly")
 {
-    sf::Texture* first = nullptr;
+    const sf::Texture* first = nullptr;
     auto manager = AssetManager(AssetPathResolver());
 
     {
-        AssetContainer container = manager.getNewContainer();
+        AssetHolder container = manager.getNewHolder();
         first = &container.getTexture(TextureAsset_Landscape1);
-        sf::Texture* second = &container.getTexture(TextureAsset_Landscape1);
+        const sf::Texture* second = &container.getTexture(TextureAsset_Landscape1);
         REQUIRE(first == second);
         manager.clean();
-        sf::Texture* third = &container.getTexture(TextureAsset_Landscape1);
+        const sf::Texture* third = &container.getTexture(TextureAsset_Landscape1);
         REQUIRE(second == third);
         {
-            auto container = manager.getNewContainer();
-            sf::Texture* five = &container.getTexture(TextureAsset_Landscape1);
+            auto container = manager.getNewHolder();
+            const sf::Texture* five = &container.getTexture(TextureAsset_Landscape1);
             REQUIRE(five == first);
         }
     }

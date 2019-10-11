@@ -27,12 +27,12 @@ namespace game {
         using namespace sf;
         using namespace std;
 
-        void RocketFactory::build(GameWorld& gameWorld, AssetContainer& assetContainer, GameObject& gameObject)
+        void RocketFactory::build(GameWorld& gameWorld, AssetHolder& assetHolder, GameObject& gameObject)
         {
             Rocket* rocket = static_cast<Rocket*>(&gameObject);
 
-            const auto& texture = assetContainer.getTexture(TextureAsset_Rockets);
-            const Document& schema = assetContainer.getSchema(SchemaAsset_Rocket1);
+            const auto& texture = assetHolder.getTexture(TextureAsset_Rockets);
+            const Document& schema = assetHolder.getSchema(SchemaAsset_Rocket1);
             float scale = schema.HasMember(scaleProperty) ? schema[scaleProperty].GetFloat() : 1.0f;
 
             vector<RocketEngine> engines;

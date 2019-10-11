@@ -60,7 +60,7 @@ namespace core {
 
     void ApplicationInitializer::initScreens(vector<unique_ptr<Screen>>& screens, AssetManager& assetManager)
     {
-        screens.push_back(std::move(std::make_unique<GameScreen>(assetManager.getNewContainer())));
+        screens.push_back(std::move(std::make_unique<GameScreen>(assetManager.getNewHolder())));
     }
 }
 }

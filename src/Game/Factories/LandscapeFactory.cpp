@@ -32,12 +32,12 @@ namespace game {
         using namespace core;
         using namespace algorithms;
 
-        void LandscapeFactory::build(GameWorld& gameWorld, AssetContainer& assetContainer, GameObject& gameObject)
+        void LandscapeFactory::build(GameWorld& gameWorld, AssetHolder& assetHolder, GameObject& gameObject)
         {
             Landscape* landscape = static_cast<Landscape*>(&gameObject);
 
-            auto& img = assetContainer.getImage(TextureAsset_Landscape1);
-            auto& texture = assetContainer.getTexture(TextureAsset_Landscape1);
+            auto& texture = assetHolder.getUniqueTexture(TextureAsset_Landscape1);
+            Image img = texture.copyToImage();
 
             b2Vec2 scale = { 25.0f, 40.0f };
 

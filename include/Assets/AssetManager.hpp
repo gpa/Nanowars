@@ -13,7 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Assets/AssetContainer.hpp"
+#include "Assets/AssetHolder.hpp"
 #include "Assets/AssetPathResolver.hpp"
 #include "Assets/Assets.hpp"
 
@@ -42,46 +42,47 @@ namespace assets {
     public:
         AssetManager(AssetPathResolver assetPathResolver);
 
-        AssetContainer getNewContainer();
+        AssetHolder getNewHolder();
+
+        template <typename TAsset, typename TKey>
+        shared_ptr<TAsset> load(TKey key) const;
 
         void clean();
         bool isEmpty();
 
-        shared_ptr<Texture> getTexture(TextureAsset textureAsset);
-        shared_ptr<Image> getImage(TextureAsset textureAsset);
-        shared_ptr<SoundBuffer> getSound(SoundAsset textureAsset);
-        shared_ptr<Document> getSchema(SchemaAsset textureAsset);
-        shared_ptr<Font> getFont(FontAsset textureAsset);
+        shared_ptr<const Texture> getTexture(TextureAsset textureAsset);
+        shared_ptr<const SoundBuffer> getSound(SoundAsset textureAsset);
+        shared_ptr<const Document> getSchema(SchemaAsset textureAsset);
+        shared_ptr<const Font> getFont(FontAsset textureAsset);
 
-    public:
-        map<TextureAsset, weak_ptr<Texture>> m_loadedTextures;
-        map<TextureAsset, weak_ptr<Image>> m_loadedImages;
-        map<SoundAsset, weak_ptr<SoundBuffer>> m_loadedSounds;
-        map<FontAsset, weak_ptr<Font>> m_loadedFonts;
-        map<SchemaAsset, weak_ptr<Document>> m_loadedSchemas;
+    private:
+        map<TextureAsset, weak_ptr<const Texture>> m_loadedTextures;
+        map<SoundAsset, weak_ptr<const SoundBuffer>> m_loadedSounds;
+        map<FontAsset, weak_ptr<const Font>> m_loadedFonts;
+        map<SchemaAsset, weak_ptr<const Document>> m_loadedSchemas;
         AssetPathResolver m_assetPathResolver;
 
         template <typename TKey, typename TAsset>
-        shared_ptr<TAsset> getAsset(map<TKey, weak_ptr<TAsset>>* container, TKey identifier)
+        shared_ptr<const TAsset> getAsset(map<TKey, weak_ptr<const TAsset>>* container, TKey identifier)
         {
             auto iter = container->find(identifier);
             if (iter != container->end())
             {
-                weak_ptr<TAsset> weakReference = (*iter).second;
+                weak_ptr<const TAsset> weakReference = (*iter).second;
                 if (!weakReference.expired())
                 {
-                    shared_ptr<TAsset> Asset = weakReference.lock();
-                    return Asset;
+                    shared_ptr<const TAsset> asset = weakReference.lock();
+                    return asset;
                 }
             }
 
-            shared_ptr<TAsset> Asset = loadFromFile<TKey, TAsset>(identifier);
-            (*container)[identifier] = Asset;
-            return Asset;
+            shared_ptr<const TAsset> asset = load<TAsset, TKey>(identifier);
+            (*container)[identifier] = asset;
+            return asset;
         }
 
         template <typename TKey, typename TAsset>
-        void clean(map<TKey, weak_ptr<TAsset>>& container)
+        void clean(map<TKey, weak_ptr<const TAsset>>& container)
         {
             auto iter = container.begin();
             for (; iter != container.end();)
@@ -92,19 +93,19 @@ namespace assets {
                     ++iter;
             }
         }
-
-        template <typename TKey, typename TAsset>
-        shared_ptr<TAsset> loadFromFile(TKey key)
-        {
-            auto Asset = std::make_shared<TAsset>();
-            string path = m_assetPathResolver.getPath(key);
-            Asset->loadFromFile(path);
-            return Asset;
-        }
     };
 
+    template <typename TAsset, typename TKey>
+    shared_ptr<TAsset> AssetManager::load(TKey key) const
+    {
+        auto asset = std::make_shared<TAsset>();
+        string path = m_assetPathResolver.getPath(key);
+        asset->loadFromFile(path);
+        return asset;
+    }
+
     template <>
-    inline shared_ptr<Document> AssetManager::loadFromFile<SchemaAsset, Document>(SchemaAsset key)
+    inline shared_ptr<Document> AssetManager::load<Document, SchemaAsset>(SchemaAsset key) const
     {
         string path = m_assetPathResolver.getPath(key);
         std::ifstream file(path);

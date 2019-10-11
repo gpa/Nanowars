@@ -34,14 +34,13 @@ namespace screens {
     class GameScreen : public Screen
     {
     public:
-        GameScreen(AssetContainer assetContainer);
+        GameScreen(AssetHolder&& assetHolder);
 
         void update(float dt) override;
+        void render(RenderWindow& window) override;
 
         bool handleEvent(const Event& event) override;
         bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
-
-        void render(RenderWindow& window) override;
 
     private:
         GameWorld m_gameWorld;

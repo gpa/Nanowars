@@ -23,32 +23,27 @@ namespace assets {
     {
     }
 
-    AssetContainer AssetManager::getNewContainer()
+    AssetHolder AssetManager::getNewHolder()
     {
-        return AssetContainer(*this);
+        return AssetHolder(*this);
     }
 
-    shared_ptr<Texture> AssetManager::getTexture(TextureAsset textureAsset)
+    shared_ptr<const Texture> AssetManager::getTexture(TextureAsset textureAsset)
     {
         return getAsset(&m_loadedTextures, textureAsset);
     }
 
-    shared_ptr<Image> AssetManager::getImage(TextureAsset textureAsset)
-    {
-        return getAsset(&m_loadedImages, textureAsset);
-    }
-
-    shared_ptr<SoundBuffer> AssetManager::getSound(SoundAsset soundAsset)
+    shared_ptr<const SoundBuffer> AssetManager::getSound(SoundAsset soundAsset)
     {
         return getAsset(&m_loadedSounds, soundAsset);
     }
 
-    shared_ptr<Document> AssetManager::getSchema(SchemaAsset schemaAsset)
+    shared_ptr<const Document> AssetManager::getSchema(SchemaAsset schemaAsset)
     {
         return getAsset(&m_loadedSchemas, schemaAsset);
     }
 
-    shared_ptr<Font> AssetManager::getFont(FontAsset fontAsset)
+    shared_ptr<const Font> AssetManager::getFont(FontAsset fontAsset)
     {
         return getAsset(&m_loadedFonts, fontAsset);
     }
@@ -56,7 +51,6 @@ namespace assets {
     void AssetManager::clean()
     {
         clean(m_loadedTextures);
-        clean(m_loadedImages);
         clean(m_loadedSounds);
         clean(m_loadedSchemas);
         clean(m_loadedFonts);
@@ -64,8 +58,7 @@ namespace assets {
 
     bool AssetManager::isEmpty()
     {
-        return m_loadedTextures.size() == 0 && m_loadedImages.size() == 0
-            && m_loadedSounds.size() == 0 && m_loadedSchemas.size() == 0 && m_loadedFonts.size() == 0;
+        return m_loadedTextures.size() == 0 && m_loadedSounds.size() == 0 && m_loadedSchemas.size() == 0 && m_loadedFonts.size() == 0;
     }
 }
 }

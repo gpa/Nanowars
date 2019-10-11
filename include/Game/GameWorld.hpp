@@ -16,7 +16,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Game/GameObject.hpp"
 #include "Game/GameWorldContactManager.hpp"
 #include "Game/Factories/GameObjectFactory.hpp"
-#include "Assets/AssetContainer.hpp"
+#include "Assets/AssetHolder.hpp"
 
 #include "Math/AABB.hpp"
 
@@ -49,7 +49,7 @@ namespace game {
     class GameWorld
     {
     public:
-        GameWorld(AssetContainer assetContainer);
+        GameWorld(AssetHolder&& assetHolder);
 
         void step(float dt);
 
@@ -70,7 +70,7 @@ namespace game {
         void afterStep();
 
         b2World m_world;
-        AssetContainer m_assetContainer;
+        AssetHolder m_assetHolder;
         GameWorldContactManager m_contactManager;
 
         vector<unique_ptr<GameObject>> m_objects;
@@ -88,7 +88,7 @@ namespace game {
         b2Body* body = m_world.CreateBody(&bodyDef);
         T* gameObject = new T(*this, *body, args...);
         m_objects.push_back(std::move(unique_ptr<T>(gameObject)));
-        m_factories[typeid(T)]->build(*this, m_assetContainer, *gameObject);
+        m_factories[typeid(T)]->build(*this, m_assetHolder, *gameObject);
         return gameObject;
     }
 

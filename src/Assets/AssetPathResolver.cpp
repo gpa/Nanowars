@@ -16,24 +16,24 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace assets {
 
-    string AssetPathResolver::getPath(TextureAsset textureAsset)
+    string AssetPathResolver::getPath(TextureAsset textureAsset) const
     {
         const char* files[] = { "landscape1.png", "rockets.png" };
         return "data/textures/" + string(files[(int)textureAsset]);
     }
 
-    string AssetPathResolver::getPath(SoundAsset textureAsset)
+    string AssetPathResolver::getPath(SoundAsset textureAsset) const
     {
         return "";
     }
 
-    string AssetPathResolver::getPath(SchemaAsset textureAsset)
+    string AssetPathResolver::getPath(SchemaAsset textureAsset) const
     {
         const char* files[] = { "rocket1.json" };
         return "data/schemas/" + string(files[(int)textureAsset]);
     }
 
-    string AssetPathResolver::getPath(FontAsset textureAsset)
+    string AssetPathResolver::getPath(FontAsset textureAsset) const
     {
         return "";
     }
