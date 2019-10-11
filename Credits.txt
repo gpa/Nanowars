@@ -1,0 +1,11 @@
+NANOWARS Credits:
+*****************
+
+Textures:
+rockets.svg  CC0 Public Domain - Conte Magnus
+
+Sound files:
+
+Fonts:
+
+Locales:
