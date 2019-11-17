@@ -15,8 +15,10 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Config/PersistentConfigManager.hpp"
 #include "Core/GameLoopParticipant.hpp"
+#include "Globalization/TranslationManager.hpp"
 #include "Asset/AssetManager.hpp"
 #include "Debug/DebugManager.hpp"
+#include "GUI/GUIManager.hpp"
 #include "Game/GameManager.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -38,13 +40,27 @@ namespace core {
     using namespace asset;
     using namespace config;
     using namespace game;
+    using namespace gui;
     using namespace debug;
+    using namespace globalization;
 
     class Application
     {
     public:
         Application();
         void run();
+
+        const RenderWindow& getWindow() const;
+        const AssetManager& getAssetManager() const;
+        const TranslationManager& getTranslationManager() const;
+        const PersistentConfigManager& getConfigManager() const;
+        const DebugManager& getDebugManager() const;
+
+        RenderWindow& getWindow();
+        AssetManager& getAssetManager();
+        TranslationManager& getTranslationManager();
+        PersistentConfigManager& getConfigManager();
+        DebugManager& getDebugManager();
 
     private:
         void initialize();
@@ -59,12 +75,14 @@ namespace core {
         PersistentConfigManager m_configManager;
         AssetManager m_assetManager;
         GameManager m_gameManager;
+        GUIManager m_guiManager;
         DebugManager m_debugManager;
 
         vector<GameLoopParticipant*> m_gameLoopParticipants;
 
         Mouse m_mouse;
         Keyboard m_keyboard;
+        TranslationManager m_TranslationManager;
 
         friend class debug::DebugManager;
     };

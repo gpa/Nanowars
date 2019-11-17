@@ -37,13 +37,32 @@ build_sfml_from_source_ubuntu() {
   cd ../../
 }
 
+build_sfgui_from_source_manjaro() {
+  mkdir -p $DEP_PATH
+  cd $DEP_PATH
+  git clone https://github.com/TankOs/SFGUI.git
+  cd SFGUI
+  mkdir build
+  cd build
+  cmake -DCMAKE_BUILD_TYPE=$1 ..
+  make
+  cd lib
+  if [[ $1 = Release ]]; 
+  then
+    cp libSFGUI.so libsfgui.so
+  else
+    cp libSFGUI-d.so libsfgui-d.so
+  fi
+}
+
 setup_manjaro() {
-  sudo pacman -S --noconfirm --needed cmake make sfml rapidjson catch2 boost
+  sudo pacman -S --noconfirm --needed cmake make sfml rapidjson catch2 boost thor
   build_box2d_from_source_ubuntu_manjaro $1
+  build_sfgui_from_source_manjaro $1
 }
 
 setup_cmake_manjaro() {
-  cmake -DBOX2D_INCLUDE_DIR=$DEP_PATH/liquidfun/liquidfun/Box2D -DBOX2DDIR=$DEP_PATH/liquidfun/liquidfun/Box2D/build/lib -DBUILD_TESTS=OFF ..
+  cmake -DBOX2D_INCLUDE_DIR=$DEP_PATH/liquidfun/liquidfun/Box2D -DBOX2DDIR=$DEP_PATH/liquidfun/liquidfun/Box2D/build/lib -DSFGUI_ROOT=$DEP_PATH/SFGUI/build/lib -DSFGUI_INCLUDE_DIR=$DEP_PATH/SFGUI/include -DBUILD_TESTS=OFF ..
 }
 
 setup_ubuntu() {
@@ -52,6 +71,7 @@ setup_ubuntu() {
   build_box2d_from_source_ubuntu_manjaro $1
   git clone https://github.com/Tencent/rapidjson.git
   git clone https://github.com/catchorg/Catch2.git
+  echo "WARNING! SFGUI is not yet installed automatically. You'll have to install it yourself."
 }
 
 setup_cmake_ubuntu() {
@@ -60,7 +80,7 @@ setup_cmake_ubuntu() {
 
 setup_deployment() {
   rsync -r resources/textures build/data
- # rsync -r resources/fonts build/data
+  #rsync -r resources/fonts build/data
   rsync -r resources/schemas build/data
 }
 

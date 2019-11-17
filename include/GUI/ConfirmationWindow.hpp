@@ -13,10 +13,28 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
+#include "GUI/Window.hpp"
+
 namespace nanowars {
-namespace locale {
-    class TranslationProvider
+namespace gui {
+
+    class ConfirmationWindow : public Window
     {
+    public:
+        ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder,
+            string infoText, string acceptString, string rejectString, string windowTitle, float rejectXOffset = 0.0f);
+
+        void update(float dt) override;
+
+        bool isRejected() const;
+        bool isAccepted() const;
+
+    private:
+        bool m_accepted;
+        bool m_rejected;
+
+        void onAccepted();
+        void onRejected();
     };
 }
 }

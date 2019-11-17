@@ -27,6 +27,7 @@ namespace core {
         , m_assetManager(AssetPathResolver())
         , m_gameManager(m_assetManager.getNewHolder())
         , m_debugManager(*this)
+        , m_guiManager(*this, m_assetManager.getNewHolder())
     {
         initialize();
     }
@@ -38,8 +39,13 @@ namespace core {
 
         ApplicationInitializer initializer;
         initializer.initWindow(m_window, m_configManager);
+
         m_gameLoopParticipants.push_back(&m_gameManager);
         m_gameLoopParticipants.push_back(&m_debugManager);
+        m_gameLoopParticipants.push_back(&m_guiManager);
+
+        m_guiManager.initializeWindows();
+        m_debugManager.getDebugConsole().execute("debug");
     }
 
     void Application::run()
@@ -94,6 +100,56 @@ namespace core {
     void Application::shutdown()
     {
         m_window.close();
+    }
+
+    const RenderWindow& Application::getWindow() const
+    {
+        return m_window;
+    }
+
+    const PersistentConfigManager& Application::getConfigManager() const
+    {
+        return m_configManager;
+    }
+
+    const AssetManager& Application::getAssetManager() const
+    {
+        return m_assetManager;
+    }
+
+    const TranslationManager& Application::getTranslationManager() const
+    {
+        return m_TranslationManager;
+    }
+
+    const DebugManager& Application::getDebugManager() const
+    {
+        return m_debugManager;
+    }
+
+    RenderWindow& Application::getWindow()
+    {
+        return m_window;
+    }
+
+    PersistentConfigManager& Application::getConfigManager()
+    {
+        return m_configManager;
+    }
+
+    AssetManager& Application::getAssetManager()
+    {
+        return m_assetManager;
+    }
+
+    TranslationManager& Application::getTranslationManager()
+    {
+        return m_TranslationManager;
+    }
+
+    DebugManager& Application::getDebugManager()
+    {
+        return m_debugManager;
     }
 }
 }

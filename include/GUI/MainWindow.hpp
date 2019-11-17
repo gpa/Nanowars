@@ -9,11 +9,29 @@ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 more details.
 You should have received a copy of the GNU General Public License along with
-this program. If not, see <http://www.gnu.org/licenses/>. */
-
-#include "Globalization/TranslationProvider.hpp"
+this program. If not, see <http://www.gnu.org/licenses/>. 
+*/
+#pragma once
+#include "GUI/Window.hpp"
+#include <memory>
 
 namespace nanowars {
-namespace locale {
+namespace gui {
+
+    class MainWindow : public Window
+    {
+    public:
+        MainWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
+
+        void update(float dt) override;
+        void handleEvent(const sf::Event& event) override;
+
+    private:
+        void onOnlineButtonClicked();
+        void onLanButtonClicked();
+        void onLocalButtonClicked();
+        void onSettingsButtonClicked();
+        void onQuitButtonClicked();
+    };
 }
 }

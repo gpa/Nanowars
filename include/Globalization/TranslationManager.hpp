@@ -13,25 +13,28 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "GUI/Widget.hpp"
-
+#include "Globalization/StringTranslations.hpp"
+#include "Asset/Assets.hpp"
 #include <vector>
-#include <memory>
+#include <string>
 
 namespace nanowars {
-namespace gui {
+namespace globalization {
 
+    using std::string;
     using std::vector;
-    using std::shared_ptr;
+    using asset::FontAsset;
 
-    class ContainerWidget : public Widget
+    struct LanguageConfiguration
+    {
+        bool leftToRight;
+        vector<FontAsset> supportedFonts;
+    };
+
+    class TranslationManager
     {
     public:
-        void addChild(shared_ptr<Widget> child);
-        void removeChild(shared_ptr<Widget> child);
-
-    private:
-        vector<shared_ptr<Widget>> m_children;
+        string getTranslation(StringTranslation translation) const;
     };
 }
 }

@@ -47,6 +47,9 @@ namespace config {
             constexpr auto altShoot = "controls.alt.shoot";
             constexpr auto altChat = "controls.alt.chat";
         }
+        namespace network {
+            constexpr auto name = "network.name";
+        }
 
         inline void populateWithDefaultValues(ConfigManager& configManager)
         {
@@ -73,6 +76,8 @@ namespace config {
             cm.setEntry(ConfigEntry(controls::altRight, Entry(string("A"))));
             cm.setEntry(ConfigEntry(controls::altShoot, Entry(string("RControl"))));
             cm.setEntry(ConfigEntry(controls::altChat, Entry(string("T"))));
+
+            cm.setEntry(ConfigEntry(network::name, Entry(string("Unnamed"))));
         }
     }
 }
