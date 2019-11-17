@@ -13,7 +13,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Core/ApplicationInitializer.hpp"
 #include "Core/Constants.hpp"
-#include "Screens/GameScreen.hpp"
 #include "Config/UserConfiguration.hpp"
 
 #include <boost/algorithm/string.hpp>
@@ -56,11 +55,6 @@ namespace core {
 
         window.create(videoMode, windowTitle, style, ContextSettings(0, 0, antiAliasing, 1, 1));
         window.setVerticalSyncEnabled(vsync);
-    }
-
-    void ApplicationInitializer::initScreens(vector<unique_ptr<Screen>>& screens, AssetManager& assetManager)
-    {
-        screens.push_back(std::move(std::make_unique<GameScreen>(assetManager.getNewHolder())));
     }
 }
 }

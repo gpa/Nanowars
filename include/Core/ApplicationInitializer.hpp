@@ -13,7 +13,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 #include "Config/ConfigManager.hpp"
-#include "Screens/Screen.hpp"
 #include "Asset/AssetManager.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -23,7 +22,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace core {
 
-    using namespace screens;
     using namespace asset;
 
     using std::vector;
@@ -35,7 +33,6 @@ namespace core {
     {
     public:
         void initWindow(RenderWindow& window, ConfigManager& config);
-        void initScreens(vector<unique_ptr<Screen>>& screens, AssetManager& assetManager);
     };
 }
 }

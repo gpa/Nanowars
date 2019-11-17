@@ -39,8 +39,7 @@ namespace graphics {
     {
         switch (event.type)
         {
-        case sf::Event::MouseButtonPressed:
-        {
+        case sf::Event::MouseButtonPressed: {
             if (event.mouseButton.button == sf::Mouse::Button::Middle)
             {
                 m_lastMousePos = sf::Vector2i(event.mouseButton.x, event.mouseButton.y);
@@ -48,21 +47,18 @@ namespace graphics {
             }
         }
         break;
-        case sf::Event::MouseButtonReleased:
-        {
+        case sf::Event::MouseButtonReleased: {
             m_isNavigationInProgress = false;
         }
         break;
-        case sf::Event::MouseWheelMoved:
-        {
+        case sf::Event::MouseWheelMoved: {
             float factor = event.mouseWheel.delta > 0.f ? 0.9f : 1.1f;
             m_mouseSensitivity += event.mouseWheel.delta < 0 ? 0.2f : -0.2f;
             m_mouseSensitivity = std::max(1.0f, m_mouseSensitivity);
             m_view.zoom(factor);
         }
         break;
-        case sf::Event::MouseMoved:
-        {
+        case sf::Event::MouseMoved: {
             if (m_isNavigationInProgress)
             {
                 float linearMouseSensitivity = 20.0f;

@@ -11,18 +11,18 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Screens/GameScreen.hpp"
+#include "Game/GameManager.hpp"
 #include "Game/Factories/RocketFactory.hpp"
 #include "Game/Factories/LandscapeFactory.hpp"
 #include "Game/Factories/BulletFactory.hpp"
 #include "Algorithms/LaunchPadFinder.hpp"
 
 namespace nanowars {
-namespace screens {
+namespace game {
 
     using namespace factories;
 
-    GameScreen::GameScreen(AssetHolder&& assetHolder)
+    GameManager::GameManager(AssetHolder&& assetHolder)
         : m_gameWorld(assetHolder.getNewHolder())
         , m_followingCamera(40.0f)
         , m_keyboardRocketController(KeyboardRocketControllerConfiguration())
@@ -43,22 +43,22 @@ namespace screens {
         m_activeCamera = &m_followingCamera;
     }
 
-    void GameScreen::update(float dt)
+    void GameManager::update(float dt)
     {
         m_gameWorld.step(dt);
     }
 
-    bool GameScreen::handleEvent(const Event& event)
+    bool GameManager::handleEvent(const Event& event)
     {
         return false;
     }
 
-    bool GameScreen::handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard)
+    bool GameManager::handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard)
     {
         return m_keyboardRocketController.handleContinuousEvent(mouse, keyboard);
     }
 
-    void GameScreen::render(RenderWindow& window)
+    void GameManager::render(RenderWindow& window)
     {
         window.setView(m_activeCamera->getView());
 

@@ -25,21 +25,21 @@ namespace core {
     Application::Application()
         : m_configManager(constants::userConfigFilename)
         , m_assetManager(AssetPathResolver())
-        , m_debugConsole(*this)
+        , m_gameManager(m_assetManager.getNewHolder())
+        , m_debugManager(*this)
     {
-        init();
+        initialize();
     }
 
-    void Application::init()
+    void Application::initialize()
     {
         userConfiguration::populateWithDefaultValues(m_configManager);
         m_configManager.load();
 
         ApplicationInitializer initializer;
         initializer.initWindow(m_window, m_configManager);
-        initializer.initScreens(m_screens, m_assetManager);
-        m_debugConsole.execute("debug");
-        m_debugConsole.execute("camera");
+        m_gameLoopParticipants.push_back(&m_gameManager);
+        m_gameLoopParticipants.push_back(&m_debugManager);
     }
 
     void Application::run()
@@ -48,6 +48,7 @@ namespace core {
         while (m_window.isOpen())
         {
             float elapsed = timer.restart().asSeconds();
+            handleEvents();
             step(elapsed);
             render();
         }
@@ -55,9 +56,8 @@ namespace core {
 
     void Application::step(float dt)
     {
-        handleEvents();
-        for (auto& screen : m_screens)
-            screen->update(dt);
+        for (auto* participant : m_gameLoopParticipants)
+            participant->update(dt);
     }
 
     void Application::handleEvents()
@@ -69,27 +69,24 @@ namespace core {
                 shutdown();
             else
             {
-                for (auto& screen : m_screens)
+                for (auto* participant : m_gameLoopParticipants)
                 {
-                    if (screen->handleEvent(event))
+                    if (participant->handleEvent(event))
                         break;
                 }
             }
         }
 
-        for (auto& screen : m_screens)
-        {
-            if (screen->handleContinuousEvent(m_mouse, m_keyboard))
-                break;
-        }
+        for (auto* participant : m_gameLoopParticipants)
+            participant->handleContinuousEvent(m_mouse, m_keyboard);
     }
 
     void Application::render()
     {
         m_window.clear(sf::Color(128, 128, 128));
 
-        for (auto& screen : m_screens)
-            screen->render(m_window);
+        for (auto* participant : m_gameLoopParticipants)
+            participant->render(m_window);
 
         m_window.display();
     }

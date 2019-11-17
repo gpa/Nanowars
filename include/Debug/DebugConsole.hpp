@@ -19,53 +19,37 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include <vector>
 #include <memory>
 
-#include "Debug/DebugGameScreen.hpp"
-#include "Screens/GameScreen.hpp"
-
 namespace nanowars {
-namespace core {
-    class Application;
-}
 namespace debug {
-
-    using namespace core;
 
     using std::map;
     using std::queue;
     using std::string;
     using std::vector;
     using std::weak_ptr;
+    using std::function;
+
+    class DebugManager;
 
     class DebugConsole
     {
     public:
-        DebugConsole(Application& app);
+        typedef const vector<string>& args_t;
+
+        DebugConsole(DebugManager& parent);
 
         void execute(const string& cmd);
-
         bool isStreamEmpty() const;
         string popStream();
 
-        void injectDebugScreen();
-        void removeDebugScreen();
+        void registerCommand(string name, function<void(args_t)> func);
 
     private:
-        typedef const vector<string>& args_t;
-
-        void cmdDebug(args_t args);
-        void cmdCamera(args_t args);
-        void cmdExit(args_t args);
-
         void write(const string&);
-        void initCommands();
 
-        GameScreen* getGameScreen();
-
-        DebugGameScreen* m_debugGameScreen;
-
-        map<string, std::function<void(args_t)>> m_commands;
+        map<string, function<void(args_t)>> m_commands;
         queue<string> m_stream;
-        Application& m_application;
+        DebugManager& m_debugManager;
     };
 }
 }

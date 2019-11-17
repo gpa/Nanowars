@@ -11,48 +11,59 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Debug/DebugGameScreen.hpp"
+#include "Debug/DebugRenderer.hpp"
 #include "Util/Box2DConverter.hpp"
 
 namespace nanowars {
 namespace debug {
 
     using namespace util;
+    using namespace core;
 
-    DebugGameScreen::DebugGameScreen(b2World& world)
+    DebugRenderer::DebugRenderer(b2World& world)
         : m_world(world)
         , m_cacheCircle(sf::CircleShape())
         , m_window(nullptr)
     {
-        m_freeCameraEnabled = false;
-        m_debugViewEnabled = false;
     }
 
-    void DebugGameScreen::update(float dt)
-    {
-    }
-
-    bool DebugGameScreen::handleEvent(const Event& event)
-    {
-        if (m_freeCameraEnabled)
-            return m_freeCamera.handleEvent(event);
-
-        return false;
-    }
-
-    bool DebugGameScreen::handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard)
-    {
-        return false;
-    }
-
-    void DebugGameScreen::render(RenderWindow& window)
+    void DebugRenderer::render(RenderWindow& window)
     {
         m_window = &window;
         m_world.SetDebugDraw(this);
         m_world.DrawDebugData();
     }
 
-    void DebugGameScreen::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+    void DebugRenderer::setOptions(vector<string> args)
+    {
+        uint32 flags = 0;
+        if (args.size() == 1)
+        {
+            if (GetFlags() == 0)
+                flags = b2Draw::e_shapeBit | b2Draw::e_particleBit;
+        }
+
+        for (int i = 1; i < args.size(); ++i)
+        {
+            auto arg = args[i];
+            if (arg == "aabb")
+                flags = !(flags & b2Draw::e_aabbBit) ? flags | b2Draw::e_aabbBit : flags & ~b2Draw::e_aabbBit;
+            else if (arg == "mass")
+                flags = !(flags & b2Draw::e_centerOfMassBit) ? flags | b2Draw::e_centerOfMassBit : flags & ~b2Draw::e_centerOfMassBit;
+            else if (arg == "joint")
+                flags = !(flags & b2Draw::e_jointBit) ? flags | b2Draw::e_jointBit : flags & ~b2Draw::e_jointBit;
+            else if (arg == "pair")
+                flags = !(flags & b2Draw::e_pairBit) ? flags | b2Draw::e_pairBit : flags & ~b2Draw::e_pairBit;
+            else if (arg == "particle")
+                flags = !(flags & b2Draw::e_particleBit) ? flags | b2Draw::e_particleBit : flags & ~b2Draw::e_particleBit;
+            else if (arg == "shape")
+                flags = !(flags & b2Draw::e_shapeBit) ? flags | b2Draw::e_shapeBit : flags & ~b2Draw::e_shapeBit;
+        }
+
+        SetFlags(flags);
+    }
+
+    void DebugRenderer::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
     {
         sf::ConvexShape polygon(vertexCount);
         sf::Vector2f center;
@@ -67,7 +78,7 @@ namespace debug {
         m_window->draw(polygon);
     }
 
-    void DebugGameScreen::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+    void DebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
     {
         sf::ConvexShape polygon(vertexCount);
         for (int i = 0; i < vertexCount; i++)
@@ -82,7 +93,7 @@ namespace debug {
         m_window->draw(polygon);
     }
 
-    void DebugGameScreen::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
+    void DebugRenderer::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
     {
         float scale = constants::meterToPixelRatio;
         if (m_cacheCircle.getRadius() != radius * scale)
@@ -101,7 +112,7 @@ namespace debug {
         m_window->draw(m_cacheCircle);
     }
 
-    void DebugGameScreen::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
+    void DebugRenderer::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
     {
         float scale = constants::meterToPixelRatio;
         m_cacheCircle.setRadius(radius * scale);
@@ -120,7 +131,7 @@ namespace debug {
         m_window->draw(line, 2, sf::Lines);
     }
 
-    void DebugGameScreen::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
+    void DebugRenderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
     {
         sf::Vertex line[] = { sf::Vertex(Box2DConverter::toSfmlVector(p1), Box2DConverter::toSfmlColor(color)),
             sf::Vertex(Box2DConverter::toSfmlVector(p2), Box2DConverter::toSfmlColor(color)) };
@@ -128,7 +139,7 @@ namespace debug {
         m_window->draw(line, 2, sf::Lines);
     }
 
-    void DebugGameScreen::DrawTransform(const b2Transform& xf)
+    void DebugRenderer::DrawTransform(const b2Transform& xf)
     {
         float lineLength = 0.55f;
 
@@ -146,7 +157,7 @@ namespace debug {
         m_window->draw(greenLine, 2, sf::Lines);
     }
 
-    void DebugGameScreen::DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count)
+    void DebugRenderer::DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count)
     {
         m_cacheCircle.setRadius(radius * constants::meterToPixelRatio);
         m_cacheCircle.setOrigin(m_cacheCircle.getRadius() * 0.5f, m_cacheCircle.getRadius() * 0.5f);

@@ -30,7 +30,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 namespace nanowars {
 namespace debug {
-    class DebugConsole;
+    class DebugManager;
 }
 }
 
@@ -77,7 +77,7 @@ namespace game {
         unordered_map<std::type_index, shared_ptr<GameObjectFactory>> m_factories;
 
         vector<GameObject*> m_objectsToRemoveCache;
-        friend class debug::DebugConsole;
+        friend class debug::DebugManager;
     };
 
     template <typename T, class... Args>

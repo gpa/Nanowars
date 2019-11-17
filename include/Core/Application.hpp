@@ -14,9 +14,10 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Config/PersistentConfigManager.hpp"
+#include "Core/GameLoopParticipant.hpp"
 #include "Asset/AssetManager.hpp"
-#include "Screens/Screen.hpp"
-#include "Debug/DebugConsole.hpp"
+#include "Debug/DebugManager.hpp"
+#include "Game/GameManager.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -36,7 +37,8 @@ namespace core {
 
     using namespace asset;
     using namespace config;
-    using namespace screens;
+    using namespace game;
+    using namespace debug;
 
     class Application
     {
@@ -45,7 +47,7 @@ namespace core {
         void run();
 
     private:
-        void init();
+        void initialize();
         void shutdown();
 
         void step(float dt);
@@ -54,16 +56,17 @@ namespace core {
 
         RenderWindow m_window;
 
-        vector<unique_ptr<Screen>> m_screens;
-
         PersistentConfigManager m_configManager;
         AssetManager m_assetManager;
+        GameManager m_gameManager;
+        DebugManager m_debugManager;
+
+        vector<GameLoopParticipant*> m_gameLoopParticipants;
 
         Mouse m_mouse;
         Keyboard m_keyboard;
 
-        debug::DebugConsole m_debugConsole;
-        friend class debug::DebugConsole;
+        friend class debug::DebugManager;
     };
 }
 }

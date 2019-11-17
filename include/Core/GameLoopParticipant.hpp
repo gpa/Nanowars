@@ -12,27 +12,25 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Event.hpp>
-#include <SFML/Window/Keyboard.hpp>
-#include <SFML/Window/Mouse.hpp>
+
+#include <SFML/Graphics.hpp>
 
 namespace nanowars {
-namespace screens {
+namespace core {
 
     using sf::RenderWindow;
     using sf::Event;
     using sf::Mouse;
     using sf::Keyboard;
 
-    class Screen
+    class GameLoopParticipant
     {
     public:
-        virtual ~Screen() = default;
         virtual void update(float dt) = 0;
+        virtual void render(RenderWindow& window) = 0;
+
         virtual bool handleEvent(const Event& event) = 0;
         virtual bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) = 0;
-        virtual void render(RenderWindow& window) = 0;
     };
 }
 }

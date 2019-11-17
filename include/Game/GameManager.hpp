@@ -13,10 +13,12 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Screens/Screen.hpp"
+#include "Core/GameLoopParticipant.hpp"
 #include "Graphics/FollowingCamera.hpp"
 #include "Controllers/KeyboardRocketController.hpp"
 #include "Game/GameWorld.hpp"
+
+#include <SFML/Graphics.hpp>
 
 namespace nanowars {
 namespace debug {
@@ -25,16 +27,18 @@ namespace debug {
 }
 
 namespace nanowars {
-namespace screens {
+namespace game {
 
     using namespace game;
+    using namespace core;
     using namespace graphics;
     using namespace controllers;
+    using namespace sf;
 
-    class GameScreen : public Screen
+    class GameManager : public GameLoopParticipant
     {
     public:
-        GameScreen(AssetHolder&& assetHolder);
+        GameManager(AssetHolder&& assetHolder);
 
         void update(float dt) override;
         void render(RenderWindow& window) override;
@@ -50,7 +54,7 @@ namespace screens {
 
         KeyboardRocketController m_keyboardRocketController;
 
-        friend class debug::DebugConsole;
+        friend class debug::DebugManager;
     };
 }
 }
