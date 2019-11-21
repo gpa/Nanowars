@@ -57,41 +57,34 @@ namespace gui {
         m_consoleInput = consoleInput;
         m_consoleOutput = consoleLabel;
         m_consoleScrollWindow = consoleOutput;
-        Show(false);
-        m_isVisible = false;
+        SetRequisition(sf::Vector2f(m_guiManager.getApplication().getWindow().getSize().x, 200.f));
+        Window::initialize();
     }
 
-    // void ConsoleWindow::update(float dt)
-    // {
-    //     SetRequisition(sf::Vector2f(m_guiManager.getApplication().getWindow().getSize().x, 200.f));
-    //     readConsoleStream();
-    //     Window::update(dt);
-    // }
+    void ConsoleWindow::HandleEvent(const sf::Event& event)
+    {
+        if (event.type == sf::Event::TextEntered && event.text.unicode == '`')
+            return;
 
-    // void ConsoleWindow::handleEvent(const sf::Event& event)
-    // {
-    //     if (event.type == sf::Event::TextEntered && event.text.unicode == '`')
-    //         return;
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Tilde)
+        {
+            m_isVisible = !m_isVisible;
+            Show(m_isVisible);
 
-    //     if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Tilde)
-    //     {
-    //         m_isVisible = !m_isVisible;
-    //         Show(m_isVisible);
+            if (m_isVisible)
+                m_consoleInput->GrabFocus();
 
-    //         if (m_isVisible)
-    //             m_consoleInput->GrabFocus();
+            return;
+        }
 
-    //         return;
-    //     }
+        if (m_consoleInput->GetCursorPosition() == 0)
+            m_consoleInput->SetCursorPosition(1);
 
-    //     if (m_consoleInput->GetCursorPosition() == 0)
-    //         m_consoleInput->SetCursorPosition(1);
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Return && m_isVisible)
+            execute();
 
-    //     if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Return && m_isVisible)
-    //         execute();
-
-    //     Window::handleEvent(event);
-    // }
+        Window::HandleEvent(event);
+    }
 
     void ConsoleWindow::execute()
     {
@@ -120,6 +113,7 @@ namespace gui {
 
         m_consoleInput->SetText(">");
         m_consoleInput->SetCursorPosition(1);
+        readConsoleStream();
     }
 
     void ConsoleWindow::clear()

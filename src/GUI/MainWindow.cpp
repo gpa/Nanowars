@@ -62,6 +62,7 @@ namespace gui {
 
         layoutBox->Pack(menuBox);
         Add(layoutBox);
+        Window::initialize();
     }
 
     void MainWindow::onOnlineButtonClicked()

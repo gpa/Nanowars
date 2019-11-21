@@ -29,15 +29,6 @@ namespace gui {
     {
     }
 
-    // void Window::update(float dt)
-    // {
-    //     center();
-    // }
-
-    // void Window::handleEvent(const Event& event)
-    // {
-    // }
-
     void Window::onTopMostGained(shared_ptr<Window> previousTopMost)
     {
         SetState(sfg::Widget::State::NORMAL);

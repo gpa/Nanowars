@@ -47,8 +47,7 @@ namespace gui {
         fixed->Put(label, sf::Vector2f(5.0f, 2.0f));
         fixed->Put(rejectButton, sf::Vector2f(230 + 0, 30.0f));
 
-        winBox->Pack(fixed, false, true);
-        Add(winBox);
+        Window::initialize();
     }
 
     void ConfirmationWindow::onAccepted()

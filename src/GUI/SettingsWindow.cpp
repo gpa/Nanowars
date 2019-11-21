@@ -48,6 +48,7 @@ namespace gui {
 
         initControls();
         loadConfigState();
+        Window::initialize();
     }
 
     void SettingsWindow::initControls()
