@@ -29,6 +29,8 @@ namespace gui {
     public:
         SettingsWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
         void initialize() override;
+
+        void HandleEvent(const Event& event) override;
     private:
         void initControls();
         void initGraphicsTab(shared_ptr<Box>);

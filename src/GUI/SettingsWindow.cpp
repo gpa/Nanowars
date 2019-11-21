@@ -196,13 +196,13 @@ namespace gui {
             combobox->AppendItem(std::to_string(i));
     }
 
-    // void SettingsWindow::handleEvent(const sf::Event& event)
-    // {
-    //     if (event.type == sf::Event::KeyReleased && isControlKeyInputMode())
-    //         handleEventInInputMode(event);
+    void SettingsWindow::HandleEvent(const sf::Event& event)
+    {
+        if (event.type == sf::Event::KeyReleased && isControlKeyInputMode())
+            handleEventInInputMode(event);
 
-    //     Window::handleEvent(event);
-    // }
+        Window::HandleEvent(event);
+    }
 
     void SettingsWindow::handleEventInInputMode(const Event& event)
     {
