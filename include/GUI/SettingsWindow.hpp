@@ -13,7 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "GUI/ControlHeavyElement.hpp"
+#include "GUI/ControlHeavyWindow.hpp"
 #include "Globalization/StringTranslations.hpp"
 #include "Globalization/TranslationManager.hpp"
 
@@ -24,7 +24,7 @@ namespace gui {
     using namespace globalization;
     using std::shared_ptr;
 
-    class SettingsWindow : public Window, protected ControlHeavyElement
+    class SettingsWindow : public ControlHeavyWindow
     {
     public:
         SettingsWindow(GUIManager& guiManager, AssetHolder&& assetHolder);

@@ -11,12 +11,17 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "GUI/ControlHeavyElement.hpp"
+#include "GUI/ControlHeavyWindow.hpp"
 
 namespace nanowars {
 namespace gui {
 
-    shared_ptr<CheckButton> ControlHeavyElement::getCheckButton(string id, function<void()> onClick)
+    ControlHeavyWindow::ControlHeavyWindow(GUIManager& guiManager, AssetHolder&& assetHolder)
+        : Window(guiManager, std::move(assetHolder))
+    {
+    }
+
+    shared_ptr<CheckButton> ControlHeavyWindow::getCheckButton(string id, function<void()> onClick)
     {
         auto cb = CheckButton::Create("");
         cb->SetId(id);
@@ -25,7 +30,7 @@ namespace gui {
         return cb;
     }
 
-    shared_ptr<ComboBox> ControlHeavyElement::getComboBox(string id, function<void()> onClick)
+    shared_ptr<ComboBox> ControlHeavyWindow::getComboBox(string id, function<void()> onClick)
     {
         auto cb = ComboBox::Create();
         cb->SetId(id);
@@ -34,7 +39,7 @@ namespace gui {
         return cb;
     }
 
-    shared_ptr<Entry> ControlHeavyElement::getEntry(string id, function<void()> onClick)
+    shared_ptr<Entry> ControlHeavyWindow::getEntry(string id, function<void()> onClick)
     {
         auto e = Entry::Create();
         e->SetId(id);
@@ -43,7 +48,7 @@ namespace gui {
         return e;
     }
 
-    shared_ptr<Button> ControlHeavyElement::getButton(string id, string label, function<void()> onClick)
+    shared_ptr<Button> ControlHeavyWindow::getButton(string id, string label, function<void()> onClick)
     {
         auto b = Button::Create(label);
         b->SetId(id);
@@ -52,7 +57,7 @@ namespace gui {
         return b;
     }
 
-    shared_ptr<Scale> ControlHeavyElement::getScale(string id, function<void()> onClick)
+    shared_ptr<Scale> ControlHeavyWindow::getScale(string id, function<void()> onClick)
     {
         auto a = Scale::Create(Scale::Orientation::HORIZONTAL);
         a->SetId(id);
@@ -68,12 +73,12 @@ namespace gui {
         return a;
     }
 
-    void ControlHeavyElement::insertLabelRow(string label, shared_ptr<Table> table, int posX, int posY, int width, int height)
+    void ControlHeavyWindow::insertLabelRow(string label, shared_ptr<Table> table, int posX, int posY, int width, int height)
     {
         table->Attach(Label::Create(label), Rect<Uint32>(posX, posY, width, height), Table::FILL, Table::FILL, sf::Vector2f(10.f, 10.f));
     }
 
-    shared_ptr<ComboBox> ControlHeavyElement::addCombo(shared_ptr<Table> table, function<void()> onClick, string id, string label,
+    shared_ptr<ComboBox> ControlHeavyWindow::addCombo(shared_ptr<Table> table, function<void()> onClick, string id, string label,
         int lX, int lY, int objX, int objY, int offX, int offY)
     {
         auto obj = getComboBox(id, onClick);
@@ -85,7 +90,7 @@ namespace gui {
         return obj;
     }
 
-    shared_ptr<CheckButton> ControlHeavyElement::addCheckbox(shared_ptr<Table> table, function<void()> onClick, string id, string label,
+    shared_ptr<CheckButton> ControlHeavyWindow::addCheckbox(shared_ptr<Table> table, function<void()> onClick, string id, string label,
         int lX, int lY, int objX, int objY, int offX, int offY)
     {
         auto obj = getCheckButton(id, onClick);
@@ -97,7 +102,7 @@ namespace gui {
         return obj;
     }
 
-    shared_ptr<Button> ControlHeavyElement::getButtonById(string id)
+    shared_ptr<Button> ControlHeavyWindow::getButtonById(string id)
     {
         for (auto& btn : m_buttons)
         {

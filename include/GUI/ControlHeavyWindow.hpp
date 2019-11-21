@@ -31,8 +31,11 @@ namespace gui {
     using std::function;
     using namespace sfg;
 
-    class ControlHeavyElement
+    class ControlHeavyWindow : public Window
     {
+    public:
+        ControlHeavyWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
+        
     protected:
         shared_ptr<CheckButton> getCheckButton(string id, function<void()> onClick);
         shared_ptr<ComboBox> getComboBox(string id, function<void()> onClick);
@@ -59,7 +62,7 @@ namespace gui {
     };
 
     template <typename T>
-    inline void ControlHeavyElement::insertRow(T obj, shared_ptr<Table> table, int posX, int posY, int width, int height)
+    inline void ControlHeavyWindow::insertRow(T obj, shared_ptr<Table> table, int posX, int posY, int width, int height)
     {
         table->Attach(obj, Rect<Uint32>(posX, posY, width, height), Table::FILL, Table::FILL, sf::Vector2f(10.f, 10.f));
     }

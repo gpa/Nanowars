@@ -34,7 +34,7 @@ namespace gui {
     using ConfEntry = nanowars::config::ConfigEntry;
 
     SettingsWindow::SettingsWindow(GUIManager& guiManager, AssetHolder&& assetHolder)
-        : Window(guiManager, std::move(assetHolder))
+        : ControlHeavyWindow(guiManager, std::move(assetHolder))
     {
     }
 
