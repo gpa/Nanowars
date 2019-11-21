@@ -320,7 +320,9 @@ namespace gui {
             tx(StringTranslation_UnsavedChanges),
             tx(StringTranslation_ApplyMadeChanges),
             tx(StringTranslation_ApplyChanges),
-            tx(StringTranslation_DiscardChanges));
+            tx(StringTranslation_DiscardChanges),
+            std::bind(&SettingsWindow::onDiscardChangesConfirmation, this, std::placeholders::_1));
+        confirmationWindow->initialize();
 
         m_guiManager.makeTopMost(confirmationWindow);
     }
@@ -345,7 +347,9 @@ namespace gui {
             tx(StringTranslation_RestoreDefaults),
             tx(StringTranslation_ResetAllValuesToDefault),
             tx(StringTranslation_RestoreDefaults),
-            tx(StringTranslation_Cancel));
+            tx(StringTranslation_Cancel),
+            std::bind(&SettingsWindow::onRestoreDefaultsConfirmation, this, std::placeholders::_1));
+        confirmationWindow->initialize();
 
         m_guiManager.makeTopMost(confirmationWindow);
     }
@@ -353,6 +357,17 @@ namespace gui {
     bool SettingsWindow::isControlKeyInputMode()
     {
         return !m_keyBindingButtonId.empty();
+    }
+
+    void SettingsWindow::onRestoreDefaultsConfirmation(bool wasConfirmed)
+    {
+
+    }
+
+    void SettingsWindow::onDiscardChangesConfirmation(bool wasConfirmed)
+    {
+        if (wasConfirmed)
+            m_guiManager.removeTopMost();
     }
 }
 }

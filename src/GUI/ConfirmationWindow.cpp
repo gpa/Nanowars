@@ -17,20 +17,19 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gui {
 
-    ConfirmationWindow::ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, string titleString, string infoString, string acceptString, string rejectString)
+    ConfirmationWindow::ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
+        string titleString, string infoString, string acceptString, string rejectString, callback_t callback)
         : Window(guiManager, std::move(assetHolder))
         , m_titleString(titleString)
         , m_infoString(infoString)
         , m_acceptString(acceptString)
         , m_rejectString(rejectString)
+        , m_callback(callback)
     {
     }
 
     void ConfirmationWindow::initialize()
     {
-        m_accepted = false;
-        m_rejected = false;
-
         SetStyle(sfg::Window::Style::BACKGROUND | sfg::Window::Style::TITLEBAR);
         SetTitle(m_titleString);
         SetRequisition(sf::Vector2f(400.f, 10.f));
@@ -52,26 +51,16 @@ namespace gui {
         Add(winBox);
     }
 
-    bool ConfirmationWindow::isRejected() const
-    {
-        return m_rejected;
-    }
-
-    bool ConfirmationWindow::isAccepted() const
-    {
-        return m_accepted;
-    }
-
     void ConfirmationWindow::onAccepted()
     {
-        m_accepted = true;
         m_guiManager.removeTopMost();
+        m_callback(true);
     }
 
     void ConfirmationWindow::onRejected()
     {
-        m_rejected = true;
         m_guiManager.removeTopMost();
+        m_callback(false);
     }
 }
 }

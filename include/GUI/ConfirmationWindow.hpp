@@ -16,29 +16,30 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "GUI/Window.hpp"
 #include <string>
 
+#include <functional>
+
 namespace nanowars {
 namespace gui {
 
+    using std::string;
     using std::string;
 
     class ConfirmationWindow : public Window
     {
     public:
+
+        typedef function<void(bool)> callback_t;
+
         ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
-            string titleString, string infoString, string acceptString, string rejectString);
-        
+            string titleString, string infoString, string acceptString, string rejectString, callback_t callback);
         void initialize() override;
 
-        bool isRejected() const;
-        bool isAccepted() const;
     private:
         string m_titleString;
         string m_infoString;
         string m_acceptString;
         string m_rejectString;
-
-        bool m_accepted;
-        bool m_rejected;
+        callback_t m_callback;
 
         void onAccepted();
         void onRejected();
