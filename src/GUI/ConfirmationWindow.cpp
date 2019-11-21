@@ -41,12 +41,12 @@ namespace gui {
         acceptButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&ConfirmationWindow::onAccepted, this));
         rejectButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&ConfirmationWindow::onRejected, this));
 
-        auto winBox = sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL);
         auto fixed = sfg::Fixed::Create();
         fixed->Put(acceptButton, sf::Vector2f(350.f, 30.f));
         fixed->Put(label, sf::Vector2f(5.0f, 2.0f));
         fixed->Put(rejectButton, sf::Vector2f(230 + 0, 30.0f));
 
+        Add(fixed);
         Window::initialize();
     }
 
