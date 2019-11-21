@@ -23,9 +23,6 @@ namespace nanowars {
 namespace core {
     class Application;
 }
-}
-
-namespace nanowars {
 namespace debug {
 
     using core::Application;

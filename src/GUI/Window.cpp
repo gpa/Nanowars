@@ -19,63 +19,68 @@ namespace nanowars {
 namespace gui {
 
     Window::Window(GUIManager& guiManager, AssetHolder&& assetHolder)
-        : m_guiManager(guiManager)
+        : sfg::Window(sfg::Window::Style::NO_STYLE)
+        , m_guiManager(guiManager)
         , m_assetHolder(std::move(assetHolder))
-        , m_window(sfg::Window::Create())
     {
     }
 
-    void Window::update(float dt)
+    void Window::initialize()
     {
     }
 
-    void Window::handleEvent(const Event& event)
-    {
-    }
+    // void Window::update(float dt)
+    // {
+    //     center();
+    // }
+
+    // void Window::handleEvent(const Event& event)
+    // {
+    // }
 
     void Window::onTopMostGained(shared_ptr<Window> previousTopMost)
     {
-        m_window->SetState(sfg::Widget::State::NORMAL);
+        SetState(sfg::Widget::State::NORMAL);
     }
 
     void Window::onTopMostLost(shared_ptr<Window> currentTopMost)
     {
-        m_window->SetState(sfg::Widget::State::INSENSITIVE);
+        SetState(sfg::Widget::State::INSENSITIVE);
     }
 
     void Window::centerHorizontally()
     {
         auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ls = m_window->GetAllocation();
-        m_window->SetPosition(sf::Vector2f((s.x / 2) - (ls.width / 2), ls.height));
+        auto ls = GetAllocation();
+        SetPosition(sf::Vector2f((s.x / 2) - (ls.width / 2), ls.height));
     }
 
     void Window::centerVertically()
     {
         auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ls = m_window->GetAllocation();
-        m_window->SetPosition(sf::Vector2f(ls.width, (s.y / 2) - (ls.height / 2)));
+        auto ls = GetAllocation();
+        SetPosition(sf::Vector2f(ls.width, (s.y / 2) - (ls.height / 2)));
     }
 
     void Window::center()
     {
         auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ls = m_window->GetAllocation();
+        auto ls = GetAllocation();
 
         float lx = (s.x / 2) - (ls.width / 2);
         float ly = (s.y / 2) - (ls.height / 2);
 
-        m_window->SetPosition(sf::Vector2f(lx, ly));
+        SetPosition(sf::Vector2f(lx, ly));
     }
 
     void Window::setMargin(float xOffset, float yOffset)
     {
         auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ms = m_window->GetAllocation();
+        auto ms = GetAllocation();
         float mx = s.x * xOffset;
         float my = s.y * yOffset;
 
-        m_window->SetPosition(sf::Vector2f(mx, my));
+        SetPosition(sf::Vector2f(mx, my));
     }
 
     string Window::tx(StringTranslation translationId)

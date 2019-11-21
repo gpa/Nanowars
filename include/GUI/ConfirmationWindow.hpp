@@ -14,22 +14,29 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "GUI/Window.hpp"
+#include <string>
 
 namespace nanowars {
 namespace gui {
 
+    using std::string;
+
     class ConfirmationWindow : public Window
     {
     public:
-        ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder,
-            string infoText, string acceptString, string rejectString, string windowTitle, float rejectXOffset = 0.0f);
-
-        void update(float dt) override;
+        ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
+            string titleString, string infoString, string acceptString, string rejectString);
+        
+        void initialize() override;
 
         bool isRejected() const;
         bool isAccepted() const;
-
     private:
+        string m_titleString;
+        string m_infoString;
+        string m_acceptString;
+        string m_rejectString;
+
         bool m_accepted;
         bool m_rejected;
 

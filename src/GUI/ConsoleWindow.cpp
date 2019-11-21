@@ -23,7 +23,11 @@ namespace gui {
         : Window(guiManager, std::move(assetHolder))
         , m_console(debugConsole)
     {
-        m_window->SetStyle(sfg::Window::Style::BACKGROUND);
+    }
+
+    void ConsoleWindow::initialize()
+    {
+        SetStyle(sfg::Window::Style::BACKGROUND);
 
         auto consoleOutput = sfg::ScrolledWindow::Create();
         consoleOutput->SetScrollbarPolicy(sfg::ScrolledWindow::VERTICAL_AUTOMATIC);
@@ -48,46 +52,46 @@ namespace gui {
         consoleBox->Pack(consoleOutput, true, true);
         consoleBox->Pack(consoleInput);
 
-        m_window->Add(consoleBox);
+        Add(consoleBox);
 
         m_consoleInput = consoleInput;
         m_consoleOutput = consoleLabel;
         m_consoleScrollWindow = consoleOutput;
-        m_window->Show(false);
+        Show(false);
         m_isVisible = false;
     }
 
-    void ConsoleWindow::update(float dt)
-    {
-        m_window->SetRequisition(sf::Vector2f(m_guiManager.getApplication().getWindow().getSize().x, 200.f));
-        readConsoleStream();
-        Window::update(dt);
-    }
+    // void ConsoleWindow::update(float dt)
+    // {
+    //     SetRequisition(sf::Vector2f(m_guiManager.getApplication().getWindow().getSize().x, 200.f));
+    //     readConsoleStream();
+    //     Window::update(dt);
+    // }
 
-    void ConsoleWindow::handleEvent(const sf::Event& event)
-    {
-        if (event.type == sf::Event::TextEntered && event.text.unicode == '`')
-            return;
+    // void ConsoleWindow::handleEvent(const sf::Event& event)
+    // {
+    //     if (event.type == sf::Event::TextEntered && event.text.unicode == '`')
+    //         return;
 
-        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Tilde)
-        {
-            m_isVisible = !m_isVisible;
-            m_window->Show(m_isVisible);
+    //     if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Tilde)
+    //     {
+    //         m_isVisible = !m_isVisible;
+    //         Show(m_isVisible);
 
-            if (m_isVisible)
-                m_consoleInput->GrabFocus();
+    //         if (m_isVisible)
+    //             m_consoleInput->GrabFocus();
 
-            return;
-        }
+    //         return;
+    //     }
 
-        if (m_consoleInput->GetCursorPosition() == 0)
-            m_consoleInput->SetCursorPosition(1);
+    //     if (m_consoleInput->GetCursorPosition() == 0)
+    //         m_consoleInput->SetCursorPosition(1);
 
-        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Return && m_isVisible)
-            execute();
+    //     if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Return && m_isVisible)
+    //         execute();
 
-        Window::handleEvent(event);
-    }
+    //     Window::handleEvent(event);
+    // }
 
     void ConsoleWindow::execute()
     {

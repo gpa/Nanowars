@@ -30,28 +30,19 @@ namespace gui {
 
     class GUIManager;
 
-    class Window
+    class Window : public sfg::Window
     {
     public:
         Window(GUIManager& guiManager, AssetHolder&& assetHolder);
         virtual ~Window() = default;
 
-        virtual void update(float dt);
-        virtual void handleEvent(const Event& event);
-
+        virtual void initialize();
         virtual void onTopMostGained(shared_ptr<Window> previousTopMost);
         virtual void onTopMostLost(shared_ptr<Window> currentTopMost);
 
-        inline shared_ptr<sfg::Window> getSfgWindow() { return m_window; }
-
-        inline string getId() { return m_id; } 
-        inline void setId(string id) { this->m_id = id; }
-
     protected:
-        string m_id;
         GUIManager& m_guiManager;
         AssetHolder m_assetHolder;
-        shared_ptr<sfg::Window> m_window;
 
         void center();
         void centerHorizontally();

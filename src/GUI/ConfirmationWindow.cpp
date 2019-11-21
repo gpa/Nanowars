@@ -17,20 +17,27 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gui {
 
-    ConfirmationWindow::ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder,
-        string infoText, string acceptString, string rejectString, string windowTitle, float rejectXOffset)
+    ConfirmationWindow::ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, string titleString, string infoString, string acceptString, string rejectString)
         : Window(guiManager, std::move(assetHolder))
+        , m_titleString(titleString)
+        , m_infoString(infoString)
+        , m_acceptString(acceptString)
+        , m_rejectString(rejectString)
+    {
+    }
+
+    void ConfirmationWindow::initialize()
     {
         m_accepted = false;
         m_rejected = false;
 
-        m_window->SetStyle(sfg::Window::Style::BACKGROUND | sfg::Window::Style::TITLEBAR);
-        m_window->SetTitle(windowTitle);
-        m_window->SetRequisition(sf::Vector2f(400.f, 10.f));
+        SetStyle(sfg::Window::Style::BACKGROUND | sfg::Window::Style::TITLEBAR);
+        SetTitle(m_titleString);
+        SetRequisition(sf::Vector2f(400.f, 10.f));
 
-        auto label = sfg::Label::Create(infoText);
-        auto acceptButton = sfg::Button::Create(acceptString);
-        auto rejectButton = sfg::Button::Create(rejectString);
+        auto label = sfg::Label::Create(m_infoString);
+        auto acceptButton = sfg::Button::Create(m_acceptString);
+        auto rejectButton = sfg::Button::Create(m_rejectString);
 
         acceptButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&ConfirmationWindow::onAccepted, this));
         rejectButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&ConfirmationWindow::onRejected, this));
@@ -39,10 +46,10 @@ namespace gui {
         auto fixed = sfg::Fixed::Create();
         fixed->Put(acceptButton, sf::Vector2f(350.f, 30.f));
         fixed->Put(label, sf::Vector2f(5.0f, 2.0f));
-        fixed->Put(rejectButton, sf::Vector2f(230 + rejectXOffset, 30.0f));
+        fixed->Put(rejectButton, sf::Vector2f(230 + 0, 30.0f));
 
         winBox->Pack(fixed, false, true);
-        m_window->Add(winBox);
+        Add(winBox);
     }
 
     bool ConfirmationWindow::isRejected() const
@@ -53,12 +60,6 @@ namespace gui {
     bool ConfirmationWindow::isAccepted() const
     {
         return m_accepted;
-    }
-
-    void ConfirmationWindow::update(float dt)
-    {
-        Window::center();
-        Window::update(dt);
     }
 
     void ConfirmationWindow::onAccepted()

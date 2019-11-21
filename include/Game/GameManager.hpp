@@ -24,9 +24,6 @@ namespace nanowars {
 namespace debug {
     class DebugConsole;
 }
-}
-
-namespace nanowars {
 namespace game {
 
     using namespace game;

@@ -26,9 +26,6 @@ namespace nanowars {
 namespace core {
     class Application;
 }
-}
-
-namespace nanowars {
 namespace gui {
 
     using namespace asset;

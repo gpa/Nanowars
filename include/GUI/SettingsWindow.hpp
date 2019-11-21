@@ -28,10 +28,7 @@ namespace gui {
     {
     public:
         SettingsWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
-
-        virtual void update(float dt) override;
-        virtual void handleEvent(const sf::Event& event) override;
-
+        void initialize() override;
     private:
         void initControls();
         void initGraphicsTab(shared_ptr<Box>);

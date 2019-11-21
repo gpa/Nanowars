@@ -30,7 +30,8 @@ namespace gui {
 
     void GUIManager::initializeWindows()
     {
-        auto mainWindow = std::shared_ptr<gui::MainWindow>(new MainWindow(*this, m_assetHolder.getNewHolder()));
+        auto mainWindow = std::shared_ptr<Window>(new MainWindow(*this, m_assetHolder.getNewHolder()));
+        mainWindow->initialize();
         makeTopMost(mainWindow);
     }
 
@@ -68,7 +69,7 @@ namespace gui {
         {
             m_windows.push_back(window);
         }
-        m_desktop.Add(window->getSfgWindow());
+        m_desktop.Add(window);
         window->onTopMostGained(previous);
     }
 
@@ -81,7 +82,7 @@ namespace gui {
         if (!m_windows.empty())
             current = m_windows.back();
 
-        m_desktop.Remove(window->getSfgWindow());
+        m_desktop.Remove(window);
         window->onTopMostLost(current);
         current->onTopMostGained(window);
     }

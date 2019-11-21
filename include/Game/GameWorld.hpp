@@ -32,9 +32,6 @@ namespace nanowars {
 namespace debug {
     class DebugManager;
 }
-}
-
-namespace nanowars {
 namespace game {
 
     using std::unique_ptr;

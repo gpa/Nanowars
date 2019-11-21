@@ -28,8 +28,13 @@ namespace gui {
     MainWindow::MainWindow(GUIManager& guiManager, AssetHolder&& assetHolder)
         : Window(guiManager, std::move(assetHolder))
     {
-        m_window->SetStyle(sfg::Window::Style::NO_STYLE);
-        m_window->SetRequisition(sf::Vector2f(400, 600));
+    }
+
+    void MainWindow::initialize()
+    {
+        RequestResize();
+        SetStyle(sfg::Window::Style::NO_STYLE);
+        SetRequisition(sf::Vector2f(400, 600));
 
         auto onlineButton = sfg::Button::Create(tx(StringTranslation_OnlineGame));
         auto lanButton = sfg::Button::Create(tx(StringTranslation_LanGame));
@@ -56,18 +61,7 @@ namespace gui {
         quitButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onQuitButtonClicked, this));
 
         layoutBox->Pack(menuBox);
-        m_window->Add(layoutBox);
-    }
-
-    void MainWindow::update(float dt)
-    {
-        center();
-        Window::update(dt);
-    }
-
-    void MainWindow::handleEvent(const sf::Event& event)
-    {
-        Window::handleEvent(event);
+        Add(layoutBox);
     }
 
     void MainWindow::onOnlineButtonClicked()
@@ -85,6 +79,7 @@ namespace gui {
     void MainWindow::onSettingsButtonClicked()
     {
         auto settingsWindow = std::shared_ptr<gui::SettingsWindow>(new SettingsWindow(m_guiManager, m_assetHolder.getNewHolder()));
+        settingsWindow->initialize();
         m_guiManager.makeTopMost(settingsWindow);
     }
 

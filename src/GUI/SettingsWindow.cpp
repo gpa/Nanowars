@@ -36,9 +36,13 @@ namespace gui {
     SettingsWindow::SettingsWindow(GUIManager& guiManager, AssetHolder&& assetHolder)
         : Window(guiManager, std::move(assetHolder))
     {
-        m_window->SetTitle(tx(StringTranslation_NanowarsSettings));
-        m_window->SetStyle(sfg::Window::Style::BACKGROUND | sfg::Window::Style::TITLEBAR | sfg::Window::Style::CLOSE);
-        m_window->GetSignal(sfg::Window::OnCloseButton).Connect(std::bind(&SettingsWindow::onCloseButtonClicked, this));
+    }
+
+    void SettingsWindow::initialize()
+    {
+        SetTitle(tx(StringTranslation_NanowarsSettings));
+        SetStyle(sfg::Window::Style::BACKGROUND | sfg::Window::Style::TITLEBAR | sfg::Window::Style::CLOSE);
+        GetSignal(sfg::Window::OnCloseButton).Connect(std::bind(&SettingsWindow::onCloseButtonClicked, this));
 
         m_graphicsModified = m_audioModified = m_controlsModified = m_networkModified = false;
 
@@ -78,7 +82,7 @@ namespace gui {
         fixed->Put(restoreButton, sf::Vector2f(680, 10.0f));
 
         winBox->Pack(fixed, false, true);
-        m_window->Add(winBox);
+        Add(winBox);
     }
 
     void SettingsWindow::initGraphicsTab(shared_ptr<Box> box)
@@ -192,13 +196,13 @@ namespace gui {
             combobox->AppendItem(std::to_string(i));
     }
 
-    void SettingsWindow::handleEvent(const sf::Event& event)
-    {
-        if (event.type == sf::Event::KeyReleased && isControlKeyInputMode())
-            handleEventInInputMode(event);
+    // void SettingsWindow::handleEvent(const sf::Event& event)
+    // {
+    //     if (event.type == sf::Event::KeyReleased && isControlKeyInputMode())
+    //         handleEventInInputMode(event);
 
-        Window::handleEvent(event);
-    }
+    //     Window::handleEvent(event);
+    // }
 
     void SettingsWindow::handleEventInInputMode(const Event& event)
     {
@@ -233,12 +237,6 @@ namespace gui {
         {
             button->SetLabel(tx(StringTranslation_PressKey));
         }
-    }
-
-    void SettingsWindow::update(float dt)
-    {
-        center();
-        Window::update(dt);
     }
 
     void SettingsWindow::loadConfigState()
@@ -319,12 +317,10 @@ namespace gui {
         }
 
         auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
+            tx(StringTranslation_UnsavedChanges),
             tx(StringTranslation_ApplyMadeChanges),
             tx(StringTranslation_ApplyChanges),
-            tx(StringTranslation_DiscardChanges),
-            tx(StringTranslation_UnsavedChanges));
-
-        confirmationWindow->setId("settings_confirm_abort");
+            tx(StringTranslation_DiscardChanges));
 
         m_guiManager.makeTopMost(confirmationWindow);
     }
@@ -346,12 +342,10 @@ namespace gui {
     void SettingsWindow::onRestoreButtonClicked()
     {
         auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
+            tx(StringTranslation_RestoreDefaults),
             tx(StringTranslation_ResetAllValuesToDefault),
             tx(StringTranslation_RestoreDefaults),
-            tx(StringTranslation_Cancel),
-            tx(StringTranslation_RestoreDefaults), 60.0f);
-
-        confirmationWindow->setId("settings_confirm_restore");
+            tx(StringTranslation_Cancel));
 
         m_guiManager.makeTopMost(confirmationWindow);
     }

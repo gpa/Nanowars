@@ -22,10 +22,8 @@ namespace gui {
     {
     public:
         MainWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
-
-        void update(float dt) override;
-        void handleEvent(const sf::Event& event) override;
-
+        void initialize() override;
+        
     private:
         void onOnlineButtonClicked();
         void onLanButtonClicked();

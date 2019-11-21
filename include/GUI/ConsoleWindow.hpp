@@ -27,9 +27,7 @@ namespace gui {
 
     public:
         ConsoleWindow(GUIManager& guiManager, AssetHolder&& assetHolder, DebugConsole& debugConsole);
-
-        virtual void handleEvent(const sf::Event& event) override;
-        virtual void update(float dt) override;
+        void initialize() override;
 
     private:
         shared_ptr<sfg::Entry> m_consoleInput;
