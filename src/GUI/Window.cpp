@@ -27,20 +27,20 @@ namespace gui {
 
     void Window::update(float dt)
     {
-        m_window->Update(dt);
     }
 
     void Window::handleEvent(const Event& event)
     {
-        m_window->HandleEvent(event);
     }
 
     void Window::onTopMostGained(shared_ptr<Window> previousTopMost)
     {
+        m_window->SetState(sfg::Widget::State::NORMAL);
     }
 
     void Window::onTopMostLost(shared_ptr<Window> currentTopMost)
     {
+        m_window->SetState(sfg::Widget::State::INSENSITIVE);
     }
 
     void Window::centerHorizontally()

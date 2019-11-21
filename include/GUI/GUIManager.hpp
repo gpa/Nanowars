@@ -19,7 +19,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>
-#include <stack>
+#include <vector>
 #include <memory>
 
 namespace nanowars {
@@ -60,7 +60,7 @@ namespace gui {
         Application& m_application;
 
         AssetHolder m_assetHolder;
-        stack<shared_ptr<Window>> m_windows;
+        vector<shared_ptr<Window>> m_windows;
     };
 }
 }

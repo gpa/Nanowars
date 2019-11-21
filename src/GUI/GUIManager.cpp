@@ -30,21 +30,18 @@ namespace gui {
 
     void GUIManager::initializeWindows()
     {
-        //auto mainWindow = std::shared_ptr<gui::MainWindow>(new MainWindow(*this, m_assetHolder.getNewHolder()));
-        //m_windows.push(mainWindow);
+        auto mainWindow = std::shared_ptr<gui::MainWindow>(new MainWindow(*this, m_assetHolder.getNewHolder()));
+        makeTopMost(mainWindow);
     }
 
     void GUIManager::update(float dt)
     {
-        if (!m_windows.empty())
-            m_windows.top()->update(dt);
+        m_desktop.Update(dt);
     }
 
     bool GUIManager::handleEvent(const Event& event)
     {
-        if (!m_windows.empty())
-            m_windows.top()->handleEvent(event);
-
+        m_desktop.HandleEvent(event);
         return false;
     }
 
@@ -63,13 +60,13 @@ namespace gui {
         auto previous = shared_ptr<Window>();
         if (!m_windows.empty())
         {
-            previous = m_windows.top();
-            m_windows.push(window);
+            previous = m_windows.back();
+            m_windows.push_back(window);
             previous->onTopMostLost(window);
         }
         else
         {
-            m_windows.push(window);
+            m_windows.push_back(window);
         }
         m_desktop.Add(window->getSfgWindow());
         window->onTopMostGained(previous);
@@ -77,12 +74,12 @@ namespace gui {
 
     void GUIManager::removeTopMost()
     {
-        shared_ptr<Window> window = m_windows.top();
-        m_windows.pop();
+        shared_ptr<Window> window = m_windows.back();
+        m_windows.pop_back();
 
         auto current = shared_ptr<Window>();
         if (!m_windows.empty())
-            current = m_windows.top();
+            current = m_windows.back();
 
         m_desktop.Remove(window->getSfgWindow());
         window->onTopMostLost(current);
