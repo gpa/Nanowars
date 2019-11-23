@@ -22,9 +22,11 @@ namespace gui {
     {
     public:
         MainWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
-        void initialize() override;
         
         void HandleEvent(const Event& event);
+        
+    protected:
+        void initialize() override;
     private:
         void onOnlineButtonClicked();
         void onLanButtonClicked();

@@ -114,7 +114,6 @@ namespace gui {
     void MainWindow::onSettingsButtonClicked()
     {
         auto settingsWindow = std::shared_ptr<gui::SettingsWindow>(new SettingsWindow(m_guiManager, m_assetHolder.getNewHolder()));
-        settingsWindow->initialize();
         m_guiManager.makeTopMost(settingsWindow);
     }
 
@@ -133,7 +132,6 @@ namespace gui {
         m_guiManager.removeTopMost();
         m_guiManager.getGameManager().exitGame();
         auto mainWindow = std::shared_ptr<gui::MainWindow>(new MainWindow(m_guiManager, m_assetHolder.getNewHolder()));
-        mainWindow->initialize();
         m_guiManager.makeTopMost(mainWindow);
     }
 }

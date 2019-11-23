@@ -22,15 +22,18 @@ namespace gui {
         : sfg::Window(sfg::Window::Style::NO_STYLE)
         , m_guiManager(guiManager)
         , m_assetHolder(std::move(assetHolder))
-    {
-    }
-
-    void Window::initialize()
+        , m_wasInitialized(false)
     {
     }
 
     void Window::onTopMostGained(shared_ptr<Window> previousTopMost)
     {
+        if (!m_wasInitialized)
+        {
+            initialize();
+            m_wasInitialized = true;
+        }
+
         SetState(sfg::Widget::State::NORMAL);
     }
 

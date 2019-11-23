@@ -32,6 +32,8 @@ namespace gui {
 
         ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
             string titleString, string infoString, string acceptString, string rejectString, callback_t callback);
+
+    protected:
         void initialize() override;
 
     private:

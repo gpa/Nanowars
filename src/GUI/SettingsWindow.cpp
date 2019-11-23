@@ -324,7 +324,6 @@ namespace gui {
             tx(StringTranslation_ApplyChanges),
             tx(StringTranslation_DiscardChanges),
             std::bind(&SettingsWindow::onDiscardChangesConfirmation, this, std::placeholders::_1));
-        confirmationWindow->initialize();
 
         m_guiManager.makeTopMost(confirmationWindow);
     }
@@ -351,7 +350,6 @@ namespace gui {
             tx(StringTranslation_RestoreDefaults),
             tx(StringTranslation_Cancel),
             std::bind(&SettingsWindow::onRestoreDefaultsConfirmation, this, std::placeholders::_1));
-        confirmationWindow->initialize();
 
         m_guiManager.makeTopMost(confirmationWindow);
     }

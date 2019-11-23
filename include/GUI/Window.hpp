@@ -36,15 +36,16 @@ namespace gui {
         Window(GUIManager& guiManager, AssetHolder&& assetHolder);
         virtual ~Window() = default;
 
-        virtual void initialize();
         virtual void onTopMostGained(shared_ptr<Window> previousTopMost);
         virtual void onTopMostLost(shared_ptr<Window> currentTopMost);
 
     protected:
+        virtual void initialize() = 0;
         string tx(StringTranslation translationId);
 
         GUIManager& m_guiManager;
         AssetHolder m_assetHolder;
+        bool m_wasInitialized;
     };
 }
 }

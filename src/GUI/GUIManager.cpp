@@ -111,7 +111,6 @@ namespace gui {
     void GUIManager::spawnMainMenu()
     {
         auto mainWindow = std::shared_ptr<MainWindow>(new MainWindow(*this, m_assetHolder.getNewHolder()));
-        mainWindow->initialize();
         makeTopMost(mainWindow);
     }
 
@@ -119,7 +118,6 @@ namespace gui {
     {
         auto& debugConsole = m_application.getDebugManager().getDebugConsole();
         auto consoleWindow = std::shared_ptr<ConsoleWindow>(new ConsoleWindow(*this, m_assetHolder.getNewHolder(), debugConsole));
-        consoleWindow->initialize();
         makeTopMost(consoleWindow);
     }
 

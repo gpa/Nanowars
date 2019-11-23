@@ -36,7 +36,6 @@ namespace gui {
     void FixedPositionWindow::initialize()
     {
         updatePosition();
-        Window::initialize();
     }
 
     void FixedPositionWindow::centerHorizontally()

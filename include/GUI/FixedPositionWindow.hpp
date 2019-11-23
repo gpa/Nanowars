@@ -23,10 +23,10 @@ namespace gui {
     public:
         FixedPositionWindow(GUIManager& guiManager, AssetHolder&& AssetHolder);
 
-        void initialize() override;
         void HandleUpdate(float dt) override;
 
     protected:
+
         enum FixedPosition
         {
             CenterHorizontally = 1,
@@ -39,6 +39,7 @@ namespace gui {
             FullHeight = 128
         };
 
+        void initialize() override;
         void setFixedPosition(int positionFlags);
         int getFixedPosition();
 
