@@ -36,9 +36,6 @@ namespace gui {
         SetStyle(sfg::Window::Style::NO_STYLE);
         SetRequisition(sf::Vector2f(400, 600));
 
-        auto onlineButton = sfg::Button::Create(tx(StringTranslation_OnlineGame));
-        auto lanButton = sfg::Button::Create(tx(StringTranslation_LanGame));
-        auto localButton = sfg::Button::Create(tx(StringTranslation_LocalGame));
         auto settingsButton = sfg::Button::Create(tx(StringTranslation_Settings));
         auto quitButton = sfg::Button::Create(tx(StringTranslation_Quit));
 
@@ -48,15 +45,37 @@ namespace gui {
         layoutBox->Pack(logo, false, false);
 
         auto menuBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15.f);
-        menuBox->Pack(onlineButton);
-        menuBox->Pack(lanButton);
-        menuBox->Pack(localButton);
-        menuBox->Pack(settingsButton);
-        menuBox->Pack(quitButton);
 
-        onlineButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onOnlineButtonClicked, this));
-        lanButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onLanButtonClicked, this));
-        localButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onLocalButtonClicked, this));
+        if (m_guiManager.getApplication().getGameManager().isGameRunning())
+        {
+            auto resumeButton = sfg::Button::Create(tx(StringTranslation_Resume));
+            auto quitToMainMenuButton = sfg::Button::Create(tx(StringTranslation_ReturnToMainMenu));
+
+            menuBox->Pack(resumeButton);
+            menuBox->Pack(settingsButton);
+            menuBox->Pack(quitToMainMenuButton);
+            menuBox->Pack(quitButton);
+
+            resumeButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onResumeButtonClicked, this));
+            quitToMainMenuButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onReturnToMainMenuButtonClicked, this));
+        }
+        else 
+        {
+            auto onlineButton = sfg::Button::Create(tx(StringTranslation_OnlineGame));
+            auto lanButton = sfg::Button::Create(tx(StringTranslation_LanGame));
+            auto localButton = sfg::Button::Create(tx(StringTranslation_LocalGame));
+
+            menuBox->Pack(onlineButton);
+            menuBox->Pack(lanButton);
+            menuBox->Pack(localButton);
+            menuBox->Pack(settingsButton);
+            menuBox->Pack(quitButton);
+
+            onlineButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onOnlineButtonClicked, this));
+            lanButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onLanButtonClicked, this));
+            localButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onLocalButtonClicked, this));
+        }
+
         settingsButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onSettingsButtonClicked, this));
         quitButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onQuitButtonClicked, this));
 
@@ -64,6 +83,19 @@ namespace gui {
         Add(layoutBox);
         setFixedPosition(FixedPosition::CenterVertically | FixedPosition::CenterHorizontally);
         FixedPositionWindow::initialize();
+    }
+
+    void MainWindow::HandleEvent(const Event& event)
+    {
+        if (event.type == sf::Event::KeyReleased)
+        {
+            if (event.key.code == sf::Keyboard::Key::Escape)
+            {
+                m_guiManager.removeTopMost();
+            }
+        }
+
+        FixedPositionWindow::HandleEvent(event);
     }
 
     void MainWindow::onOnlineButtonClicked()
@@ -90,6 +122,20 @@ namespace gui {
     void MainWindow::onQuitButtonClicked()
     {
         m_guiManager.getApplication().getWindow().close();
+    }
+
+    void MainWindow::onResumeButtonClicked()
+    {
+        m_guiManager.removeTopMost();
+    }
+
+    void MainWindow::onReturnToMainMenuButtonClicked()
+    {
+        m_guiManager.removeTopMost();
+        m_guiManager.getApplication().getGameManager().exitGame();
+        auto mainWindow = std::shared_ptr<gui::MainWindow>(new MainWindow(m_guiManager, m_assetHolder.getNewHolder()));
+        mainWindow->initialize();
+        m_guiManager.makeTopMost(mainWindow);
     }
 }
 }

@@ -57,6 +57,7 @@ namespace gui {
         m_consoleInput = consoleInput;
         m_consoleOutput = consoleLabel;
         m_consoleScrollWindow = consoleOutput;
+        m_consoleInput->GrabFocus();
         SetRequisition(sf::Vector2f(m_guiManager.getApplication().getWindow().getSize().x, 200.f));
         FixedPositionWindow::initialize();
     }
@@ -68,19 +69,11 @@ namespace gui {
 
         if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Tilde)
         {
-            m_isVisible = !m_isVisible;
-            Show(m_isVisible);
-
-            if (m_isVisible)
-                m_consoleInput->GrabFocus();
-
+            m_guiManager.removeTopMost();
             return;
         }
 
-        if (m_consoleInput->GetCursorPosition() == 0)
-            m_consoleInput->SetCursorPosition(1);
-
-        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Return && m_isVisible)
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Return)
             execute();
 
         Window::HandleEvent(event);

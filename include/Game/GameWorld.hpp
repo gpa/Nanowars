@@ -46,7 +46,7 @@ namespace game {
     class GameWorld
     {
     public:
-        GameWorld(AssetHolder&& assetHolder);
+        GameWorld(AssetHolder& assetHolder);
 
         void step(float dt);
 
@@ -62,12 +62,13 @@ namespace game {
         template <typename TGameObjectType>
         void deregisterFactory();
 
+        void reset();
     private:
         void beforeStep();
         void afterStep();
 
         b2World m_world;
-        AssetHolder m_assetHolder;
+        AssetHolder& m_assetHolder;
         GameWorldContactManager m_contactManager;
 
         vector<unique_ptr<GameObject>> m_objects;

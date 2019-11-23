@@ -20,6 +20,7 @@ namespace graphics {
     FollowingCamera::FollowingCamera(float startZoom)
     {
         m_view.zoom(startZoom);
+        m_followedObject = nullptr;
     }
 
     void FollowingCamera::follow(GameObject* gameObject)

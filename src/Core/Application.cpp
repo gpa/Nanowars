@@ -161,6 +161,5 @@ namespace core {
     {
         return m_gameManager;
     }
-
 }
 }

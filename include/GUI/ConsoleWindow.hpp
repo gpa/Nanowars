@@ -36,8 +36,6 @@ namespace gui {
 
         shared_ptr<sfg::ScrolledWindow> m_consoleScrollWindow;
         vector<string> m_inputs;
-
-        bool m_isVisible;
         int m_inputScrollCurrentIndex;
 
         DebugConsole& m_console;

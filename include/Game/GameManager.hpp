@@ -44,6 +44,7 @@ namespace game {
         bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
 
         void startGame();
+        void exitGame();
         bool isGameRunning();
 
     private:
@@ -54,6 +55,7 @@ namespace game {
 
         bool m_isGameInProgress;
         KeyboardRocketController m_keyboardRocketController;
+        AssetHolder m_assetHolder;
 
         friend class debug::DebugManager;
     };

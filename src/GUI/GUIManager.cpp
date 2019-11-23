@@ -46,10 +46,19 @@ namespace gui {
             return true;
         }
 
-        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Escape)
+        if (event.type == sf::Event::KeyReleased)
         {
-            spawnMainMenu();
-            return true;
+            if (event.key.code == sf::Keyboard::Key::Escape)
+            {
+                spawnMainMenu();
+                return true;
+            }
+
+            if (event.key.code == sf::Keyboard::Key::Tilde)
+            {
+                spawnDebugConsole();
+                return true;
+            }
         }
 
         return false;
@@ -62,6 +71,7 @@ namespace gui {
 
     void GUIManager::render(RenderWindow& window)
     {
+        window.resetGLStates();
         m_sfgui.Display(window);
     }
 
@@ -93,19 +103,24 @@ namespace gui {
 
         m_desktop.Remove(window);
         window->onTopMostLost(current);
-        current->onTopMostGained(window);
+
+        if (current.get() != nullptr)
+            current->onTopMostGained(window);
     }
 
     void GUIManager::spawnMainMenu()
     {
-        auto mainWindow = std::shared_ptr<Window>(new MainWindow(*this, m_assetHolder.getNewHolder()));
+        auto mainWindow = std::shared_ptr<MainWindow>(new MainWindow(*this, m_assetHolder.getNewHolder()));
         mainWindow->initialize();
         makeTopMost(mainWindow);
     }
 
     void GUIManager::spawnDebugConsole()
     {
-
+        auto& debugConsole = m_application.getDebugManager().getDebugConsole();
+        auto consoleWindow = std::shared_ptr<ConsoleWindow>(new ConsoleWindow(*this, m_assetHolder.getNewHolder(), debugConsole));
+        consoleWindow->initialize();
+        makeTopMost(consoleWindow);
     }
 
     Application& GUIManager::getApplication() const

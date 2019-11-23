@@ -22,6 +22,8 @@ namespace globalization {
         StringTranslation_LocalGame,
         StringTranslation_Settings,
         StringTranslation_Quit,
+        StringTranslation_Resume,
+        StringTranslation_ReturnToMainMenu,
 
         // Settings
         StringTranslation_NanowarsSettings,

@@ -22,19 +22,23 @@ namespace game {
     using namespace factories;
 
     GameManager::GameManager(AssetHolder&& assetHolder)
-        : m_gameWorld(assetHolder.getNewHolder())
+        : m_assetHolder(std::move(assetHolder))
+        , m_gameWorld(m_assetHolder)
         , m_followingCamera(40.0f)
         , m_keyboardRocketController(KeyboardRocketControllerConfiguration())
+        , m_activeCamera(nullptr)
+        , m_isGameInProgress(false)
     {
         m_gameWorld.registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
         m_gameWorld.registerFactory<Rocket>(std::make_shared<RocketFactory>());
         m_gameWorld.registerFactory<Bullet>(std::make_shared<BulletFactory>());
-        m_activeCamera = &m_followingCamera;
-        startGame();
     }
 
     void GameManager::startGame()
     {
+        if (m_isGameInProgress)
+            return;
+            
         Landscape* landscape = m_gameWorld.spawn<Landscape>();
         Rocket* rocket = m_gameWorld.spawn<Rocket>();
 
@@ -44,6 +48,13 @@ namespace game {
         m_keyboardRocketController.setRocket(rocket);
         m_activeCamera = &m_followingCamera;
         m_isGameInProgress = true;
+    }
+
+    void GameManager::exitGame()
+    {
+        m_followingCamera.follow(nullptr);
+        m_gameWorld.reset();
+        m_isGameInProgress = false;
     }
 
     bool GameManager::isGameRunning()

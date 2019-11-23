@@ -24,12 +24,15 @@ namespace gui {
         MainWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
         void initialize() override;
         
+        void HandleEvent(const Event& event);
     private:
         void onOnlineButtonClicked();
         void onLanButtonClicked();
         void onLocalButtonClicked();
         void onSettingsButtonClicked();
         void onQuitButtonClicked();
+        void onResumeButtonClicked();
+        void onReturnToMainMenuButtonClicked();
     };
 }
 }

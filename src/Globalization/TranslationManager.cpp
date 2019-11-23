@@ -24,6 +24,8 @@ namespace globalization {
             "Local Game",
             "Settings",
             "Quit Nanowars",
+            "Resume",
+            "Return to Main Menu",
             "NANOWARS Settings",
             "Graphics",
             "Audio",

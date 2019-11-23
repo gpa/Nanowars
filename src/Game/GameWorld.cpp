@@ -19,9 +19,9 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace game {
 
-    GameWorld::GameWorld(AssetHolder&& assetHolder)
+    GameWorld::GameWorld(AssetHolder& assetHolder)
         : m_world(b2Vec2(0.0f, 9.8f))
-        , m_assetHolder(std::move(assetHolder))
+        , m_assetHolder(assetHolder)
     {
         m_world.SetContactFilter(&m_contactManager);
         m_world.SetContactListener(&m_contactManager);
@@ -61,6 +61,13 @@ namespace game {
                 m_objects.erase(m_objects.begin() + index);
             }
         }
+        m_objectsToRemoveCache.clear();
+    }
+
+    void GameWorld::reset()
+    {
+        m_world = b2World(m_world.GetGravity());
+        m_objects.clear();
         m_objectsToRemoveCache.clear();
     }
 }
