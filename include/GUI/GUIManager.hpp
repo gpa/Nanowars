@@ -15,6 +15,10 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Core/GameLoopParticipant.hpp"
 #include "Asset/AssetHolder.hpp"
+#include "Globalization/TranslationManager.hpp"
+#include "Game/GameManager.hpp"
+#include "Config/PersistentConfigManager.hpp"
+
 #include "GUI/Window.hpp"
 
 #include <SFGUI/SFGUI.hpp>
@@ -32,6 +36,9 @@ namespace gui {
     using namespace gui;
     using namespace std;
     using namespace core;
+    using namespace config;
+    using namespace game;
+    using namespace globalization;
 
     class GUIManager : public GameLoopParticipant
     {
@@ -46,7 +53,10 @@ namespace gui {
         bool handleEvent(const Event& event) override;
         bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
 
-        Application& getApplication() const;
+        RenderWindow& getWindow();
+        PersistentConfigManager& getConfigManager();
+        GameManager& getGameManager();
+        TranslationManager& getTranslationManager();
 
         void makeTopMost(shared_ptr<Window> window);
         void removeTopMost();

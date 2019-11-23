@@ -123,9 +123,24 @@ namespace gui {
         makeTopMost(consoleWindow);
     }
 
-    Application& GUIManager::getApplication() const
+    RenderWindow& GUIManager::getWindow() 
     {
-        return m_application;
+        return m_application.getWindow(); 
+    }
+
+    PersistentConfigManager& GUIManager::getConfigManager() 
+    {
+        return m_application.getConfigManager(); 
+    }
+
+    GameManager& GUIManager::getGameManager() 
+    {
+        return m_application.getGameManager();
+    }
+
+    TranslationManager& GUIManager::getTranslationManager()
+    { 
+        return m_application.getTranslationManager();
     }
 }
 }

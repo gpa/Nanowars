@@ -14,7 +14,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "GUI/MainWindow.hpp"
 #include "GUI/GUIManager.hpp"
 #include "Core/Constants.hpp"
-#include "Core/Application.hpp"
 #include "Globalization/TranslationManager.hpp"
 #include "GUI/SettingsWindow.hpp"
 
@@ -46,7 +45,7 @@ namespace gui {
 
         auto menuBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15.f);
 
-        if (m_guiManager.getApplication().getGameManager().isGameRunning())
+        if (m_guiManager.getGameManager().isGameRunning())
         {
             auto resumeButton = sfg::Button::Create(tx(StringTranslation_Resume));
             auto quitToMainMenuButton = sfg::Button::Create(tx(StringTranslation_ReturnToMainMenu));
@@ -100,7 +99,7 @@ namespace gui {
 
     void MainWindow::onOnlineButtonClicked()
     {
-        m_guiManager.getApplication().getGameManager().startGame();
+        m_guiManager.getGameManager().startGame();
         m_guiManager.removeTopMost();
     }
 
@@ -121,7 +120,7 @@ namespace gui {
 
     void MainWindow::onQuitButtonClicked()
     {
-        m_guiManager.getApplication().getWindow().close();
+        m_guiManager.getWindow().close();
     }
 
     void MainWindow::onResumeButtonClicked()
@@ -132,7 +131,7 @@ namespace gui {
     void MainWindow::onReturnToMainMenuButtonClicked()
     {
         m_guiManager.removeTopMost();
-        m_guiManager.getApplication().getGameManager().exitGame();
+        m_guiManager.getGameManager().exitGame();
         auto mainWindow = std::shared_ptr<gui::MainWindow>(new MainWindow(m_guiManager, m_assetHolder.getNewHolder()));
         mainWindow->initialize();
         m_guiManager.makeTopMost(mainWindow);

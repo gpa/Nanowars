@@ -12,7 +12,6 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "GUI/ConsoleWindow.hpp"
-#include "Core/Application.hpp"
 
 namespace nanowars {
 namespace gui {
@@ -58,7 +57,7 @@ namespace gui {
         m_consoleOutput = consoleLabel;
         m_consoleScrollWindow = consoleOutput;
         m_consoleInput->GrabFocus();
-        SetRequisition(sf::Vector2f(m_guiManager.getApplication().getWindow().getSize().x, 200.f));
+        SetRequisition(sf::Vector2f(m_guiManager.getWindow().getSize().x, 200.f));
         FixedPositionWindow::initialize();
     }
 

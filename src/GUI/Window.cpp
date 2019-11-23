@@ -13,7 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "GUI/Window.hpp"
 #include "GUI/GUIManager.hpp"
-#include "Core/Application.hpp"
+#include "Globalization/TranslationManager.hpp"
 
 namespace nanowars {
 namespace gui {
@@ -41,7 +41,7 @@ namespace gui {
 
     string Window::tx(StringTranslation translationId)
     {
-        auto& tm = m_guiManager.getApplication().getTranslationManager();
+        auto& tm = m_guiManager.getTranslationManager();
         return tm.getTranslation(translationId);
     }
 }

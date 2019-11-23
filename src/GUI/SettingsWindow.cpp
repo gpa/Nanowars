@@ -212,7 +212,7 @@ namespace gui {
         {
             auto button = getButtonById(m_keyBindingButtonId);
             if (button.get() != nullptr)
-                button->SetLabel(m_guiManager.getApplication().getConfigManager().getString(button->GetId()));
+                button->SetLabel(m_guiManager.getConfigManager().getString(button->GetId()));
 
             m_keyBindingButtonId.clear();
             return;
@@ -243,7 +243,7 @@ namespace gui {
 
     void SettingsWindow::loadConfigState()
     {
-        auto& conf = m_guiManager.getApplication().getConfigManager();
+        auto& conf = m_guiManager.getConfigManager();
         for (auto& cb : m_checkboxes)
             cb->SetActive(conf.getBool(cb->GetId()));
 
@@ -281,7 +281,7 @@ namespace gui {
 
     void SettingsWindow::saveConfigState()
     {
-        auto& conf = m_guiManager.getApplication().getConfigManager();
+        auto& conf = m_guiManager.getConfigManager();
         for (auto& cb : m_checkboxes)
             conf.setEntry(ConfEntry(cb->GetId(), configEntry_t(cb->IsActive())));
 
@@ -337,7 +337,7 @@ namespace gui {
         if (m_graphicsModified)
         {
             ApplicationInitializer initializer;
-            initializer.initWindow(m_guiManager.getApplication().getWindow(), m_guiManager.getApplication().getConfigManager());
+            initializer.initWindow(m_guiManager.getWindow(), m_guiManager.getConfigManager());
         }
 
         m_graphicsModified = m_audioModified = m_controlsModified = m_networkModified = false;

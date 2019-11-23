@@ -12,7 +12,6 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "GUI/ConsoleWindow.hpp"
-#include "Core/Application.hpp"
 
 namespace nanowars {
 namespace gui {
@@ -42,14 +41,14 @@ namespace gui {
 
     void FixedPositionWindow::centerHorizontally()
     {
-        auto s = m_guiManager.getApplication().getWindow().getSize();
+        auto s = m_guiManager.getWindow().getSize();
         auto ls = GetAllocation();
         SetPosition(sf::Vector2f((s.x / 2) - (ls.width / 2), ls.top));
     }
 
     void FixedPositionWindow::centerVertically()
     {
-        auto s = m_guiManager.getApplication().getWindow().getSize();
+        auto s = m_guiManager.getWindow().getSize();
         auto ls = GetAllocation();
         SetPosition(sf::Vector2f(ls.left, (s.y / 2) - (ls.height / 2)));
     }
