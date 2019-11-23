@@ -34,7 +34,7 @@ namespace gui {
     using ConfEntry = nanowars::config::ConfigEntry;
 
     SettingsWindow::SettingsWindow(GUIManager& guiManager, AssetHolder&& assetHolder)
-        : ControlHeavyWindow(guiManager, std::move(assetHolder))
+        : FixedPositionWindow(guiManager, std::move(assetHolder))
     {
     }
 
@@ -48,7 +48,8 @@ namespace gui {
 
         initControls();
         loadConfigState();
-        Window::initialize();
+        setFixedPosition(FixedPosition::CenterVertically | FixedPosition::CenterHorizontally);
+        FixedPositionWindow::initialize();
     }
 
     void SettingsWindow::initControls()
@@ -202,7 +203,7 @@ namespace gui {
         if (event.type == sf::Event::KeyReleased && isControlKeyInputMode())
             handleEventInInputMode(event);
 
-        Window::HandleEvent(event);
+        FixedPositionWindow::HandleEvent(event);
     }
 
     void SettingsWindow::handleEventInInputMode(const Event& event)
@@ -255,7 +256,7 @@ namespace gui {
         for (auto& entry : m_entries)
             entry->SetText(conf.getString(entry->GetId()));
 
-        for (auto& combo : m_comboboxs)
+        for (auto& combo : m_comboboxes)
         {
             auto id = combo->GetId();
 
@@ -293,7 +294,7 @@ namespace gui {
         for (auto& entry : m_entries)
             conf.setEntry(ConfEntry(entry->GetId(), configEntry_t(entry->GetText())));
 
-        for (auto& combo : m_comboboxs)
+        for (auto& combo : m_comboboxes)
         {
             auto id = combo->GetId();
 

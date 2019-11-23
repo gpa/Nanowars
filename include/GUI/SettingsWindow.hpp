@@ -24,7 +24,7 @@ namespace gui {
     using namespace globalization;
     using std::shared_ptr;
 
-    class SettingsWindow : public ControlHeavyWindow
+    class SettingsWindow : public FixedPositionWindow, protected ControlHeavyWindow
     {
     public:
         SettingsWindow(GUIManager& guiManager, AssetHolder&& assetHolder);

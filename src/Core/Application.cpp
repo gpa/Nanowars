@@ -127,6 +127,11 @@ namespace core {
         return m_debugManager;
     }
 
+    const GameManager& Application::getGameManager() const
+    {
+        return m_gameManager;
+    }
+
     RenderWindow& Application::getWindow()
     {
         return m_window;
@@ -151,5 +156,11 @@ namespace core {
     {
         return m_debugManager;
     }
+    
+    GameManager& Application::getGameManager()
+    {
+        return m_gameManager;
+    }
+
 }
 }

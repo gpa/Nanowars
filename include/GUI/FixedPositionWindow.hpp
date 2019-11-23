@@ -13,36 +13,41 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "GUI/FixedPositionWindow.hpp"
-#include <string>
-
-#include <functional>
+#include "GUI/Window.hpp"
 
 namespace nanowars {
 namespace gui {
 
-    using std::string;
-    using std::string;
-
-    class ConfirmationWindow : public FixedPositionWindow
+    class FixedPositionWindow : public Window
     {
     public:
+        FixedPositionWindow(GUIManager& guiManager, AssetHolder&& AssetHolder);
 
-        typedef function<void(bool)> callback_t;
-
-        ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
-            string titleString, string infoString, string acceptString, string rejectString, callback_t callback);
         void initialize() override;
+        void HandleUpdate(float dt) override;
+
+    protected:
+        enum FixedPosition
+        {
+            CenterHorizontally = 1,
+            CenterVertically = 2,
+            StickToTop = 4,
+            StickToLeft = 8,
+            StickToBottom = 16,
+            StickToRight = 32,
+            FullWidth = 62,
+            FullHeight = 128
+        };
+
+        void setFixedPosition(int positionFlags);
+        int getFixedPosition();
 
     private:
-        string m_titleString;
-        string m_infoString;
-        string m_acceptString;
-        string m_rejectString;
-        callback_t m_callback;
+        void updatePosition();
+        void centerHorizontally();
+        void centerVertically();
 
-        void onAccepted();
-        void onRejected();
+        int m_positionFlags;
     };
 }
 }

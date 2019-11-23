@@ -16,7 +16,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widget.hpp>
 
-#include "GUI/Window.hpp"
+#include "GUI/FixedPositionWindow.hpp"
 #include "GUI/GUIManager.hpp"
 
 #include <memory>
@@ -31,11 +31,8 @@ namespace gui {
     using std::function;
     using namespace sfg;
 
-    class ControlHeavyWindow : public Window
+    class ControlHeavyWindow
     {
-    public:
-        ControlHeavyWindow(GUIManager& guiManager, AssetHolder&& assetHolder);
-        
     protected:
         shared_ptr<CheckButton> getCheckButton(string id, function<void()> onClick);
         shared_ptr<ComboBox> getComboBox(string id, function<void()> onClick);
@@ -56,7 +53,7 @@ namespace gui {
 
         vector<shared_ptr<CheckButton>> m_checkboxes;
         vector<shared_ptr<Button>> m_buttons;
-        vector<shared_ptr<ComboBox>> m_comboboxs;
+        vector<shared_ptr<ComboBox>> m_comboboxes;
         vector<shared_ptr<Entry>> m_entries;
         vector<shared_ptr<Scale>> m_scales;
     };

@@ -55,12 +55,14 @@ namespace core {
         const TranslationManager& getTranslationManager() const;
         const PersistentConfigManager& getConfigManager() const;
         const DebugManager& getDebugManager() const;
+        const GameManager& getGameManager() const;
 
         RenderWindow& getWindow();
         AssetManager& getAssetManager();
         TranslationManager& getTranslationManager();
         PersistentConfigManager& getConfigManager();
         DebugManager& getDebugManager();
+        GameManager& getGameManager();
 
     private:
         void initialize();

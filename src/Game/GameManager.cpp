@@ -26,11 +26,15 @@ namespace game {
         , m_followingCamera(40.0f)
         , m_keyboardRocketController(KeyboardRocketControllerConfiguration())
     {
-
         m_gameWorld.registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
         m_gameWorld.registerFactory<Rocket>(std::make_shared<RocketFactory>());
         m_gameWorld.registerFactory<Bullet>(std::make_shared<BulletFactory>());
+        m_activeCamera = &m_followingCamera;
+        startGame();
+    }
 
+    void GameManager::startGame()
+    {
         Landscape* landscape = m_gameWorld.spawn<Landscape>();
         Rocket* rocket = m_gameWorld.spawn<Rocket>();
 
@@ -39,6 +43,12 @@ namespace game {
         m_followingCamera.follow(rocket);
         m_keyboardRocketController.setRocket(rocket);
         m_activeCamera = &m_followingCamera;
+        m_isGameInProgress = true;
+    }
+
+    bool GameManager::isGameRunning()
+    {
+        return m_isGameInProgress;
     }
 
     void GameManager::update(float dt)
@@ -58,7 +68,8 @@ namespace game {
 
     void GameManager::render(RenderWindow& window)
     {
-        window.setView(m_activeCamera->getView());
+        if (m_activeCamera != nullptr)
+            window.setView(m_activeCamera->getView());
 
         for (const auto& gameObject : m_gameWorld.getGameObjects())
         {

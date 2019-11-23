@@ -16,11 +16,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gui {
 
-    ControlHeavyWindow::ControlHeavyWindow(GUIManager& guiManager, AssetHolder&& assetHolder)
-        : Window(guiManager, std::move(assetHolder))
-    {
-    }
-
     shared_ptr<CheckButton> ControlHeavyWindow::getCheckButton(string id, function<void()> onClick)
     {
         auto cb = CheckButton::Create("");
@@ -35,7 +30,7 @@ namespace gui {
         auto cb = ComboBox::Create();
         cb->SetId(id);
         cb->GetSignal(Widget::OnLeftClick).Connect(onClick);
-        m_comboboxs.push_back(cb);
+        m_comboboxes.push_back(cb);
         return cb;
     }
 

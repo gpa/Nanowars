@@ -30,9 +30,7 @@ namespace gui {
 
     void GUIManager::initializeWindows()
     {
-        auto mainWindow = std::shared_ptr<Window>(new MainWindow(*this, m_assetHolder.getNewHolder()));
-        mainWindow->initialize();
-        makeTopMost(mainWindow);
+        spawnMainMenu();
     }
 
     void GUIManager::update(float dt)
@@ -42,7 +40,18 @@ namespace gui {
 
     bool GUIManager::handleEvent(const Event& event)
     {
-        m_desktop.HandleEvent(event);
+        if (m_windows.size() > 0)
+        {
+            m_desktop.HandleEvent(event);
+            return true;
+        }
+
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Escape)
+        {
+            spawnMainMenu();
+            return true;
+        }
+
         return false;
     }
 
@@ -85,6 +94,18 @@ namespace gui {
         m_desktop.Remove(window);
         window->onTopMostLost(current);
         current->onTopMostGained(window);
+    }
+
+    void GUIManager::spawnMainMenu()
+    {
+        auto mainWindow = std::shared_ptr<Window>(new MainWindow(*this, m_assetHolder.getNewHolder()));
+        mainWindow->initialize();
+        makeTopMost(mainWindow);
+    }
+
+    void GUIManager::spawnDebugConsole()
+    {
+
     }
 
     Application& GUIManager::getApplication() const

@@ -13,7 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "GUI/Window.hpp"
+#include "GUI/FixedPositionWindow.hpp"
 #include "GUI/GUIManager.hpp"
 #include "Debug/DebugConsole.hpp"
 
@@ -22,7 +22,7 @@ namespace gui {
 
     using namespace debug;
 
-    class ConsoleWindow : public Window
+    class ConsoleWindow : public FixedPositionWindow
     {
 
     public:

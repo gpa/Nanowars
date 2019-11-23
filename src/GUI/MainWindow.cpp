@@ -26,7 +26,7 @@ namespace gui {
     using namespace globalization;
 
     MainWindow::MainWindow(GUIManager& guiManager, AssetHolder&& assetHolder)
-        : Window(guiManager, std::move(assetHolder))
+        : FixedPositionWindow(guiManager, std::move(assetHolder))
     {
     }
 
@@ -62,11 +62,14 @@ namespace gui {
 
         layoutBox->Pack(menuBox);
         Add(layoutBox);
-        Window::initialize();
+        setFixedPosition(FixedPosition::CenterVertically | FixedPosition::CenterHorizontally);
+        FixedPositionWindow::initialize();
     }
 
     void MainWindow::onOnlineButtonClicked()
     {
+        m_guiManager.getApplication().getGameManager().startGame();
+        m_guiManager.removeTopMost();
     }
 
     void MainWindow::onLanButtonClicked()
@@ -86,6 +89,7 @@ namespace gui {
 
     void MainWindow::onQuitButtonClicked()
     {
+        m_guiManager.getApplication().getWindow().close();
     }
 }
 }

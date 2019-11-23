@@ -20,7 +20,7 @@ namespace gui {
     using namespace sfg;
 
     ConsoleWindow::ConsoleWindow(GUIManager& guiManager, AssetHolder&& assetHolder, DebugConsole& debugConsole)
-        : Window(guiManager, std::move(assetHolder))
+        : FixedPositionWindow(guiManager, std::move(assetHolder))
         , m_console(debugConsole)
     {
     }
@@ -58,7 +58,7 @@ namespace gui {
         m_consoleOutput = consoleLabel;
         m_consoleScrollWindow = consoleOutput;
         SetRequisition(sf::Vector2f(m_guiManager.getApplication().getWindow().getSize().x, 200.f));
-        Window::initialize();
+        FixedPositionWindow::initialize();
     }
 
     void ConsoleWindow::HandleEvent(const sf::Event& event)

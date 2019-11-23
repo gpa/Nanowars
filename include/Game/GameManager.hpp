@@ -43,12 +43,16 @@ namespace game {
         bool handleEvent(const Event& event) override;
         bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
 
+        void startGame();
+        bool isGameRunning();
+
     private:
         GameWorld m_gameWorld;
 
         Camera* m_activeCamera;
         FollowingCamera m_followingCamera;
 
+        bool m_isGameInProgress;
         KeyboardRocketController m_keyboardRocketController;
 
         friend class debug::DebugManager;

@@ -41,15 +41,10 @@ namespace gui {
         virtual void onTopMostLost(shared_ptr<Window> currentTopMost);
 
     protected:
+        string tx(StringTranslation translationId);
+
         GUIManager& m_guiManager;
         AssetHolder m_assetHolder;
-
-        void center();
-        void centerHorizontally();
-        void centerVertically();
-        void setMargin(float percentX, float percentY);
-
-        string tx(StringTranslation translationId);
     };
 }
 }

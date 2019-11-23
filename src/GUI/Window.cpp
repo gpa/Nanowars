@@ -39,41 +39,6 @@ namespace gui {
         SetState(sfg::Widget::State::INSENSITIVE);
     }
 
-    void Window::centerHorizontally()
-    {
-        auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ls = GetAllocation();
-        SetPosition(sf::Vector2f((s.x / 2) - (ls.width / 2), ls.height));
-    }
-
-    void Window::centerVertically()
-    {
-        auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ls = GetAllocation();
-        SetPosition(sf::Vector2f(ls.width, (s.y / 2) - (ls.height / 2)));
-    }
-
-    void Window::center()
-    {
-        auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ls = GetAllocation();
-
-        float lx = (s.x / 2) - (ls.width / 2);
-        float ly = (s.y / 2) - (ls.height / 2);
-
-        SetPosition(sf::Vector2f(lx, ly));
-    }
-
-    void Window::setMargin(float xOffset, float yOffset)
-    {
-        auto s = m_guiManager.getApplication().getWindow().getSize();
-        auto ms = GetAllocation();
-        float mx = s.x * xOffset;
-        float my = s.y * yOffset;
-
-        SetPosition(sf::Vector2f(mx, my));
-    }
-
     string Window::tx(StringTranslation translationId)
     {
         auto& tm = m_guiManager.getApplication().getTranslationManager();

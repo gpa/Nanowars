@@ -19,7 +19,7 @@ namespace gui {
 
     ConfirmationWindow::ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
         string titleString, string infoString, string acceptString, string rejectString, callback_t callback)
-        : Window(guiManager, std::move(assetHolder))
+        : FixedPositionWindow(guiManager, std::move(assetHolder))
         , m_titleString(titleString)
         , m_infoString(infoString)
         , m_acceptString(acceptString)
@@ -47,7 +47,8 @@ namespace gui {
         fixed->Put(rejectButton, sf::Vector2f(230 + 0, 30.0f));
 
         Add(fixed);
-        Window::initialize();
+        setFixedPosition(FixedPosition::CenterVertically | FixedPosition::CenterHorizontally);
+        FixedPositionWindow::initialize();
     }
 
     void ConfirmationWindow::onAccepted()
