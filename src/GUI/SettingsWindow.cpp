@@ -21,8 +21,9 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Core/Application.hpp"
 #include "Core/ApplicationInitializer.hpp"
 
+#include "Util/InputUtil.hpp"
+
 #include <functional>
-#include <Thor/Input.hpp>
 #include <SFML/Graphics.hpp>
 
 namespace nanowars {
@@ -221,7 +222,7 @@ namespace gui {
         if (event.key.code == sf::Keyboard::Key::Unknown)
             return;
 
-        string keyAsString = thor::toString(event.key.code);
+        string keyAsString = util::toString(event.key.code);
         auto button = getButtonById(m_keyBindingButtonId);
 
         if (button.get() != nullptr)
