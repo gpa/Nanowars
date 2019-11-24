@@ -15,7 +15,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Config/ConfigManager.hpp"
 
-#include <boost/filesystem.hpp>
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
 #include <string>

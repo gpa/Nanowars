@@ -14,7 +14,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Config/PersistentConfigManager.hpp"
 
 #include <boost/assert.hpp>
-#include <boost/filesystem/fstream.hpp>
 #include <fstream>
 #include <rapidjson/document.h>
 #include <rapidjson/prettywriter.h>
@@ -25,7 +24,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace config {
     using namespace rapidjson;
-    using namespace boost::filesystem;
 
     PersistentConfigManager::PersistentConfigManager(std::string configFile)
         : m_configFile(configFile)
@@ -34,13 +32,13 @@ namespace config {
 
     void PersistentConfigManager::load()
     {
-        if (!exists(m_configFile))
+        std::ifstream file(m_configFile);
+        if (!file.good())
         {
             save();
             return;
         }
 
-        std::ifstream file(m_configFile);
         if (!file.is_open())
             throw new std::invalid_argument("Failed to open the file");
 
