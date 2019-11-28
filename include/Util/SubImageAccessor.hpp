@@ -32,7 +32,7 @@ namespace util {
 
         inline Vector2u getSize() const override
         {
-            return { (uint)m_region.width, (uint)m_region.height };
+            return { (unsigned)m_region.width, (unsigned)m_region.height };
         }
 
         inline Color getPixel(int x, int y) const override

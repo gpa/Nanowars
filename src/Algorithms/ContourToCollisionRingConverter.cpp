@@ -42,7 +42,7 @@ namespace algorithms {
     CollisionRing ContourToCollisionRingConverter::convert(ContourTracer::contour_t contour)
     {
         std::vector<Vector2f> vertices;
-        for (uint i = 0, cornerId = 0; i < contour.size() - 1; i++, cornerId = (cornerId + 1) % 4)
+        for (unsigned i = 0, cornerId = 0; i < contour.size() - 1; i++, cornerId = (cornerId + 1) % 4)
         {
             Pixel currentPixel(contour[i].x, contour[i].y);
             vertices.push_back(currentPixel.corners[cornerId]);
