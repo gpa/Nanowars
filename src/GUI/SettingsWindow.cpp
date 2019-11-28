@@ -24,6 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Util/InputUtil.hpp"
 
 #include <functional>
+#include <algorithm>
 #include <SFML/Graphics.hpp>
 
 namespace nanowars {
@@ -185,11 +186,8 @@ namespace gui {
     {
         for (const auto& res : VideoMode::getFullscreenModes())
         {
-            if (res.bitsPerPixel == 8)
-            {
-                auto resolution = std::to_string(res.width) + "x" + std::to_string(res.height);
-                combobox->AppendItem(resolution);
-            }
+            auto resolution = std::to_string(res.width) + "x" + std::to_string(res.height) + "@" + std::to_string(res.bitsPerPixel);
+            combobox->AppendItem(resolution);
         }
     }
 
@@ -313,7 +311,7 @@ namespace gui {
 
     void SettingsWindow::onCloseButtonClicked()
     {
-        if(!(m_graphicsModified || m_audioModified || m_controlsModified || m_networkModified))
+        if (!(m_graphicsModified || m_audioModified || m_controlsModified || m_networkModified))
         {
             m_guiManager.removeTopMost();
             return;
@@ -362,7 +360,6 @@ namespace gui {
 
     void SettingsWindow::onRestoreDefaultsConfirmation(bool wasConfirmed)
     {
-
     }
 
     void SettingsWindow::onDiscardChangesConfirmation(bool wasConfirmed)

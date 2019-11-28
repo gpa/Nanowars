@@ -36,7 +36,7 @@ namespace math {
         CollisionRing(Vector2f* vertices, Vector2f* verticesEnd);
 
         inline int getCount() const { return m_vertices.size(); }
-        inline const Vector2f* getVertices() const { return &m_vertices[0]; }
+        inline const Vector2f* getVertices() const { return m_vertices.data(); }
 
         AABB getAABB() const;
         double getArea() const;

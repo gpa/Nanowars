@@ -19,20 +19,6 @@ namespace util {
 
     using namespace core;
 
-    CollisionRing Box2DConverter::chainShapeToCollisionRing(const b2ChainShape& chainShape)
-    {
-        CollisionRing collisionRing(chainShape.m_vertices, chainShape.m_vertices + chainShape.m_count);
-        collisionRing.correct();
-        return collisionRing;
-    }
-
-    b2ChainShape Box2DConverter::collisionRingToChainShape(const CollisionRing& collisionRing)
-    {
-        b2ChainShape chain;
-        chain.CreateChain(collisionRing.getVertices(), (int)collisionRing.getCount());
-        return chain;
-    }
-
     CollisionRing Box2DConverter::circleToCollisionRing(b2Vec2 position, float radius, float vertexCount)
     {
         vector<b2Vec2> vertices;

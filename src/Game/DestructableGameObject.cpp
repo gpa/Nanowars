@@ -36,7 +36,8 @@ namespace game {
                 throw std::invalid_argument("non-chain shapes are not supported.");
 
             b2ChainShape& chainShape = *static_cast<b2ChainShape*>(fixture->GetShape());
-            auto collisionRing = Box2DConverter::chainShapeToCollisionRing(chainShape);
+            CollisionRing collisionRing(chainShape.m_vertices, chainShape.m_vertices + chainShape.m_count);
+            collisionRing.correct();
             m_fixtureCache.emplace_back(collisionRing, fixture);
         }
         m_textureSource = textureSource;
@@ -84,7 +85,8 @@ namespace game {
                     if (simplified.getArea() < 0.5f)
                         continue;
 
-                    b2ChainShape chainShape = Box2DConverter::collisionRingToChainShape(simplified);
+                    b2ChainShape chainShape;
+                    chainShape.CreateChain(simplified.getVertices(), (int)simplified.getCount());
                     auto fixture = m_body.CreateFixture(&chainShape, 0.0f);
 
                     if (j != 0)

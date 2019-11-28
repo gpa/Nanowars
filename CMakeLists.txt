@@ -12,8 +12,8 @@ set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 1)
 
 find_package(SFGUI REQUIRED)
-find_package(SFML 2.4.2 REQUIRED COMPONENTS system audio graphics window)
-find_package(Boost COMPONENTS system REQUIRED)
+find_package(SFML REQUIRED COMPONENTS system audio graphics window)
+find_package(Boost REQUIRED)
 find_package(Rapidjson REQUIRED)
 find_package(Box2D REQUIRED)
 

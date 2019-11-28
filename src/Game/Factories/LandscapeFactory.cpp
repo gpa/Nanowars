@@ -57,7 +57,9 @@ namespace game {
                     collisionRing[i] = v / constants::meterToPixelRatio;
                 }
 
-                b2ChainShape chain = Box2DConverter::collisionRingToChainShape(collisionRing);
+                b2ChainShape chain;
+                auto* vertices = collisionRing.getVertices();
+                chain.CreateChain(vertices, (int)collisionRing.getCount());
                 landscape->getBody().CreateFixture(&chain, 0.0f);
             }
 
