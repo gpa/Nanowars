@@ -3,10 +3,6 @@
 NANOWARS is a fun 2D shooter with exciting gameplay and attractive visual effects.
 The game is very much in progress and is currently not playable.
 
-# Building
-If you're on a popular linux distribution refer to the `setup-dependencies.sh` script for installation.
-On other platforms you will have to install all dependencies manually and configure with cmake as usual.
-
 ## License
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
 
