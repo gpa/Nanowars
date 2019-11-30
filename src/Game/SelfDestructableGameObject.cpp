@@ -11,32 +11,22 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#pragma once
-
-#include "Game/GameObject.hpp"
 #include "Game/SelfDestructableGameObject.hpp"
-#include "Game/DestructableGameObjectDestroyer.hpp"
+#include "Game/GameWorld.hpp"
 
 namespace nanowars {
 namespace game {
 
-    class Rocket;
-    class GameWorld;
-
-    class Bullet : public SelfDestructableGameObject, public DestructableGameObjectDestroyer
+    SelfDestructableGameObject::SelfDestructableGameObject(GameWorld& parent, b2Body& body, GameObjectType type, float lifetimeInSeconds)
+        : GameObject(parent, body, type)
+        , m_lifetimeInSeconds(lifetimeInSeconds)
     {
-    public:
-        Bullet(GameWorld& parent, b2Body& body, Rocket* firedBy, b2Vec2 position, b2Vec2 velocity);
+    }
 
-        void onCollision(GameObject& other) override;
-        CollisionRing getCollisionRing() const override;
-
-        Rocket* getFiredBy();
-
-    private:
-        void draw(RenderTarget& target, RenderStates states) const override;
-
-        Rocket* m_firedBy;
-    };
+    void SelfDestructableGameObject::update(float dt)
+    {
+        if (m_lifetimeClock.getElapsedTime().asSeconds() > m_lifetimeInSeconds)
+            m_parent.kill(*this);
+	}
 }
 }

@@ -14,29 +14,20 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Game/GameObject.hpp"
-#include "Game/SelfDestructableGameObject.hpp"
-#include "Game/DestructableGameObjectDestroyer.hpp"
+#include <SFML/System/Clock.hpp>
 
 namespace nanowars {
 namespace game {
 
-    class Rocket;
-    class GameWorld;
-
-    class Bullet : public SelfDestructableGameObject, public DestructableGameObjectDestroyer
+    class SelfDestructableGameObject : public GameObject
     {
     public:
-        Bullet(GameWorld& parent, b2Body& body, Rocket* firedBy, b2Vec2 position, b2Vec2 velocity);
-
-        void onCollision(GameObject& other) override;
-        CollisionRing getCollisionRing() const override;
-
-        Rocket* getFiredBy();
+        SelfDestructableGameObject(GameWorld& parent, b2Body& body, GameObjectType type, float lifetimeInSeconds);
+		void update(float dt) override;
 
     private:
-        void draw(RenderTarget& target, RenderStates states) const override;
-
-        Rocket* m_firedBy;
+		sf::Clock m_lifetimeClock;
+        float m_lifetimeInSeconds;
     };
 }
 }

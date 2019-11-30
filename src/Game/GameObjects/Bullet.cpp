@@ -24,7 +24,7 @@ namespace nanowars {
 namespace game {
 
     Bullet::Bullet(GameWorld& parent, b2Body& body, Rocket* firedBy, b2Vec2 position, b2Vec2 velocity)
-        : GameObject(parent, body, e_bullet)
+        : SelfDestructableGameObject(parent, body, e_bullet, 2.0f)
         , m_firedBy(firedBy)
     {
         body.SetTransform(position, 0.0f);
