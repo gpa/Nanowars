@@ -12,6 +12,9 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
+
+#include <SFML/Graphics/Color.hpp>
+
 namespace nanowars {
 namespace core {
     namespace constants {
@@ -20,6 +23,7 @@ namespace core {
         constexpr auto userConfigFilename = "userconfig.json";
         constexpr float defaultGravityX = 0.0f;
         constexpr float defaultGravityY = 9.8f;
+        const sf::Color BackgroundColor = sf::Color(128, 128, 128);
     }
 }
 }

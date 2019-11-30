@@ -17,7 +17,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gui {
 
-    ConfirmationWindow::ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
+    ConfirmationWindow::ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder,
         string titleString, string infoString, string acceptString, string rejectString, callback_t callback)
         : FixedPositionWindow(guiManager, std::move(assetHolder))
         , m_titleString(titleString)
@@ -40,7 +40,7 @@ namespace gui {
 
         acceptButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&ConfirmationWindow::onAccepted, this));
         rejectButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&ConfirmationWindow::onRejected, this));
-       
+
         auto layoutBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15.f);
         layoutBox->Pack(label, true, true);
 
@@ -64,6 +64,14 @@ namespace gui {
     {
         m_guiManager.removeTopMost();
         m_callback(false);
+    }
+
+    void ConfirmationWindow::HandleEvent(const sf::Event& event)
+    {
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Key::Escape)
+            onRejected();
+        else
+            Window::HandleEvent(event);
     }
 }
 }

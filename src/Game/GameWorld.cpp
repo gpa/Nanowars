@@ -66,9 +66,11 @@ namespace game {
 
     void GameWorld::reset()
     {
-        m_world = b2World(m_world.GetGravity());
-        m_objects.clear();
-        m_objectsToRemoveCache.clear();
+		for (auto& body : m_objects)
+            m_world.DestroyBody(&body->getBody());
+        
+		m_objects.clear();
+		m_objectsToRemoveCache.clear();
     }
 }
 }

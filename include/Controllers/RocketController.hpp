@@ -23,6 +23,7 @@ namespace controllers {
     class RocketController
     {
     public:
+        RocketController();
         void setRocket(Rocket* r);
         inline Rocket* getRocket() { return m_controlledRocket; }
 

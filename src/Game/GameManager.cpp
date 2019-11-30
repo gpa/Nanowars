@@ -53,6 +53,7 @@ namespace game {
     void GameManager::exitGame()
     {
         m_followingCamera.follow(nullptr);
+        m_keyboardRocketController.setRocket(nullptr);
         m_gameWorld.reset();
         m_isGameInProgress = false;
     }

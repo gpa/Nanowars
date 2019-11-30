@@ -16,6 +16,11 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace controllers {
 
+    RocketController::RocketController()
+    {
+        m_controlledRocket = nullptr;
+	}
+
     void RocketController::setRocket(Rocket* rocket)
     {
         m_controlledRocket = rocket;

@@ -33,12 +33,12 @@ namespace gui {
     {
         RequestResize();
         SetStyle(sfg::Window::Style::NO_STYLE);
-        SetRequisition(sf::Vector2f(400, 600));
+        SetRequisition(sf::Vector2f(400, 700));
 
         auto settingsButton = sfg::Button::Create(tx(StringTranslation_Settings));
         auto quitButton = sfg::Button::Create(tx(StringTranslation_Quit));
 
-        auto layoutBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15.f);
+        auto layoutBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 50.f);
         auto logo = sfg::Label::Create(core::constants::windowTitle);
         logo->SetId("logo");
         layoutBox->Pack(logo, false, false);
@@ -58,7 +58,7 @@ namespace gui {
             resumeButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onResumeButtonClicked, this));
             quitToMainMenuButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onReturnToMainMenuButtonClicked, this));
         }
-        else 
+        else
         {
             auto onlineButton = sfg::Button::Create(tx(StringTranslation_OnlineGame));
             auto lanButton = sfg::Button::Create(tx(StringTranslation_LanGame));
@@ -90,7 +90,8 @@ namespace gui {
         {
             if (event.key.code == sf::Keyboard::Key::Escape)
             {
-                m_guiManager.removeTopMost();
+                if (m_guiManager.getGameManager().isGameRunning())
+                    m_guiManager.removeTopMost();
             }
         }
 

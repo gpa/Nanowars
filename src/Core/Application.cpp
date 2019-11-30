@@ -62,8 +62,8 @@ namespace core {
 
     void Application::step(float dt)
     {
-        for (auto* participant : m_gameLoopParticipants)
-            participant->update(dt);
+        for (auto iter = m_gameLoopParticipants.rbegin(); iter != m_gameLoopParticipants.rend(); ++iter)
+            (*iter)->update(dt);
     }
 
     void Application::handleEvents()
@@ -75,21 +75,24 @@ namespace core {
                 shutdown();
             else
             {
-                for (auto* participant : m_gameLoopParticipants)
+                for (auto iter = m_gameLoopParticipants.rbegin(); iter != m_gameLoopParticipants.rend(); ++iter)
                 {
-                    if (participant->handleEvent(event))
+                    if ((*iter)->handleEvent(event))
                         break;
                 }
             }
         }
 
-        for (auto* participant : m_gameLoopParticipants)
-            participant->handleContinuousEvent(m_mouse, m_keyboard);
+        for (auto iter = m_gameLoopParticipants.rbegin(); iter != m_gameLoopParticipants.rend(); ++iter)
+        {
+            if ((*iter)->handleContinuousEvent(m_mouse, m_keyboard))
+                break;
+        }
     }
 
     void Application::render()
     {
-        m_window.clear(sf::Color(128, 128, 128));
+        m_window.clear(constants::BackgroundColor);
 
         for (auto* participant : m_gameLoopParticipants)
             participant->render(m_window);
@@ -156,7 +159,7 @@ namespace core {
     {
         return m_debugManager;
     }
-    
+
     GameManager& Application::getGameManager()
     {
         return m_gameManager;

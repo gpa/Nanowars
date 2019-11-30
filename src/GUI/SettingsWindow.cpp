@@ -199,10 +199,15 @@ namespace gui {
 
     void SettingsWindow::HandleEvent(const sf::Event& event)
     {
-        if (event.type == sf::Event::KeyReleased && isControlKeyInputMode())
-            handleEventInInputMode(event);
-
-        FixedPositionWindow::HandleEvent(event);
+        if (event.type == sf::Event::KeyReleased)
+        {
+            if (isControlKeyInputMode())
+                handleEventInInputMode(event);
+            else if (event.key.code == sf::Keyboard::Key::Escape)
+                onCloseButtonClicked();
+        }
+        
+		FixedPositionWindow::HandleEvent(event);
     }
 
     void SettingsWindow::handleEventInInputMode(const Event& event)
@@ -360,6 +365,12 @@ namespace gui {
 
     void SettingsWindow::onRestoreDefaultsConfirmation(bool wasConfirmed)
     {
+        if (wasConfirmed)
+        {
+            userConfiguration::populateWithDefaultValues(m_guiManager.getConfigManager());
+            loadConfigState();
+            saveConfigState();
+        }
     }
 
     void SettingsWindow::onDiscardChangesConfirmation(bool wasConfirmed)

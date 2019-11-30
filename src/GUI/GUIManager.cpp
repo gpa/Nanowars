@@ -66,7 +66,7 @@ namespace gui {
 
     bool GUIManager::handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard)
     {
-        return false;
+        return m_windows.size() > 0;
     }
 
     void GUIManager::render(RenderWindow& window)

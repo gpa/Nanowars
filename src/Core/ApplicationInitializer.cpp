@@ -40,16 +40,15 @@ namespace core {
         boost::split(parsedResolution, resolutionString, boost::is_any_of("x"));
         int width = std::stoi(parsedResolution[0].c_str());
         int height = std::stoi(parsedResolution[1].c_str());
+        
+		parsedResolution.clear();
+		boost::split(parsedResolution, resolutionString, boost::is_any_of("@"));
+		int bitsPerPixel = std::stoi(parsedResolution[1]);
 
         Uint32 style = Style::Default;
-        VideoMode videoMode;
+        VideoMode videoMode = sf::VideoMode(width, height, bitsPerPixel);
         if (fullscreen)
-        {
-            videoMode = sf::VideoMode::getFullscreenModes()[0];
             style = sf::Style::Fullscreen;
-        }
-        else
-            videoMode = sf::VideoMode(width, height);
 
         auto windowTitle = constants::windowTitle;
 

@@ -27,11 +27,12 @@ namespace gui {
     class ConfirmationWindow : public FixedPositionWindow
     {
     public:
-
         typedef function<void(bool)> callback_t;
 
-        ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder, 
+        ConfirmationWindow(GUIManager& guiManager, AssetHolder&& assetHolder,
             string titleString, string infoString, string acceptString, string rejectString, callback_t callback);
+
+        void HandleEvent(const sf::Event& event) override;
 
     protected:
         void initialize() override;
