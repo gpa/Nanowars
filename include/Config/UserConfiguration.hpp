@@ -54,7 +54,7 @@ namespace config {
         inline void populateWithDefaultValues(ConfigManager& configManager)
         {
             auto& cm = configManager;
-            cm.setEntry(ConfigEntry(graphics::resolution, Entry(string("1024x768"))));
+            cm.setEntry(ConfigEntry(graphics::resolution, Entry(string("1024x768@32"))));
             cm.setEntry(ConfigEntry(graphics::antiAliasing, Entry(8)));
             cm.setEntry(ConfigEntry(graphics::vsync, Entry(true)));
             cm.setEntry(ConfigEntry(graphics::fullscreen, Entry(false)));
