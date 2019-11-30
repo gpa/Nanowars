@@ -56,9 +56,15 @@ namespace gui {
         m_consoleInput = consoleInput;
         m_consoleOutput = consoleLabel;
         m_consoleScrollWindow = consoleOutput;
-        m_consoleInput->GrabFocus();
         SetRequisition(sf::Vector2f(m_guiManager.getWindow().getSize().x, 200.f));
         FixedPositionWindow::initialize();
+    }
+
+    void ConsoleWindow::onTopMostGained(shared_ptr<Window> previousTopMost)
+    {
+        FixedPositionWindow::onTopMostGained(previousTopMost);
+        m_consoleInput->GrabFocus();
+        m_consoleInput->SetCursorPosition(1);
     }
 
     void ConsoleWindow::HandleEvent(const sf::Event& event)

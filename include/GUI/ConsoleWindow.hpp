@@ -28,6 +28,8 @@ namespace gui {
     public:
         ConsoleWindow(GUIManager& guiManager, AssetHolder&& assetHolder, DebugConsole& debugConsole);
 
+
+        void onTopMostGained(shared_ptr<Window> previousTopMost) override;
         void HandleEvent(const Event& event) override;
 
     protected:

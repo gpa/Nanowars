@@ -38,7 +38,7 @@ namespace game {
             Landscape* landscape = static_cast<Landscape*>(&gameObject);
 
             CaveGenerator caveGenerator;
-            Image image = caveGenerator.getRandomTexturedCave(Vector2u(2000, 1000), assetHolder);
+            Image image = caveGenerator.getRandomTexturedCave(Vector2u(3000, 2000), assetHolder);
 
             shared_ptr<Texture> texture = std::make_shared<Texture>();
             texture->loadFromImage(image);
