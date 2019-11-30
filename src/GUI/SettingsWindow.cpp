@@ -206,8 +206,8 @@ namespace gui {
             else if (event.key.code == sf::Keyboard::Key::Escape)
                 onCloseButtonClicked();
         }
-        
-		FixedPositionWindow::HandleEvent(event);
+
+        FixedPositionWindow::HandleEvent(event);
     }
 
     void SettingsWindow::handleEventInInputMode(const Event& event)
@@ -327,7 +327,7 @@ namespace gui {
             tx(StringTranslation_ApplyMadeChanges),
             tx(StringTranslation_ApplyChanges),
             tx(StringTranslation_DiscardChanges),
-            std::bind(&SettingsWindow::onDiscardChangesConfirmation, this, std::placeholders::_1));
+            std::bind(&SettingsWindow::onSaveChangesConfirmation, this, std::placeholders::_1));
 
         m_guiManager.makeTopMost(confirmationWindow);
     }
@@ -369,14 +369,16 @@ namespace gui {
         {
             userConfiguration::populateWithDefaultValues(m_guiManager.getConfigManager());
             loadConfigState();
-            saveConfigState();
+            onApplyButtonClicked();
         }
     }
 
-    void SettingsWindow::onDiscardChangesConfirmation(bool wasConfirmed)
+    void SettingsWindow::onSaveChangesConfirmation(bool wasConfirmed)
     {
         if (wasConfirmed)
-            m_guiManager.removeTopMost();
+            onApplyButtonClicked();
+
+        m_guiManager.removeTopMost();
     }
 }
 }

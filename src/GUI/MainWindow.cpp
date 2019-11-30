@@ -16,6 +16,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Core/Constants.hpp"
 #include "Globalization/TranslationManager.hpp"
 #include "GUI/SettingsWindow.hpp"
+#include "GUI/ConfirmationWindow.hpp"
 
 #include <SFGUI/Widgets.hpp>
 
@@ -36,7 +37,7 @@ namespace gui {
         SetRequisition(sf::Vector2f(400, 700));
 
         auto settingsButton = sfg::Button::Create(tx(StringTranslation_Settings));
-        auto quitButton = sfg::Button::Create(tx(StringTranslation_Quit));
+        auto quitButton = sfg::Button::Create(tx(StringTranslation_ExitNanowars));
 
         auto layoutBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 50.f);
         auto logo = sfg::Label::Create(core::constants::windowTitle);
@@ -76,7 +77,7 @@ namespace gui {
         }
 
         settingsButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onSettingsButtonClicked, this));
-        quitButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onQuitButtonClicked, this));
+        quitButton->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&MainWindow::onExitButtonClicked, this));
 
         layoutBox->Pack(menuBox);
         Add(layoutBox);
@@ -118,9 +119,22 @@ namespace gui {
         m_guiManager.makeTopMost(settingsWindow);
     }
 
-    void MainWindow::onQuitButtonClicked()
+    void MainWindow::onExitButtonClicked()
     {
-        m_guiManager.getWindow().close();
+        if (!m_guiManager.getGameManager().isGameRunning())
+        {
+            exitApplication();
+			return;
+		}
+
+        auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
+            tx(StringTranslation_ExitNanowars),
+            tx(StringTranslation_ExitGameAndReturnToDesktop),
+            tx(StringTranslation_Exit),
+            tx(StringTranslation_Cancel),
+            std::bind(&MainWindow::onExitConfirmation, this, std::placeholders::_1));
+
+        m_guiManager.makeTopMost(confirmationWindow);
     }
 
     void MainWindow::onResumeButtonClicked()
@@ -129,6 +143,37 @@ namespace gui {
     }
 
     void MainWindow::onReturnToMainMenuButtonClicked()
+    {
+        auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
+            tx(StringTranslation_ReturnToMainMenu),
+            tx(StringTranslation_ExitGameAndReturnToMainMenu),
+            tx(StringTranslation_OK),
+            tx(StringTranslation_Cancel),
+            std::bind(&MainWindow::onReturnToMainMenuConfirmation, this, std::placeholders::_1));
+
+        m_guiManager.makeTopMost(confirmationWindow);
+    }
+
+    void MainWindow::onReturnToMainMenuConfirmation(bool confirmed)
+    {
+        if (confirmed)
+            exitGame();
+    }
+
+    void MainWindow::onExitConfirmation(bool confirmed)
+    {
+        if (confirmed)
+        {
+            exitApplication();
+        }
+    }
+
+    void MainWindow::exitApplication()
+    {
+        m_guiManager.getWindow().close();
+    }
+
+    void MainWindow::exitGame()
     {
         m_guiManager.removeTopMost();
         m_guiManager.getGameManager().exitGame();

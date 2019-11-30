@@ -55,7 +55,7 @@ namespace gui {
         void handleEventInInputMode(const Event& event);
 
         void onRestoreDefaultsConfirmation(bool wasConfirmed);
-        void onDiscardChangesConfirmation(bool wasConfirmed);
+        void onSaveChangesConfirmation(bool wasConfirmed);
 
         bool m_graphicsModified;
         bool m_audioModified;

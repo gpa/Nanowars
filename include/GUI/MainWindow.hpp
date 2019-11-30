@@ -32,9 +32,15 @@ namespace gui {
         void onLanButtonClicked();
         void onLocalButtonClicked();
         void onSettingsButtonClicked();
-        void onQuitButtonClicked();
+        void onExitButtonClicked();
         void onResumeButtonClicked();
         void onReturnToMainMenuButtonClicked();
+
+		void onReturnToMainMenuConfirmation(bool confirmed);
+        void onExitConfirmation(bool confirmed);
+
+		void exitApplication();
+        void exitGame();
     };
 }
 }

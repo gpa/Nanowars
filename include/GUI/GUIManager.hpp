@@ -68,9 +68,11 @@ namespace gui {
 
         AssetHolder m_assetHolder;
         vector<shared_ptr<Window>> m_windows;
+        vector<shared_ptr<Window>> m_removed;
 
         void spawnMainMenu();
         void spawnDebugConsole();
+		void processRemoved();
     };
 }
 }

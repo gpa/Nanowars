@@ -43,6 +43,7 @@ namespace gui {
         if (m_windows.size() > 0)
         {
             m_desktop.HandleEvent(event);
+            processRemoved();
             return true;
         }
 
@@ -88,6 +89,7 @@ namespace gui {
         {
             m_windows.push_back(window);
         }
+
         m_desktop.Add(window);
         window->onTopMostGained(previous);
     }
@@ -101,12 +103,20 @@ namespace gui {
         if (!m_windows.empty())
             current = m_windows.back();
 
-        m_desktop.Remove(window);
+        m_removed.push_back(window);
         window->onTopMostLost(current);
 
         if (current.get() != nullptr)
             current->onTopMostGained(window);
     }
+
+    void GUIManager::processRemoved()
+    {
+        for (auto& window : m_removed)
+            m_desktop.Remove(window);
+
+		m_removed.clear();
+	}
 
     void GUIManager::spawnMainMenu()
     {
@@ -121,23 +131,23 @@ namespace gui {
         makeTopMost(consoleWindow);
     }
 
-    RenderWindow& GUIManager::getWindow() 
+    RenderWindow& GUIManager::getWindow()
     {
-        return m_application.getWindow(); 
+        return m_application.getWindow();
     }
 
-    PersistentConfigManager& GUIManager::getConfigManager() 
+    PersistentConfigManager& GUIManager::getConfigManager()
     {
-        return m_application.getConfigManager(); 
+        return m_application.getConfigManager();
     }
 
-    GameManager& GUIManager::getGameManager() 
+    GameManager& GUIManager::getGameManager()
     {
         return m_application.getGameManager();
     }
 
     TranslationManager& GUIManager::getTranslationManager()
-    { 
+    {
         return m_application.getTranslationManager();
     }
 }
