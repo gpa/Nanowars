@@ -37,12 +37,8 @@ namespace game {
         {
             Landscape* landscape = static_cast<Landscape*>(&gameObject);
 
-            CaveGenerator caveGenerator;
-            Image image = caveGenerator.getRandomTexturedCave(Vector2u(3000, 2000), assetHolder);
-
-            shared_ptr<Texture> texture = std::make_shared<Texture>();
-            texture->loadFromImage(image);
-            assetHolder.holdCustomUntracked(texture);
+            auto& texture = assetHolder.getUniqueTexture(TextureAsset_Cave1);
+            Image image = texture.copyToImage();
 
             b2Vec2 scale = { 25.0f, 40.0f };
 
@@ -68,7 +64,7 @@ namespace game {
             landscape->initializeDestructableBehavior(image);
 
             auto& sprite = landscape->getSprite();
-            sprite.setTexture(*(texture.get()));
+            sprite.setTexture(texture);
             sprite.setOrigin(0, 0);
             sprite.setScale(scale.x, scale.y);
         }

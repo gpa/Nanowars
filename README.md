@@ -3,6 +3,10 @@
 NANOWARS is a fun 2D shooter with exciting gameplay and attractive visual effects.
 The game is very much in progress and is currently not playable.
 
+## Current progress:
+
+![](/resources/screenshots/0.1.0/destructable-terrain.gif)
+
 ## License
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
 

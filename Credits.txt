@@ -2,7 +2,8 @@ NANOWARS Credits:
 *****************
 
 Textures:
-rockets.svg  CC0 Public Domain - Conte Magnus
+rockets.svg  CC0 Public Domain by Conte Magnus
+TrophyRace.png GNU Free Documentation Licence 1.2 by wolfmarc & Dragonfly - Hedgewars.org
 
 Sound files:
 

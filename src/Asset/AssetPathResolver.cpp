@@ -21,10 +21,9 @@ namespace asset {
 
     string AssetPathResolver::getPath(TextureAsset textureAsset) const
     {
-        const char* files[] = { "rockets.png" };
+        const char* files[] = { "rockets.png", "cave1.png" };
 		auto fullPath = path("data") / path("textures") / path(string(files[(int)textureAsset]));
-        string test = fullPath.string();
-        return test;
+        return fullPath.string();
     }
 
     string AssetPathResolver::getPath(SoundAsset soundAsset) const
@@ -36,8 +35,7 @@ namespace asset {
     {
         const char* files[] = { "rocket1.json" };
         auto fullPath = path("data") / path("schemas") / path(string(files[(int)schemaAsset]));
-        string test = fullPath.string();
-        return test;
+        return fullPath.string();
     }
 
     string AssetPathResolver::getPath(FontAsset fontAsset) const

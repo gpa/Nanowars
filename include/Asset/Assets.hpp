@@ -18,7 +18,8 @@ namespace asset {
 
     enum TextureAsset
     {
-        TextureAsset_Rockets = 0
+        TextureAsset_Rockets = 0,
+		TextureAsset_Cave1
     };
 
     enum SoundAsset

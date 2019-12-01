@@ -22,7 +22,7 @@ namespace core {
         constexpr auto meterToPixelRatio = 100.0f;
         constexpr auto userConfigFilename = "userconfig.json";
         constexpr float defaultGravityX = 0.0f;
-        constexpr float defaultGravityY = 9.8f;
+        constexpr float defaultGravityY = 20.8f;
         const sf::Color BackgroundColor = sf::Color(128, 128, 128);
     }
 }
