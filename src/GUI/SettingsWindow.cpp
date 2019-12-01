@@ -21,7 +21,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Core/Application.hpp"
 #include "Core/ApplicationInitializer.hpp"
 
-#include "Util/InputUtil.hpp"
+#include "Input/InputNames.hpp"
 
 #include <functional>
 #include <algorithm>
@@ -225,7 +225,7 @@ namespace gui {
         if (event.key.code == sf::Keyboard::Key::Unknown)
             return;
 
-        string keyAsString = util::toString(event.key.code);
+        string keyAsString = input::InputNames::toString(event.key.code);
         auto button = getButtonById(m_keyBindingButtonId);
 
         if (button.get() != nullptr)

@@ -11,10 +11,10 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Controllers/KeyboardRocketController.hpp"
+#include "Input/KeyboardRocketController.hpp"
 
 namespace nanowars {
-namespace controllers {
+namespace input {
 
     KeyboardRocketController::KeyboardRocketController(KeyboardRocketControllerConfiguration keyboardConfiguration)
         : m_keyboardConfiguration(keyboardConfiguration)
