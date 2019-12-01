@@ -20,6 +20,7 @@ namespace game {
 
     Rocket::Rocket(GameWorld& parent, b2Body& body)
         : GameObject(parent, body, GameObjectType::Rocket)
+        , m_thrustParticleSystem(body)
     {
     }
 
@@ -69,6 +70,7 @@ namespace game {
                 auto p = m_body.GetWorldPoint(e.position);
 
                 m_body.ApplyForce(f, p, true);
+                m_thrustParticleSystem.fire(p, -f);
             }
         }
     }

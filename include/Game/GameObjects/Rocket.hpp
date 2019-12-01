@@ -14,6 +14,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Game/GameObject.hpp"
+#include "Game/Decorations/ThrustParticleSystem.hpp"
 #include <Box2D/Box2D.h>
 #include <vector>
 
@@ -21,10 +22,11 @@ namespace nanowars {
 namespace game {
 
     using std::vector;
+	using namespace decorations;
 
     struct RocketEngine
     {
-        enum EngineType
+        enum class EngineType
         {
             Main,
             PositionalLeft,
@@ -58,6 +60,7 @@ namespace game {
 
         vector<RocketEngine> m_engines;
         vector<RocketWeaponSlot> m_weaponSlots;
+        ThrustParticleSystem m_thrustParticleSystem;
     };
 }
 }
