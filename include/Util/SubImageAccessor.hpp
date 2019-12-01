@@ -19,12 +19,11 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace util {
 
-    using sf::IntRect;
 
     class SubImageAccessor : public ImageAccessor
     {
     public:
-        SubImageAccessor(const ImageAccessor& originalAccessor, IntRect region)
+        SubImageAccessor(const ImageAccessor& originalAccessor, sf::Rect<unsigned> region)
             : m_originalAccessor(originalAccessor)
             , m_region(region)
         {
@@ -35,12 +34,12 @@ namespace util {
             return { (unsigned)m_region.width, (unsigned)m_region.height };
         }
 
-        inline Color getPixel(int x, int y) const override
+        inline Color getPixel(unsigned x, unsigned y) const override
         {
-            if (x < 0 || x > m_region.width)
+            if (x > m_region.width)
                 throw std::invalid_argument("Argument out of bounds");
 
-            if (y < 0 || y > m_region.height)
+            if (y > m_region.height)
                 throw std::invalid_argument("Argument out of bounds");
 
             return m_originalAccessor.getPixel(m_region.left + x, m_region.top + y);
@@ -48,7 +47,7 @@ namespace util {
 
     private:
         const ImageAccessor& m_originalAccessor;
-        const IntRect m_region;
+        const sf::Rect<unsigned> m_region;
     };
 }
 }

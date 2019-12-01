@@ -22,7 +22,7 @@ namespace game {
     }
 
     Landscape::Landscape(GameWorld& parent, b2Body& body)
-        : DestructableGameObject(parent, body, GameObjectType::e_landscape)
+        : DestructableGameObject(parent, body, GameObjectType::Landscape)
     {
     }
 

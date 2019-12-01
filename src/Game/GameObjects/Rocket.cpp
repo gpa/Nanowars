@@ -19,7 +19,7 @@ namespace nanowars {
 namespace game {
 
     Rocket::Rocket(GameWorld& parent, b2Body& body)
-        : GameObject(parent, body, GameObjectType::e_rocket)
+        : GameObject(parent, body, GameObjectType::Rocket)
     {
     }
 

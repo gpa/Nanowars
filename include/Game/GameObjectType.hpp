@@ -16,11 +16,11 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace game {
 
-    enum GameObjectType
+    enum class GameObjectType
     {
-        e_rocket = 0x0001,
-        e_landscape = 0x0002,
-        e_bullet = 0x0004
+        Rocket = 0x0001,
+        Landscape = 0x0002,
+        Bullet = 0x0004
     };
 }
 }

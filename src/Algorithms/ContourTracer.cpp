@@ -83,9 +83,9 @@ namespace algorithms {
     {
         vector<contour_t> contours;
         int contourId = 1;
-        for (int y = 0; y < m_size.y; ++y)
+        for (unsigned y = 0; y < m_size.y; ++y)
         {
-            for (int x = 0; x < m_size.x; ++x)
+            for (unsigned x = 0; x < m_size.x; ++x)
             {
                 if (!isSolid(x, y))
                     continue;

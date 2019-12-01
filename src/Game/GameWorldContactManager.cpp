@@ -20,22 +20,22 @@ namespace game {
     {
         auto* a = static_cast<GameObject*>(fixtureA->GetBody()->GetUserData());
         auto* b = static_cast<GameObject*>(fixtureB->GetBody()->GetUserData());
-        if (a->getType() == GameObjectType::e_bullet && b->getType() == GameObjectType::e_bullet)
+        if (a->getType() == GameObjectType::Bullet && b->getType() == GameObjectType::Bullet)
             return false;
 
-        if (a->getType() == GameObjectType::e_bullet && b->getType() == GameObjectType::e_rocket)
+        if (a->getType() == GameObjectType::Bullet && b->getType() == GameObjectType::Rocket)
         {
             if (reinterpret_cast<Bullet*>(a)->getFiredBy() == reinterpret_cast<Rocket*>(b))
                 return false;
         }
 
-        if (a->getType() == GameObjectType::e_rocket && b->getType() == GameObjectType::e_bullet)
+        if (a->getType() == GameObjectType::Rocket && b->getType() == GameObjectType::Bullet)
         {
             if (reinterpret_cast<Bullet*>(b)->getFiredBy() == reinterpret_cast<Rocket*>(a))
                 return false;
         }
 
-        if (a->getType() == e_bullet && b->getType() == e_bullet)
+        if (a->getType() == GameObjectType::Bullet && b->getType() == GameObjectType::Bullet)
             return false;
 
         return true;

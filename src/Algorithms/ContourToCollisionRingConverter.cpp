@@ -21,8 +21,8 @@ namespace algorithms {
 
     struct Pixel
     {
-        Vector2f corners[4];
-        Pixel(float x, float y)
+        Vector2i corners[4];
+        Pixel(int x, int y)
         {
             corners[0] = { x, y };
             corners[1] = { x + 1, y };
@@ -30,9 +30,9 @@ namespace algorithms {
             corners[3] = { x, y + 1 };
         }
 
-        int getNextCornerIndex(Vector2f position)
+        int getNextCornerIndex(Vector2i position)
         {
-            for (int i = 0; i < 4; ++i)
+            for (unsigned i = 0; i < 4; ++i)
                 if (corners[i] == position)
                     return i;
             return -1;
@@ -41,7 +41,7 @@ namespace algorithms {
 
     CollisionRing ContourToCollisionRingConverter::convert(ContourTracer::contour_t contour)
     {
-        std::vector<Vector2f> vertices;
+        std::vector<Vector2i> vertices;
         for (unsigned i = 0, cornerId = 0; i < contour.size() - 1; i++, cornerId = (cornerId + 1) % 4)
         {
             Pixel currentPixel(contour[i].x, contour[i].y);

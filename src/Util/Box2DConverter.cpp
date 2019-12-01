@@ -19,9 +19,9 @@ namespace util {
 
     using namespace core;
 
-    CollisionRing Box2DConverter::circleToCollisionRing(b2Vec2 position, float radius, float vertexCount)
+    CollisionRing Box2DConverter::circleToCollisionRing(b2Vec2 position, float radius, unsigned vertexCount)
     {
-        vector<b2Vec2> vertices;
+        vector<Vector2f> vertices;
         vertices.resize(vertexCount);
 
         const float theta
@@ -37,7 +37,7 @@ namespace util {
         {
             float vx = x + position.x;
             float vy = y + position.y;
-            vertices[i] = b2Vec2(vx, vy);
+            vertices[i] = Vector2f(vx, vy);
             t = x;
             x = c * x - s * y;
             y = s * t + c * y;

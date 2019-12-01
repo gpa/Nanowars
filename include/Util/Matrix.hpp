@@ -29,23 +29,23 @@ namespace util {
     public:
         Matrix(Vector2u size)
             : m_size(size)
-            , m_array(new T[size.x * size.y])
+            , m_array(new T[(size_t)size.x * (size_t)size.y])
         {
             for (unsigned long i = 0; i < size.x * size.y; ++i)
                 m_array[i] = 0;
         }
 
         inline T getAt(Vector2u pos) const { return m_array[index(pos.x, pos.y)]; }
-        inline T getAt(int x, int y) const { return m_array[index(x, y)]; }
-        inline T getPrevious(int x, int y) const { return x - 1 >= 0 ? m_array[index(x, y)] : m_array[index(0, y - 1)]; }
+        inline T getAt(unsigned x, unsigned y) const { return m_array[index(x, y)]; }
+        inline T getPrevious(unsigned x, unsigned y) const { return x - 1 >= 0 ? m_array[index(x, y)] : m_array[index(0, y - 1)]; }
 
-        inline void setAt(int x, int y, T value) const { m_array[index(x, y)] = value; }
+        inline void setAt(unsigned x, unsigned y, T value) const { m_array[index(x, y)] = value; }
         inline void setAt(Vector2u pos, T value) const { m_array[index(pos.x, pos.y)] = value; }
 
         inline Vector2u getSize() const { return m_size; }
 
     protected:
-        inline int index(int x, int y) const { return x + m_size.x * y; }
+        inline size_t index(unsigned x, unsigned y) const { return x + m_size.x * y; }
 
     private:
         unique_ptr<T[]> m_array;

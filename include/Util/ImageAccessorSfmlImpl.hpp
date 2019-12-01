@@ -28,7 +28,7 @@ namespace util {
         }
 
         inline Vector2u getSize() const override { return m_sfImage.getSize(); }
-        inline Color getPixel(int x, int y) const override { return m_sfImage.getPixel(x, y); }
+        inline Color getPixel(unsigned x, unsigned y) const override { return m_sfImage.getPixel(x, y); }
 
     private:
         const sf::Image& m_sfImage;

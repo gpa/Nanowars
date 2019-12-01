@@ -46,9 +46,9 @@ namespace algorithms {
     void ImagePainter::scanLineFill(Image& bmp, const Color& boundaryColor, const Color& replacementColor)
     {
         auto targetColor = boundaryColor;
-        for (int y = 0; y < bmp.getSize().y; ++y)
+        for (unsigned y = 0; y < bmp.getSize().y; ++y)
         {
-            int x = 0;
+            unsigned x = 0;
             while (x < bmp.getSize().x && bmp.getPixel(x, y) != targetColor)
             {
                 x++;
@@ -59,7 +59,7 @@ namespace algorithms {
                 x++;
             }
             bool hasFinish = false;
-            for (int k = x; k < bmp.getSize().x; ++k)
+            for (unsigned k = x; k < bmp.getSize().x; ++k)
             {
                 if (bmp.getPixel(k, y) == targetColor)
                 {
@@ -84,12 +84,12 @@ namespace algorithms {
         }
     }
 
-    b2Vec2 ImagePainter::drawShape(CollisionRing collisionRing, float shapeScaleX, float shapeScaleY, float vertexScale, Image& original, Image& bmp, const Color& boundaryColor)
+    Vector2u ImagePainter::drawShape(CollisionRing collisionRing, float shapeScaleX, float shapeScaleY, float vertexScale, Image& original, Image& bmp, const Color& boundaryColor)
     {
         float sx = shapeScaleX;
         float sy = shapeScaleY;
-        float w = original.getSize().x;
-        float h = original.getSize().y;
+        float w = static_cast<float>(original.getSize().x);
+        float h = static_cast<float>(original.getSize().y);
 
         vector<std::pair<b2Vec2, b2Vec2>> segments;
 
@@ -144,26 +144,32 @@ namespace algorithms {
         // also they're nicely scaled for our map.
 
         // Generate a new image as big as the subtraction shape
-        bmp.create(maxX + 1, maxY + 1);
+        bmp.create(static_cast<unsigned>(maxX + 1), static_cast<unsigned>(maxY + 1));
 
         // fill the image with the pixels from the original map
         // so basically the small subtraction shape becomes a copy of a part of the
         // original image
-        for (int y = 0; y < bmp.getSize().y; ++y)
+        for (unsigned y = 0; y < bmp.getSize().y; ++y)
         {
-            for (int x = 0; x < bmp.getSize().x; ++x)
+            for (unsigned x = 0; x < bmp.getSize().x; ++x)
             {
-                bmp.setPixel(x, y, original.getPixel(minX + x, minY + y));
+                bmp.setPixel(x, y, original.getPixel(static_cast<int>(minX) + x, static_cast<int>(minY) + y));
             }
         }
 
         // draw the outline lines from the shape to the image
         for (auto seg : segments)
         {
-            ImagePainter::drawLine(
-                seg.first.x, seg.first.y, seg.second.x, seg.second.y, bmp, boundaryColor);
+            int x0 = static_cast<int>(seg.first.x);
+            int y0 = static_cast<int>(seg.first.y);
+            int x1 = static_cast<int>(seg.second.x);
+            int y1 = static_cast<int>(seg.second.y);
+
+           ImagePainter::drawLine(
+                x0, y0, x1, y1, bmp, boundaryColor);
         }
-        return b2Vec2(minX, minY);
+
+        return Vector2u(static_cast<unsigned>(minX), static_cast<unsigned>(minY));
     }
 }
 }

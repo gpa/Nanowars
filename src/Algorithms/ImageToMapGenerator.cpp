@@ -29,22 +29,22 @@ namespace algorithms {
 
     vector<CollisionRing> ImageToMapGenerator::getCollisionRings(const ImageAccessor& imageAccessor) const
     {
-        int imageSizeX = imageAccessor.getSize().x;
-        int imageSizeY = imageAccessor.getSize().y;
+        unsigned imageSizeX = imageAccessor.getSize().x;
+        unsigned imageSizeY = imageAccessor.getSize().y;
 
-        int regionWidth = static_cast<int>(m_divisionFactor.x * imageSizeX);
-        int regionHeight = static_cast<int>(m_divisionFactor.y * imageSizeY);
+        unsigned regionWidth = static_cast<int>(m_divisionFactor.x * imageSizeX);
+        unsigned regionHeight = static_cast<int>(m_divisionFactor.y * imageSizeY);
 
-        int regionCountX = imageSizeX / regionWidth + 1;
-        int regionCountY = imageSizeY / regionHeight + 1;
+        unsigned regionCountX = imageSizeX / regionWidth + 1;
+        unsigned regionCountY = imageSizeY / regionHeight + 1;
 
         vector<CollisionRing> collisionRings;
 
-        for (int y = 0; y < regionCountY; ++y)
+        for (unsigned y = 0; y < regionCountY; ++y)
         {
-            for (int x = 0; x < regionCountX; ++x)
+            for (unsigned x = 0; x < regionCountX; ++x)
             {
-                IntRect region(x * regionWidth, y * regionHeight, regionWidth, regionHeight);
+                sf::Rect<unsigned> region(x * regionWidth, y * regionHeight, regionWidth, regionHeight);
 
                 if (region.left + region.width > imageSizeX)
                     region.width = imageSizeX - region.left;

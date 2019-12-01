@@ -50,7 +50,7 @@ namespace game {
             }
         };
 
-        bool m_wasInitialzied;
+        bool m_wasInitialized;
         Image m_textureSource;
         vector<FixtureCache> m_fixtureCache;
     };

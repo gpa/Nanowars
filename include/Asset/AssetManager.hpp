@@ -48,7 +48,6 @@ namespace asset {
         shared_ptr<TAsset> load(TKey key) const;
 
         void clean();
-        bool isEmpty();
 
         shared_ptr<const Texture> getTexture(TextureAsset textureAsset);
         shared_ptr<const SoundBuffer> getSound(SoundAsset textureAsset);
@@ -63,7 +62,7 @@ namespace asset {
         AssetPathResolver m_assetPathResolver;
 
         template <typename TKey, typename TAsset>
-        shared_ptr<const TAsset> getAsset(map<TKey, weak_ptr<const TAsset>>* container, TKey identifier)
+        inline shared_ptr<const TAsset> getAsset(map<TKey, weak_ptr<const TAsset>>* container, TKey identifier)
         {
             auto iter = container->find(identifier);
             if (iter != container->end())
@@ -82,7 +81,7 @@ namespace asset {
         }
 
         template <typename TKey, typename TAsset>
-        void clean(map<TKey, weak_ptr<const TAsset>>& container)
+        inline void clean(map<TKey, weak_ptr<const TAsset>>& container)
         {
             auto iter = container.begin();
             for (; iter != container.end();)
@@ -120,6 +119,46 @@ namespace asset {
         if (Asset->Parse(data.c_str()).HasParseError())
             throw new std::runtime_error("Failed to parse " + path);
         return Asset;
+    }
+
+	inline AssetManager::AssetManager(AssetPathResolver assetPathResolver)
+        : m_assetPathResolver(assetPathResolver)
+        , m_loadedTextures()
+        , m_loadedSchemas()
+    {
+    }
+
+    inline AssetHolder AssetManager::getNewHolder()
+    {
+        return AssetHolder(*this);
+    }
+
+    inline shared_ptr<const Texture> AssetManager::getTexture(TextureAsset textureAsset)
+    {
+        return getAsset(&m_loadedTextures, textureAsset);
+    }
+
+    inline shared_ptr<const SoundBuffer> AssetManager::getSound(SoundAsset soundAsset)
+    {
+        return getAsset(&m_loadedSounds, soundAsset);
+    }
+
+    inline shared_ptr<const Document> AssetManager::getSchema(SchemaAsset schemaAsset)
+    {
+        return getAsset(&m_loadedSchemas, schemaAsset);
+    }
+
+    inline shared_ptr<const Font> AssetManager::getFont(FontAsset fontAsset)
+    {
+        return getAsset(&m_loadedFonts, fontAsset);
+    }
+
+    inline void AssetManager::clean()
+    {
+        clean(m_loadedTextures);
+        clean(m_loadedSounds);
+        clean(m_loadedSchemas);
+        clean(m_loadedFonts);
     }
 }
 }

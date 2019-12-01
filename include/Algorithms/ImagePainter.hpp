@@ -14,6 +14,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Math/CollisionRing.hpp"
+#include "Math/Vector2.hpp"
 #include <SFML/Graphics/Image.hpp>
 
 namespace nanowars {
@@ -22,12 +23,13 @@ namespace algorithms {
     using sf::Image;
     using sf::Color;
     using math::CollisionRing;
+	using math::Vector2u;
 
     class ImagePainter
     {
     public:
         static void drawLine(int x0, int y0, int x1, int y1, Image& img, const Color& color);
-        static b2Vec2 drawShape(CollisionRing shape, float shapeScaleX, float shapeScaleY, float vertexScale, Image& original, Image& bmp, const Color& boundaryColor);
+        static Vector2u drawShape(CollisionRing shape, float shapeScaleX, float shapeScaleY, float vertexScale, Image& original, Image& bmp, const Color& boundaryColor);
         static void scanLineFill(Image& img, const Color& boundaryColor, const Color& replacementColor);
     };
 }

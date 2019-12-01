@@ -33,9 +33,9 @@ namespace algorithms {
     void CaveGenerator::initMatrices(Matrix<bool>& matrix1, Matrix<bool>& matrix2, float wallProbability)
     {
         auto generationSize = matrix1.getSize();
-        for (int y = 0; y < generationSize.y; ++y)
+        for (unsigned y = 0; y < generationSize.y; ++y)
         {
-            for (int x = 0; x < generationSize.x; ++x)
+            for (unsigned x = 0; x < generationSize.x; ++x)
             {
                 if (x == 0 || x == generationSize.x - 1 || y == 0 || y == generationSize.y - 1)
                     matrix1.setAt(x, y, true);
@@ -50,12 +50,12 @@ namespace algorithms {
     void CaveGenerator::performGeneration(Matrix<bool>& matrix1, Matrix<bool>& matrix2, int r1CutOff, int r2CutOff)
     {
         // Original code by http://www.roguebasin.com/index.php?title=Jim_Babcock&action=edit&redlink=1
-        int size_y = matrix1.getSize().y;
-        int size_x = matrix1.getSize().x;
+        unsigned size_y = matrix1.getSize().y;
+        unsigned size_x = matrix1.getSize().x;
 
-        for (int y = 1; y < size_y - 1; y++)
+        for (unsigned y = 1; y < size_y - 1; y++)
         {
-            for (int x = 1; x < size_x - 1; x++)
+            for (unsigned x = 1; x < size_x - 1; x++)
             {
                 int adjcount_r1 = 0,
                     adjcount_r2 = 0;
@@ -73,13 +73,13 @@ namespace algorithms {
                 {
                     for (int jj = x - 2; jj <= x + 2; jj++)
                     {
-                        if (abs(ii - y) == 2 && abs(jj - x) == 2)
+                        if (abs((int)(ii - y)) == 2 && abs((int)(jj - x)) == 2)
                             continue;
 
-                        if (ii < 0 || jj < 0 || ii >= size_y || jj >= size_x)
+                        if (ii < 0 || jj < 0 || static_cast<unsigned>(ii) >= size_y || static_cast<unsigned>(jj) >= size_x)
                             continue;
 
-                        if (matrix1.getAt(jj, ii))
+                        if (matrix1.getAt(static_cast<unsigned>(jj), static_cast<unsigned>(ii)))
                             adjcount_r2++;
                     }
                 }
@@ -88,9 +88,9 @@ namespace algorithms {
             }
         }
 
-        for (int y = 1; y < size_y - 1; y++)
+        for (unsigned y = 1; y < size_y - 1; y++)
         {
-            for (int x = 1; x < size_x - 1; x++)
+            for (unsigned x = 1; x < size_x - 1; x++)
                 matrix1.setAt(x, y, matrix2.getAt(x, y));
         }
     }
@@ -101,8 +101,8 @@ namespace algorithms {
         Image image;
         image.create(size.x, size.y);
 
-        for (int y = 0; y < size.y; ++y)
-            for (int x = 0; x < size.x; ++x)
+        for (unsigned y = 0; y < size.y; ++y)
+            for (unsigned x = 0; x < size.x; ++x)
                 image.setPixel(x, y, cave.getAt(x, y) ? Color::Black : Color::Transparent);
 
         return image;

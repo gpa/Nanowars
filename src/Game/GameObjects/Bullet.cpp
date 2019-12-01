@@ -24,7 +24,7 @@ namespace nanowars {
 namespace game {
 
     Bullet::Bullet(GameWorld& parent, b2Body& body, Rocket* firedBy, b2Vec2 position, b2Vec2 velocity)
-        : SelfDestructableGameObject(parent, body, e_bullet, 2.0f)
+        : SelfDestructableGameObject(parent, body, GameObjectType::Bullet, 2.0f)
         , m_firedBy(firedBy)
     {
         body.SetTransform(position, 0.0f);
@@ -33,7 +33,7 @@ namespace game {
 
     void Bullet::onCollision(GameObject& other)
     {
-        if (other.getType() == e_landscape)
+        if (other.getType() == GameObjectType::Landscape)
         {
             Landscape* landscape = static_cast<Landscape*>(&other);
             landscape->destroy(*this);

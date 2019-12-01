@@ -25,6 +25,7 @@ namespace game {
 
     DestructableGameObject::DestructableGameObject(GameWorld& parent, b2Body& body, GameObjectType gameObjectType)
         : GameObject(parent, body, gameObjectType)
+        , m_wasInitialized(false)
     {
     }
 
@@ -41,12 +42,12 @@ namespace game {
             m_fixtureCache.emplace_back(collisionRing, fixture);
         }
         m_textureSource = textureSource;
-        m_wasInitialzied = true;
+        m_wasInitialized = true;
     }
 
     void DestructableGameObject::destroy(const DestructableGameObjectDestroyer& destroyer)
     {
-        if (!m_wasInitialzied)
+        if (!m_wasInitialized)
             return;
 
         destroyShape(destroyer);
@@ -58,8 +59,8 @@ namespace game {
         auto destroyerCollisionRing = destroyer.getCollisionRing();
         auto destroyerAABB = destroyerCollisionRing.getAABB();
 
-        int shapesCount = m_fixtureCache.size(); // important to cache this since we'll be adding shapes
-        for (int i = 0; i < shapesCount; ++i)
+        size_t shapesCount = m_fixtureCache.size(); // important to cache this since we'll be adding shapes
+        for (size_t i = 0; i < shapesCount; ++i)
         {
             if (m_fixtureCache[i].fixture == nullptr)
                 continue;
@@ -74,7 +75,7 @@ namespace game {
                 m_body.DestroyFixture(m_fixtureCache[i].fixture);
                 m_fixtureCache[i].fixture = nullptr;
 
-                for (int j = 0; j < subtractionResult.size(); ++j)
+                for (size_t j = 0; j < subtractionResult.size(); ++j)
                 {
                     CollisionRing simplified = subtractionResult[j].getSimplified(0.05f);
 
@@ -114,9 +115,9 @@ namespace game {
 
         algorithms::ImagePainter::scanLineFill(bmp, sf::Color(-1), sf::Color::Transparent);
 
-        for (int y = 0; y < bmp.getSize().y; ++y)
+        for (unsigned y = 0; y < bmp.getSize().y; ++y)
         {
-            for (int x = 0; x < bmp.getSize().x; ++x)
+            for (unsigned x = 0; x < bmp.getSize().x; ++x)
             {
                 img.setPixel(s.x + x, s.y + y, bmp.getPixel(x, y));
             }

@@ -40,10 +40,11 @@ namespace algorithms {
         vector<contour_t> findAllContours();
         contour_t followContour(int startX, int startY, int16_t contourId, bool isInternal = false);
 
-        inline bool isSolid(int x, int y) const { return m_image.getPixel(x, y).a > 128; }
+        inline bool isSolid(unsigned x, unsigned y) const { return m_image.getPixel(x, y).a > 128; }
         inline bool isSolid(Vector2i p) const { return isSolid(p.x, p.y); }
-        inline bool isOutOfBounds(int x, int y) const { return (x < 0) || (x >= m_size.x || y < 0 || y >= m_size.y); }
-        inline bool isOutOfBounds(Vector2i p) const { return isOutOfBounds(p.x, p.y); }
+        inline bool isOutOfBounds(int x, int y) const { return x < 0 || (static_cast<unsigned>(x) >= m_size.x || y < 0 || static_cast<unsigned>(y) >= m_size.y); }
+        inline bool isOutOfBounds(unsigned x, unsigned y) const { return x < 0 || x >= m_size.x || y < 0 || y >= m_size.y; }
+		inline bool isOutOfBounds(Vector2i p) const { return isOutOfBounds(p.x, p.y); }
         inline bool isNone(int16_t pixelId) const { return pixelId == 0; }
 
         const ImageAccessor& m_image;

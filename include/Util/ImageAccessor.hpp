@@ -25,7 +25,7 @@ namespace util {
     {
     public:
         virtual Vector2u getSize() const = 0;
-        virtual Color getPixel(int x, int y) const = 0;
+        virtual Color getPixel(unsigned x, unsigned y) const = 0;
     };
 }
 }

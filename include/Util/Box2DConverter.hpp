@@ -25,7 +25,7 @@ namespace util {
     class Box2DConverter
     {
     public:
-        static CollisionRing circleToCollisionRing(b2Vec2 position, float radius, float vertexCount);
+        static CollisionRing circleToCollisionRing(b2Vec2 position, float radius, unsigned vertexCount);
         static sf::Color toSfmlColor(const b2Color& color, sf::Uint8 alpha = 255);
         static sf::Vector2f toSfmlVector(const b2Vec2& vector, bool scaleToPixels = true);
     };

@@ -33,6 +33,7 @@ namespace math {
     public:
         CollisionRing();
         CollisionRing(vector<Vector2f> vertices);
+        CollisionRing(vector<Vector2i> vertices);
         CollisionRing(Vector2f* vertices, Vector2f* verticesEnd);
 
         inline size_t getCount() const { return m_vertices.size(); }
