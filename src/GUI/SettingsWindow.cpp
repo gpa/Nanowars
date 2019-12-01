@@ -42,7 +42,7 @@ namespace gui {
 
     void SettingsWindow::initialize()
     {
-        SetTitle(tx(StringTranslation_NanowarsSettings));
+        SetTitle(tx(StringTranslation::NanowarsSettings));
         SetStyle(sfg::Window::Style::BACKGROUND | sfg::Window::Style::TITLEBAR | sfg::Window::Style::CLOSE);
         GetSignal(sfg::Window::OnCloseButton).Connect(std::bind(&SettingsWindow::onCloseButtonClicked, this));
 
@@ -68,15 +68,15 @@ namespace gui {
         initControlsTab(controlsBox);
         initNetworkTab(networkBox);
 
-        notebook->AppendPage(graphicsBox, Label::Create(tx(StringTranslation_Graphics)));
-        notebook->AppendPage(audioBox, Label::Create(tx(StringTranslation_Audio)));
-        notebook->AppendPage(controlsBox, Label::Create(tx(StringTranslation_Controls)));
-        notebook->AppendPage(networkBox, Label::Create(tx(StringTranslation_Network)));
+        notebook->AppendPage(graphicsBox, Label::Create(tx(StringTranslation::Graphics)));
+        notebook->AppendPage(audioBox, Label::Create(tx(StringTranslation::Audio)));
+        notebook->AppendPage(controlsBox, Label::Create(tx(StringTranslation::Controls)));
+        notebook->AppendPage(networkBox, Label::Create(tx(StringTranslation::Network)));
 
         winBox->Pack(notebook);
 
-        auto applyButton = Button::Create(tx(StringTranslation_ApplyChanges));
-        auto restoreButton = Button::Create(tx(StringTranslation_RestoreDefaults));
+        auto applyButton = Button::Create(tx(StringTranslation::ApplyChanges));
+        auto restoreButton = Button::Create(tx(StringTranslation::RestoreDefaults));
 
         applyButton->GetSignal(Widget::OnLeftClick).Connect(std::bind(&SettingsWindow::onApplyButtonClicked, this));
         restoreButton->GetSignal(Widget::OnLeftClick).Connect(std::bind(&SettingsWindow::onRestoreButtonClicked, this));
@@ -95,19 +95,19 @@ namespace gui {
         auto onModify = [&]() { m_graphicsModified = true; };
 
         auto resolutionCombo = addCombo(table, onModify, userConfiguration::graphics::resolution,
-            tx(StringTranslation_ScreenResolution), 0, 0, 1, 0, 3, 1);
+            tx(StringTranslation::ScreenResolution), 0, 0, 1, 0, 3, 1);
 
         auto fullscreenCheckbox = addCheckbox(table, onModify, userConfiguration::graphics::fullscreen,
-            tx(StringTranslation_FullScreen), 0, 1, 1, 1);
+            tx(StringTranslation::FullScreen), 0, 1, 1, 1);
 
         auto vsyncCheckbox = addCheckbox(table, onModify, userConfiguration::graphics::vsync,
-            tx(StringTranslation_VSync), 0, 2, 1, 2);
+            tx(StringTranslation::VSync), 0, 2, 1, 2);
 
         auto antiAliasingCombo = addCombo(table, onModify, userConfiguration::graphics::antiAliasing,
-            tx(StringTranslation_AntiAliasing), 0, 3, 1, 3);
+            tx(StringTranslation::AntiAliasing), 0, 3, 1, 3);
 
         auto showFpsCheckbox = addCheckbox(table, onModify, userConfiguration::graphics::showFps,
-            tx(StringTranslation_ShowFps), 0, 4, 1, 4);
+            tx(StringTranslation::ShowFps), 0, 4, 1, 4);
 
         initScreenResolutionOptions(resolutionCombo);
         initAntiAliasingOptions(antiAliasingCombo);
@@ -120,16 +120,16 @@ namespace gui {
         auto table = Table::Create();
         auto onModify = [&]() { m_audioModified = true; };
 
-        insertLabelRow(tx(StringTranslation_MenuSoundEffects), table, 0, 0);
+        insertLabelRow(tx(StringTranslation::MenuSoundEffects), table, 0, 0);
         insertRow(getScale(userConfiguration::audio::menuEffects, onModify), table, 1, 0, 11);
 
-        insertLabelRow(tx(StringTranslation_GameSoundEffects), table, 0, 1);
+        insertLabelRow(tx(StringTranslation::GameSoundEffects), table, 0, 1);
         insertRow(getScale(userConfiguration::audio::gameEffects, onModify), table, 1, 1, 11);
 
-        insertLabelRow(tx(StringTranslation_MenuMusic), table, 0, 2);
+        insertLabelRow(tx(StringTranslation::MenuMusic), table, 0, 2);
         insertRow(getScale(userConfiguration::audio::menuMusic, onModify), table, 1, 2, 11);
 
-        insertLabelRow(tx(StringTranslation_GameMusic), table, 0, 3);
+        insertLabelRow(tx(StringTranslation::GameMusic), table, 0, 3);
         insertRow(getScale(userConfiguration::audio::gameMusic, onModify), table, 1, 3, 11);
 
         box->Pack(table);
@@ -144,26 +144,26 @@ namespace gui {
         };
 
         insertLabelRow("", table, 0, 0);
-        insertLabelRow(tx(StringTranslation_Main), table, 1, 0, 10, 1);
-        insertLabelRow(tx(StringTranslation_Alternative), table, 11, 0, 10, 1);
+        insertLabelRow(tx(StringTranslation::Main), table, 1, 0, 10, 1);
+        insertLabelRow(tx(StringTranslation::Alternative), table, 11, 0, 10, 1);
 
-        insertLabelRow(tx(StringTranslation_Thrust), table, 0, 1);
+        insertLabelRow(tx(StringTranslation::Thrust), table, 0, 1);
         addRow(userConfiguration::controls::mainThrust, 1, 1, 10, 1);
         addRow(userConfiguration::controls::altThrust, 11, 1, 10, 1);
 
-        insertLabelRow(tx(StringTranslation_Left), table, 0, 2);
+        insertLabelRow(tx(StringTranslation::Left), table, 0, 2);
         addRow(userConfiguration::controls::mainLeft, 1, 2, 10, 1);
         addRow(userConfiguration::controls::altLeft, 11, 2, 10, 1);
 
-        insertLabelRow(tx(StringTranslation_Right), table, 0, 3);
+        insertLabelRow(tx(StringTranslation::Right), table, 0, 3);
         addRow(userConfiguration::controls::mainRight, 1, 3, 10, 1);
         addRow(userConfiguration::controls::altRight, 11, 3, 10, 1);
 
-        insertLabelRow(tx(StringTranslation_Shoot), table, 0, 4);
+        insertLabelRow(tx(StringTranslation::Shoot), table, 0, 4);
         addRow(userConfiguration::controls::mainShoot, 1, 4, 10, 1);
         addRow(userConfiguration::controls::altShoot, 11, 4, 10, 1);
 
-        insertLabelRow(tx(StringTranslation_Chat), table, 0, 5);
+        insertLabelRow(tx(StringTranslation::Chat), table, 0, 5);
         addRow(userConfiguration::controls::mainChat, 1, 5, 10, 1);
         addRow(userConfiguration::controls::altChat, 11, 5, 10, 1);
 
@@ -176,7 +176,7 @@ namespace gui {
         auto onModify = [&]() { m_audioModified = true; };
 
         auto nameEntry = getEntry(userConfiguration::network::name, onModify);
-        insertLabelRow(tx(StringTranslation_NetworkName), table, 0, 0);
+        insertLabelRow(tx(StringTranslation::NetworkName), table, 0, 0);
         insertRow(nameEntry, table, 1, 0, 11, 1);
 
         box->Pack(table);
@@ -241,7 +241,7 @@ namespace gui {
 
         if (button.get() != nullptr)
         {
-            button->SetLabel(tx(StringTranslation_PressKey));
+            button->SetLabel(tx(StringTranslation::PressKey));
         }
     }
 
@@ -323,10 +323,10 @@ namespace gui {
         }
 
         auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
-            tx(StringTranslation_UnsavedChanges),
-            tx(StringTranslation_ApplyMadeChanges),
-            tx(StringTranslation_ApplyChanges),
-            tx(StringTranslation_DiscardChanges),
+            tx(StringTranslation::UnsavedChanges),
+            tx(StringTranslation::ApplyMadeChanges),
+            tx(StringTranslation::ApplyChanges),
+            tx(StringTranslation::DiscardChanges),
             std::bind(&SettingsWindow::onSaveChangesConfirmation, this, std::placeholders::_1));
 
         m_guiManager.makeTopMost(confirmationWindow);
@@ -349,10 +349,10 @@ namespace gui {
     void SettingsWindow::onRestoreButtonClicked()
     {
         auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
-            tx(StringTranslation_RestoreDefaults),
-            tx(StringTranslation_ResetAllValuesToDefault),
-            tx(StringTranslation_RestoreDefaults),
-            tx(StringTranslation_Cancel),
+            tx(StringTranslation::RestoreDefaults),
+            tx(StringTranslation::ResetAllValuesToDefault),
+            tx(StringTranslation::RestoreDefaults),
+            tx(StringTranslation::Cancel),
             std::bind(&SettingsWindow::onRestoreDefaultsConfirmation, this, std::placeholders::_1));
 
         m_guiManager.makeTopMost(confirmationWindow);

@@ -16,23 +16,24 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace asset {
 
-    enum TextureAsset
+    enum class TextureAsset
     {
-        TextureAsset_Rockets = 0,
-		TextureAsset_Cave1
+        Rockets1 = 0,
+		Landscape1
     };
 
-    enum SoundAsset
-    {
-    };
-
-    enum FontAsset
+    enum class SoundAsset
     {
     };
 
-    enum SchemaAsset
+    enum class FontAsset
     {
-        SchemaAsset_Rocket1
+    };
+
+    enum class SchemaAsset
+    {
+        Rocket1,
+		Landscape1
     };
 }
 }

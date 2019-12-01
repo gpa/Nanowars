@@ -1,0 +1,30 @@
+{
+	"scale": {
+		"x": 25,
+		"y": 40
+	},
+	"areas": [
+		{
+			"type": "launchpad",
+			"lowerBound": {
+				"x": 1621,
+				"y": 500
+			},
+			"upperBound": {
+				"x": 1721,
+				"y": 550
+			}
+		},
+		{
+			"type": "launchpad",
+			"lowerBound": {
+				"x": 105,
+				"y": 1927
+			},
+			"upperBound": {
+				"x": 205,
+				"y": 1977
+			}
+		}
+	]
+}

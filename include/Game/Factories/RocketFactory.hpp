@@ -24,16 +24,6 @@ namespace game {
         {
         public:
             void build(GameWorld& gameWorld, AssetHolder& assetHolder, GameObject& gameObject) override;
-
-        protected:
-            static constexpr auto xDirectionProperty = "vx";
-            static constexpr auto yDirectionProperty = "vy";
-            static constexpr auto enginesProperty = "engines";
-            static constexpr auto weaponSlotsProperty = "weapon_slots";
-            static constexpr auto mainEngineTypeProperty = "mainEngine";
-            static constexpr auto engineTypeProperty = "engineType";
-            static constexpr auto leftEngineTypeProperty = "positionalLeftEngine";
-            static constexpr auto rightEngineTypeProperty = "positionalRightEngine";
         };
     }
 }

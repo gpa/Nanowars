@@ -31,7 +31,7 @@ namespace util {
             : m_size(size)
             , m_array(new T[size.x * size.y])
         {
-            for (long i = 0; i < size.x * size.y; ++i)
+            for (unsigned long i = 0; i < size.x * size.y; ++i)
                 m_array[i] = 0;
         }
 

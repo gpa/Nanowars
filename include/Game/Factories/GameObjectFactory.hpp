@@ -45,13 +45,26 @@ namespace game {
             static constexpr auto linearDampingProperty = "linear_damping";
             static constexpr auto rotationalDampingProperty = "rotational_damping";
             static constexpr auto gravityScaleProperty = "gravity_scale";
-            static constexpr auto xPositionProperty = "x";
-            static constexpr auto yPositionProperty = "y";
+            static constexpr auto xProperty = "x";
+            static constexpr auto yProperty = "y";
+            static constexpr auto vxProperty = "vx";
+            static constexpr auto vyProperty = "vy";
             static constexpr auto textureProperty = "texture";
             static constexpr auto textureRectLeftProperty = "left";
             static constexpr auto textureRectTopProperty = "top";
             static constexpr auto textureRectWidthProperty = "width";
             static constexpr auto textureRectHeightProperty = "height";
+            static constexpr auto lowerBoundProperty = "lowerBound";
+            static constexpr auto upperBoundProperty = "upperBound";
+
+			// game object dependent
+            static constexpr auto areasProperty = "areas";
+            static constexpr auto enginesProperty = "engines";
+            static constexpr auto weaponSlotsProperty = "weapon_slots";
+            static constexpr auto mainEngineTypeProperty = "mainEngine";
+            static constexpr auto engineTypeProperty = "engineType";
+            static constexpr auto leftEngineTypeProperty = "positionalLeftEngine";
+            static constexpr auto rightEngineTypeProperty = "positionalRightEngine";
 
             static sf::Sprite createSpriteFromTexture(sf::Sprite& s, const sf::Texture& texture, sf::FloatRect scaleRect);
             static sf::FloatRect createFixturesFromSchema(const rapidjson::Document& document, b2Body& body, sf::Vector2f scale);

@@ -36,8 +36,8 @@ namespace gui {
         SetStyle(sfg::Window::Style::NO_STYLE);
         SetRequisition(sf::Vector2f(400, 700));
 
-        auto settingsButton = sfg::Button::Create(tx(StringTranslation_Settings));
-        auto quitButton = sfg::Button::Create(tx(StringTranslation_ExitNanowars));
+        auto settingsButton = sfg::Button::Create(tx(StringTranslation::Settings));
+        auto quitButton = sfg::Button::Create(tx(StringTranslation::ExitNanowars));
 
         auto layoutBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 50.f);
         auto logo = sfg::Label::Create(core::constants::windowTitle);
@@ -48,8 +48,8 @@ namespace gui {
 
         if (m_guiManager.getGameManager().isGameRunning())
         {
-            auto resumeButton = sfg::Button::Create(tx(StringTranslation_Resume));
-            auto quitToMainMenuButton = sfg::Button::Create(tx(StringTranslation_ReturnToMainMenu));
+            auto resumeButton = sfg::Button::Create(tx(StringTranslation::Resume));
+            auto quitToMainMenuButton = sfg::Button::Create(tx(StringTranslation::ReturnToMainMenu));
 
             menuBox->Pack(resumeButton);
             menuBox->Pack(settingsButton);
@@ -61,9 +61,9 @@ namespace gui {
         }
         else
         {
-            auto onlineButton = sfg::Button::Create(tx(StringTranslation_OnlineGame));
-            auto lanButton = sfg::Button::Create(tx(StringTranslation_LanGame));
-            auto localButton = sfg::Button::Create(tx(StringTranslation_LocalGame));
+            auto onlineButton = sfg::Button::Create(tx(StringTranslation::OnlineGame));
+            auto lanButton = sfg::Button::Create(tx(StringTranslation::LanGame));
+            auto localButton = sfg::Button::Create(tx(StringTranslation::LocalGame));
 
             menuBox->Pack(onlineButton);
             menuBox->Pack(lanButton);
@@ -128,10 +128,10 @@ namespace gui {
 		}
 
         auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
-            tx(StringTranslation_ExitNanowars),
-            tx(StringTranslation_ExitGameAndReturnToDesktop),
-            tx(StringTranslation_Exit),
-            tx(StringTranslation_Cancel),
+            tx(StringTranslation::ExitNanowars),
+            tx(StringTranslation::ExitGameAndReturnToDesktop),
+            tx(StringTranslation::Exit),
+            tx(StringTranslation::Cancel),
             std::bind(&MainWindow::onExitConfirmation, this, std::placeholders::_1));
 
         m_guiManager.makeTopMost(confirmationWindow);
@@ -145,10 +145,10 @@ namespace gui {
     void MainWindow::onReturnToMainMenuButtonClicked()
     {
         auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
-            tx(StringTranslation_ReturnToMainMenu),
-            tx(StringTranslation_ExitGameAndReturnToMainMenu),
-            tx(StringTranslation_OK),
-            tx(StringTranslation_Cancel),
+            tx(StringTranslation::ReturnToMainMenu),
+            tx(StringTranslation::ExitGameAndReturnToMainMenu),
+            tx(StringTranslation::OK),
+            tx(StringTranslation::Cancel),
             std::bind(&MainWindow::onReturnToMainMenuConfirmation, this, std::placeholders::_1));
 
         m_guiManager.makeTopMost(confirmationWindow);

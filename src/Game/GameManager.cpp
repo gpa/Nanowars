@@ -38,14 +38,19 @@ namespace game {
     {
         if (m_isGameInProgress)
             return;
-            
+
         Landscape* landscape = m_gameWorld.spawn<Landscape>();
-        Rocket* rocket = m_gameWorld.spawn<Rocket>();
 
-        rocket->getBody().SetTransform(b2Vec2(50.0f, 0.0f), 0.0f);
-
-        m_followingCamera.follow(rocket);
-        m_keyboardRocketController.setRocket(rocket);
+        for (auto& area : landscape->getAreas())
+        {
+            Rocket* rocket = m_gameWorld.spawn<Rocket>();
+            rocket->getBody().SetTransform(area.area.GetCenter(), 0.0f);
+        
+			// @TODO
+			m_followingCamera.follow(rocket);
+            m_keyboardRocketController.setRocket(rocket);
+		}
+        
         m_activeCamera = &m_followingCamera;
         m_isGameInProgress = true;
     }

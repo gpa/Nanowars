@@ -19,10 +19,31 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace game {
 
+    struct LandscapeArea
+    {
+        enum class LandscapeAreaType
+        {
+            Launchpad
+        };
+
+        b2AABB area;
+        LandscapeAreaType type;
+
+        bool operator==(const LandscapeArea& rhs);
+    };
+
     class Landscape : public DestructableGameObject
     {
     public:
         Landscape(GameWorld& parent, b2Body& body);
+
+        void addArea(LandscapeArea landscapeArea);
+        void removeArea(LandscapeArea landscapeArea);
+
+		const vector<LandscapeArea>& getAreas() const;
+
+    private:
+        vector<LandscapeArea> m_areas;
     };
 }
 }

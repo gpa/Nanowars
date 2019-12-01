@@ -32,8 +32,8 @@ namespace algorithms {
         int imageSizeX = imageAccessor.getSize().x;
         int imageSizeY = imageAccessor.getSize().y;
 
-        int regionWidth = m_divisionFactor.x * imageSizeX;
-        int regionHeight = m_divisionFactor.y * imageSizeY;
+        int regionWidth = static_cast<int>(m_divisionFactor.x * imageSizeX);
+        int regionHeight = static_cast<int>(m_divisionFactor.y * imageSizeY);
 
         int regionCountX = imageSizeX / regionWidth + 1;
         int regionCountY = imageSizeY / regionHeight + 1;

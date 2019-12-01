@@ -31,8 +31,8 @@ namespace game {
         {
             Rocket* rocket = static_cast<Rocket*>(&gameObject);
 
-            const auto& texture = assetHolder.getTexture(TextureAsset_Rockets);
-            const Document& schema = assetHolder.getSchema(SchemaAsset_Rocket1);
+            const auto& texture = assetHolder.getTexture(TextureAsset::Rockets1);
+            const Document& schema = assetHolder.getSchema(SchemaAsset::Rocket1);
             float scale = schema.HasMember(scaleProperty) ? schema[scaleProperty].GetFloat() : 1.0f;
 
             vector<RocketEngine> engines;
@@ -42,10 +42,10 @@ namespace game {
                 const Value& engineSchema = enginesSchema[k];
 
                 RocketEngine rocketEngine;
-                rocketEngine.position.x = -engineSchema[xPositionProperty].GetFloat() * scale;
-                rocketEngine.position.y = -engineSchema[yPositionProperty].GetFloat() * scale;
-                rocketEngine.force.x = -engineSchema[xDirectionProperty].GetFloat();
-                rocketEngine.force.y = -engineSchema[yDirectionProperty].GetFloat();
+                rocketEngine.position.x = -engineSchema[xProperty].GetFloat() * scale;
+                rocketEngine.position.y = -engineSchema[yProperty].GetFloat() * scale;
+                rocketEngine.force.x = -engineSchema[vxProperty].GetFloat();
+                rocketEngine.force.y = -engineSchema[vyProperty].GetFloat();
 
                 string type = engineSchema[engineTypeProperty].GetString();
                 if (type == mainEngineTypeProperty)
@@ -69,10 +69,10 @@ namespace game {
             {
                 const Value& slotSchema = weaponSchema[k];
                 RocketWeaponSlot slot;
-                slot.position.x = -slotSchema[xPositionProperty].GetFloat() * scale;
-                slot.position.y = -slotSchema[yPositionProperty].GetFloat() * scale;
-                slot.direction.x = -slotSchema[xDirectionProperty].GetFloat();
-                slot.direction.y = -slotSchema[yDirectionProperty].GetFloat();
+                slot.position.x = -slotSchema[xProperty].GetFloat() * scale;
+                slot.position.y = -slotSchema[yProperty].GetFloat() * scale;
+                slot.direction.x = -slotSchema[vxProperty].GetFloat();
+                slot.direction.y = -slotSchema[vyProperty].GetFloat();
                 weaponSlots.push_back(slot);
             }
 

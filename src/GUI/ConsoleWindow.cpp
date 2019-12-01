@@ -56,7 +56,7 @@ namespace gui {
         m_consoleInput = consoleInput;
         m_consoleOutput = consoleLabel;
         m_consoleScrollWindow = consoleOutput;
-        SetRequisition(sf::Vector2f(m_guiManager.getWindow().getSize().x, 200.f));
+        SetRequisition(sf::Vector2f(static_cast<float>(m_guiManager.getWindow().getSize().x), 200.f));
         FixedPositionWindow::initialize();
     }
 
@@ -101,7 +101,7 @@ namespace gui {
         m_console.execute(input);
 
         m_inputs.push_back(input);
-        m_inputScrollCurrentIndex = m_inputs.size();
+        m_inputScrollCurrentIndex = static_cast<int>(m_inputs.size());
 
         const string& output = m_consoleOutput->GetText();
         m_consoleOutput->SetText(output + "\n" + cmd);

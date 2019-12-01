@@ -35,7 +35,7 @@ namespace math {
         CollisionRing(vector<Vector2f> vertices);
         CollisionRing(Vector2f* vertices, Vector2f* verticesEnd);
 
-        inline int getCount() const { return m_vertices.size(); }
+        inline size_t getCount() const { return m_vertices.size(); }
         inline const Vector2f* getVertices() const { return m_vertices.data(); }
 
         AABB getAABB() const;
@@ -47,7 +47,7 @@ namespace math {
         bool intersects(const AABB& aabb) const;
         bool intersects(const CollisionRing& collisionRing) const;
 
-        inline Vector2f& operator[](int index) { return m_vertices[index]; }
+        inline Vector2f& operator[](size_t index) { return m_vertices[index]; }
 
         void correct();
 

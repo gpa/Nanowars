@@ -16,9 +16,29 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace game {
 
+    bool LandscapeArea::operator==(const LandscapeArea& rhs)
+    {
+        return this->area.lowerBound == this->area.lowerBound && this->area.upperBound == rhs.area.upperBound && this->type == rhs.type;
+    }
+
     Landscape::Landscape(GameWorld& parent, b2Body& body)
         : DestructableGameObject(parent, body, GameObjectType::e_landscape)
     {
+    }
+
+    void Landscape::addArea(LandscapeArea landscapeArea)
+    {
+        m_areas.push_back(landscapeArea);
+    }
+
+    void Landscape::removeArea(LandscapeArea landscapeArea)
+    {
+        m_areas.erase(std::remove(m_areas.begin(), m_areas.end(), landscapeArea), m_areas.end());
+    }
+
+    const vector<LandscapeArea>& Landscape::getAreas() const
+    {
+        return m_areas;
     }
 }
 }

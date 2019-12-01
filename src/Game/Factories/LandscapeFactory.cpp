@@ -17,6 +17,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Algorithms/CaveGenerator.hpp"
 #include "Util/ImageAccessorSfmlImpl.hpp"
 #include "Util/Box2DConverter.hpp"
+#include "Core/Constants.hpp"
 #include "Asset/Assets.hpp"
 
 #include "Core/Constants.hpp"
@@ -36,11 +37,17 @@ namespace game {
         void LandscapeFactory::build(GameWorld& gameWorld, AssetHolder& assetHolder, GameObject& gameObject)
         {
             Landscape* landscape = static_cast<Landscape*>(&gameObject);
+            auto& schema = assetHolder.getSchema(SchemaAsset::Landscape1);
 
-            auto& texture = assetHolder.getUniqueTexture(TextureAsset_Cave1);
+            auto& texture = assetHolder.getUniqueTexture(TextureAsset::Landscape1);
             Image image = texture.copyToImage();
 
-            b2Vec2 scale = { 25.0f, 40.0f };
+            b2Vec2 scale = { 1.f, 1.f };
+            if (schema.HasMember(scaleProperty))
+            {
+                scale.x = schema[scaleProperty][xProperty].GetFloat();
+                scale.y = schema[scaleProperty][xProperty].GetFloat();
+			}
 
             ImageToMapGenerator ImageToMapGenerator(Vector2f(0.05f, 0.05f), 0.5f);
             auto collisionRings = ImageToMapGenerator.getCollisionRings(ImageAccessorSfmlImpl(image));
@@ -62,6 +69,30 @@ namespace game {
             landscape->getBody().SetType(b2BodyType::b2_staticBody);
 
             landscape->initializeDestructableBehavior(image);
+
+            const Value& areasSchema = schema[areasProperty];
+
+            for (SizeType k = 0; k < areasSchema.Size(); ++k)
+            {
+                const Value& areaSchema = areasSchema[k];
+                LandscapeArea landscapeArea;
+                b2AABB aabb;
+
+                aabb.lowerBound = b2Vec2(
+                    areaSchema[lowerBoundProperty][xProperty].GetFloat() / constants::meterToPixelRatio * scale.x,
+                    areaSchema[lowerBoundProperty][yProperty].GetFloat() / constants::meterToPixelRatio * scale.y);
+
+                aabb.upperBound = b2Vec2(
+                    areaSchema[upperBoundProperty][xProperty].GetFloat() / constants::meterToPixelRatio * scale.x,
+                    areaSchema[upperBoundProperty][yProperty].GetFloat() / constants::meterToPixelRatio * scale.y);
+
+                auto test = areaSchema["type"].GetString();
+
+                landscapeArea.area = aabb;
+                landscapeArea.type = LandscapeArea::LandscapeAreaType::Launchpad;
+
+                landscape->addArea(landscapeArea);
+            }
 
             auto& sprite = landscape->getSprite();
             sprite.setTexture(texture);
