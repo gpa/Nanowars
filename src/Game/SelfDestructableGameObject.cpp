@@ -27,6 +27,6 @@ namespace game {
     {
         if (m_lifetimeClock.getElapsedTime().asSeconds() > m_lifetimeInSeconds)
             m_parent.kill(*this);
-	}
+    }
 }
 }

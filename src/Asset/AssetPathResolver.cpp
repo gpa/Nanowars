@@ -17,12 +17,12 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace asset {
 
-	using std::filesystem::path;
+    using std::filesystem::path;
 
     string AssetPathResolver::getPath(TextureAsset textureAsset) const
     {
         const char* files[] = { "rockets1.png", "landscape1.png" };
-		auto fullPath = path("data") / path("textures") / path(string(files[(int)textureAsset]));
+        auto fullPath = path("data") / path("textures") / path(string(files[(int)textureAsset]));
         return fullPath.string();
     }
 

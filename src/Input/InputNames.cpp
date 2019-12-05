@@ -11,16 +11,18 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Util/InputUtil.hpp"
+#include "Input/InputNames.hpp"
 
 namespace nanowars {
-namespace util {
+namespace input {
 
-    std::string toString(sf::Keyboard::Key key)
+    std::string InputNames::toString(sf::Keyboard::Key key)
     {
-		static_assert(sf::Keyboard::KeyCount == 101);
-        #define insert_case(id) case sf::Keyboard::id: return #id
-        switch(key)
+        static_assert(sf::Keyboard::KeyCount == 101);
+#define insert_case(id)    \
+    case sf::Keyboard::id: \
+        return #id
+        switch (key)
         {
             insert_case(Unknown);
             insert_case(A);
@@ -125,7 +127,7 @@ namespace util {
             insert_case(F15);
             insert_case(Pause);
         }
-        #undef insert_case
+#undef insert_case
         return "Unknown";
     }
 }

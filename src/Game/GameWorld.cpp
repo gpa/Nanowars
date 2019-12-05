@@ -66,11 +66,11 @@ namespace game {
 
     void GameWorld::reset()
     {
-		for (auto& body : m_objects)
+        for (auto& body : m_objects)
             m_world.DestroyBody(&body->getBody());
-        
-		m_objects.clear();
-		m_objectsToRemoveCache.clear();
+
+        m_objects.clear();
+        m_objectsToRemoveCache.clear();
     }
 }
 }

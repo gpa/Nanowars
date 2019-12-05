@@ -13,13 +13,13 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Controllers/RocketController.hpp"
+#include "Input/RocketController.hpp"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
 
 namespace nanowars {
-namespace controllers {
+namespace input {
 
     using namespace sf;
 

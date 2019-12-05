@@ -25,13 +25,12 @@ namespace math {
     {
     }
 
-	CollisionRing::CollisionRing(vector<Vector2i> vertices)
+    CollisionRing::CollisionRing(vector<Vector2i> vertices)
     {
-		m_vertices.reserve(vertices.size());
+        m_vertices.reserve(vertices.size());
         for (const auto& v : vertices)
             m_vertices.push_back(Vector2f(static_cast<float>(v.x), static_cast<float>(v.y)));
     }
-
 
     CollisionRing::CollisionRing(Vector2f* vertices, Vector2f* verticesEnd)
         : m_vertices(vertices, verticesEnd)

@@ -165,7 +165,7 @@ namespace algorithms {
             int x1 = static_cast<int>(seg.second.x);
             int y1 = static_cast<int>(seg.second.y);
 
-           ImagePainter::drawLine(
+            ImagePainter::drawLine(
                 x0, y0, x1, y1, bmp, boundaryColor);
         }
 

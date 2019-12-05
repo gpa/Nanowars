@@ -47,7 +47,7 @@ namespace game {
             {
                 scale.x = schema[scaleProperty][xProperty].GetFloat();
                 scale.y = schema[scaleProperty][xProperty].GetFloat();
-			}
+            }
 
             ImageToMapGenerator ImageToMapGenerator(Vector2f(0.05f, 0.05f), 0.5f);
             auto collisionRings = ImageToMapGenerator.getCollisionRings(ImageAccessorSfmlImpl(image));

@@ -12,28 +12,16 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
-
-#include "Game/GameObjects/Rocket.hpp"
+#include <SFML/Window/Keyboard.hpp>
+#include <string>
 
 namespace nanowars {
-namespace controllers {
+namespace input {
 
-    using game::Rocket;
-
-    class RocketController
+    class InputNames
     {
     public:
-        RocketController();
-        void setRocket(Rocket* r);
-        inline Rocket* getRocket() { return m_controlledRocket; }
-
-    protected:
-        void fly();
-        void flyLeft();
-        void flyRight();
-        void shoot();
-
-        Rocket* m_controlledRocket;
-    };
+        static std::string toString(sf::Keyboard::Key);
+	};
 }
 }

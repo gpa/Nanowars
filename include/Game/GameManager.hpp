@@ -15,7 +15,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Core/GameLoopParticipant.hpp"
 #include "Graphics/FollowingCamera.hpp"
-#include "Controllers/KeyboardRocketController.hpp"
+#include "Input/KeyboardRocketController.hpp"
 #include "Game/GameWorld.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -29,7 +29,7 @@ namespace game {
     using namespace game;
     using namespace core;
     using namespace graphics;
-    using namespace controllers;
+    using namespace input;
     using namespace sf;
 
     class GameManager : public GameLoopParticipant

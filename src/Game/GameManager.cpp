@@ -45,12 +45,12 @@ namespace game {
         {
             Rocket* rocket = m_gameWorld.spawn<Rocket>();
             rocket->getBody().SetTransform(area.area.GetCenter(), 0.0f);
-        
-			// @TODO
-			m_followingCamera.follow(rocket);
+
+            // @TODO
+            m_followingCamera.follow(rocket);
             m_keyboardRocketController.setRocket(rocket);
-		}
-        
+        }
+
         m_activeCamera = &m_followingCamera;
         m_isGameInProgress = true;
     }
