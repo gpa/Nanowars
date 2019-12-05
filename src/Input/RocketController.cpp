@@ -19,7 +19,7 @@ namespace input {
     RocketController::RocketController()
     {
         m_controlledRocket = nullptr;
-	}
+    }
 
     void RocketController::setRocket(Rocket* rocket)
     {

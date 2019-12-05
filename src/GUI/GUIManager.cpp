@@ -115,8 +115,8 @@ namespace gui {
         for (auto& window : m_removed)
             m_desktop.Remove(window);
 
-		m_removed.clear();
-	}
+        m_removed.clear();
+    }
 
     void GUIManager::spawnMainMenu()
     {

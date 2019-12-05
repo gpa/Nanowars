@@ -124,8 +124,8 @@ namespace gui {
         if (!m_guiManager.getGameManager().isGameRunning())
         {
             exitApplication();
-			return;
-		}
+            return;
+        }
 
         auto confirmationWindow = std::make_shared<ConfirmationWindow>(m_guiManager, m_assetHolder.getNewHolder(),
             tx(StringTranslation::ExitNanowars),

@@ -18,9 +18,11 @@ namespace input {
 
     std::string InputNames::toString(sf::Keyboard::Key key)
     {
-		static_assert(sf::Keyboard::KeyCount == 101);
-        #define insert_case(id) case sf::Keyboard::id: return #id
-        switch(key)
+        static_assert(sf::Keyboard::KeyCount == 101);
+#define insert_case(id)    \
+    case sf::Keyboard::id: \
+        return #id
+        switch (key)
         {
             insert_case(Unknown);
             insert_case(A);
@@ -125,7 +127,7 @@ namespace input {
             insert_case(F15);
             insert_case(Pause);
         }
-        #undef insert_case
+#undef insert_case
         return "Unknown";
     }
 }
