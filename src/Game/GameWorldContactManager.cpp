@@ -48,7 +48,7 @@ namespace game {
 		if (static_cast<GameObject*>(fixture->GetBody()->GetUserData())->getType() == GameObjectType::Landscape)
             return true;
 
-        return true;
+        return false;
     }
 
     bool GameWorldContactManager::ShouldCollide(b2ParticleSystem* particleSystem, int32 particleIndexA, int32 particleIndexB)
