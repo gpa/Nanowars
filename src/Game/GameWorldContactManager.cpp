@@ -45,7 +45,7 @@ namespace game {
     {
         auto type = static_cast<GameObject*>(fixture->GetBody()->GetUserData())->getType();
 
-		if (static_cast<GameObject*>(fixture->GetBody()->GetUserData())->getType() == GameObjectType::Landscape)
+        if (static_cast<GameObject*>(fixture->GetBody()->GetUserData())->getType() == GameObjectType::Landscape)
             return true;
 
         return false;

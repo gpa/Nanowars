@@ -29,10 +29,10 @@ namespace game {
 
     GameWorld::~GameWorld()
     {
-		// our objects have to be deallocated before b2World
+        // our objects have to be deallocated before b2World
         m_objects.clear();
         m_objectsToRemoveCache.clear();
-	}
+    }
 
     void GameWorld::step(float dt)
     {

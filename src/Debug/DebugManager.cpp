@@ -31,7 +31,7 @@ namespace debug {
     {
         if (m_debugCamera)
             static_cast<FreeCamera*>(m_debugCamera.get())->handleEvent(event);
-        
+
         return false;
     }
 

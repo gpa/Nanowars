@@ -33,7 +33,7 @@ namespace game {
             throw new std::logic_error("A game is already running.");
 
         m_gameWorld = std::make_shared<GameWorld>(m_assetHolder);
-		m_gameWorld->registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
+        m_gameWorld->registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
         m_gameWorld->registerFactory<Rocket>(std::make_shared<RocketFactory>());
         m_gameWorld->registerFactory<Bullet>(std::make_shared<BulletFactory>());
 
@@ -43,7 +43,7 @@ namespace game {
             Rocket* rocket = m_gameWorld->spawn<Rocket>();
             rocket->getBody().SetTransform(area.area.GetCenter(), 0.0f);
 
-			m_activeCamera = std::make_shared<FollowingCamera>(40.0f);
+            m_activeCamera = std::make_shared<FollowingCamera>(40.0f);
             static_cast<FollowingCamera*>(m_activeCamera.get())->follow(rocket);
             m_keyboardRocketController.setRocket(rocket);
         }
@@ -63,7 +63,7 @@ namespace game {
     void GameManager::update(float dt)
     {
         if (m_gameWorld)
-			m_gameWorld->step(dt);
+            m_gameWorld->step(dt);
     }
 
     bool GameManager::handleEvent(const Event& event)
@@ -80,8 +80,8 @@ namespace game {
     {
         if (!m_gameWorld)
             return;
-		
-		if (m_activeCamera)
+
+        if (m_activeCamera)
             window.setView(m_activeCamera->getView());
 
         for (const auto& gameObject : m_gameWorld->getGameObjects())

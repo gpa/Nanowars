@@ -97,12 +97,12 @@ namespace asset {
         clean(m_loadedFonts);
     }
 
-	template shared_ptr<const Texture> AssetManager::getAsset<TextureAsset, Texture>(map<TextureAsset, weak_ptr<const Texture>>* container, TextureAsset identifier);
+    template shared_ptr<const Texture> AssetManager::getAsset<TextureAsset, Texture>(map<TextureAsset, weak_ptr<const Texture>>* container, TextureAsset identifier);
     template shared_ptr<const SoundBuffer> AssetManager::getAsset<SoundAsset, SoundBuffer>(map<SoundAsset, weak_ptr<const SoundBuffer>>* container, SoundAsset identifier);
     template shared_ptr<const Font> AssetManager::getAsset<FontAsset, Font>(map<FontAsset, weak_ptr<const Font>>* container, FontAsset identifier);
     template shared_ptr<const Document> AssetManager::getAsset<SchemaAsset, Document>(map<SchemaAsset, weak_ptr<const Document>>* container, SchemaAsset identifier);
-    
-	template void AssetManager::clean<TextureAsset, Texture>(map<TextureAsset, weak_ptr<const Texture>>& container);
+
+    template void AssetManager::clean<TextureAsset, Texture>(map<TextureAsset, weak_ptr<const Texture>>& container);
     template void AssetManager::clean<SoundAsset, SoundBuffer>(map<SoundAsset, weak_ptr<const SoundBuffer>>& container);
     template void AssetManager::clean<FontAsset, Font>(map<FontAsset, weak_ptr<const Font>>& container);
     template void AssetManager::clean<SchemaAsset, Document>(map<SchemaAsset, weak_ptr<const Document>>& container);
@@ -111,7 +111,7 @@ namespace asset {
     template shared_ptr<SoundBuffer> AssetManager::load<SoundBuffer, SoundAsset>(SoundAsset key) const;
     template shared_ptr<Font> AssetManager::load<Font, FontAsset>(FontAsset key) const;
 
-	template <>
+    template <>
     shared_ptr<Document> AssetManager::load<Document, SchemaAsset>(SchemaAsset key) const
     {
         string path = m_assetPathResolver.getPath(key);
