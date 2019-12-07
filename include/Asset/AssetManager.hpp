@@ -62,103 +62,10 @@ namespace asset {
         AssetPathResolver m_assetPathResolver;
 
         template <typename TKey, typename TAsset>
-        inline shared_ptr<const TAsset> getAsset(map<TKey, weak_ptr<const TAsset>>* container, TKey identifier)
-        {
-            auto iter = container->find(identifier);
-            if (iter != container->end())
-            {
-                weak_ptr<const TAsset> weakReference = (*iter).second;
-                if (!weakReference.expired())
-                {
-                    shared_ptr<const TAsset> asset = weakReference.lock();
-                    return asset;
-                }
-            }
-
-            shared_ptr<const TAsset> asset = load<TAsset, TKey>(identifier);
-            (*container)[identifier] = asset;
-            return asset;
-        }
+        shared_ptr<const TAsset> getAsset(map<TKey, weak_ptr<const TAsset>>* container, TKey identifier);
 
         template <typename TKey, typename TAsset>
-        inline void clean(map<TKey, weak_ptr<const TAsset>>& container)
-        {
-            auto iter = container.begin();
-            for (; iter != container.end();)
-            {
-                if (iter->second.expired())
-                    container.erase(iter++);
-                else
-                    ++iter;
-            }
-        }
+        void clean(map<TKey, weak_ptr<const TAsset>>& container);
     };
-
-    template <typename TAsset, typename TKey>
-    shared_ptr<TAsset> AssetManager::load(TKey key) const
-    {
-        auto asset = std::make_shared<TAsset>();
-        string path = m_assetPathResolver.getPath(key);
-        asset->loadFromFile(path);
-        return asset;
-    }
-
-    template <>
-    inline shared_ptr<Document> AssetManager::load<Document, SchemaAsset>(SchemaAsset key) const
-    {
-        string path = m_assetPathResolver.getPath(key);
-        std::ifstream file(path);
-        if (!file.is_open())
-            throw new std::invalid_argument("Failed to open file " + path);
-
-        std::stringstream buffer;
-        buffer << file.rdbuf();
-        std::string data = buffer.str();
-
-        auto Asset = std::make_shared<Document>();
-        if (Asset->Parse(data.c_str()).HasParseError())
-            throw new std::runtime_error("Failed to parse " + path);
-        return Asset;
-    }
-
-	inline AssetManager::AssetManager(AssetPathResolver assetPathResolver)
-        : m_assetPathResolver(assetPathResolver)
-        , m_loadedTextures()
-        , m_loadedSchemas()
-    {
-    }
-
-    inline AssetHolder AssetManager::getNewHolder()
-    {
-        return AssetHolder(*this);
-    }
-
-    inline shared_ptr<const Texture> AssetManager::getTexture(TextureAsset textureAsset)
-    {
-        return getAsset(&m_loadedTextures, textureAsset);
-    }
-
-    inline shared_ptr<const SoundBuffer> AssetManager::getSound(SoundAsset soundAsset)
-    {
-        return getAsset(&m_loadedSounds, soundAsset);
-    }
-
-    inline shared_ptr<const Document> AssetManager::getSchema(SchemaAsset schemaAsset)
-    {
-        return getAsset(&m_loadedSchemas, schemaAsset);
-    }
-
-    inline shared_ptr<const Font> AssetManager::getFont(FontAsset fontAsset)
-    {
-        return getAsset(&m_loadedFonts, fontAsset);
-    }
-
-    inline void AssetManager::clean()
-    {
-        clean(m_loadedTextures);
-        clean(m_loadedSounds);
-        clean(m_loadedSchemas);
-        clean(m_loadedFonts);
-    }
 }
 }
