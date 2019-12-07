@@ -29,6 +29,7 @@ namespace globalization {
         ExitGameAndReturnToMainMenu,
         ExitGameAndReturnToDesktop,
 		OK,
+        Cancel,
 
         // Settings
         NanowarsSettings,
@@ -57,10 +58,10 @@ namespace globalization {
         NetworkName,
         PressKey,
         ResetAllValuesToDefault,
-        Cancel,
         ApplyMadeChanges,
         DiscardChanges,
-        UnsavedChanges
+        UnsavedChanges,
+		_StringTranslationCount
     };
 }
 }

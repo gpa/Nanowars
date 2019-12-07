@@ -42,5 +42,15 @@ namespace asset {
     {
         return "";
     }
+
+    string AssetPathResolver::getDataDirectoryLocation() const
+    {
+        return "data";
+    }
+
+    string AssetPathResolver::getLocaleDirectoryLocation() const
+    {
+        return (path("data") / path("locales")).string();
+    }
 }
 }

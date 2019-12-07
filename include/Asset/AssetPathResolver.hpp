@@ -27,6 +27,9 @@ namespace asset {
         virtual string getPath(SoundAsset textureAsset) const;
         virtual string getPath(SchemaAsset textureAsset) const;
         virtual string getPath(FontAsset textureAsset) const;
+
+        virtual string getDataDirectoryLocation() const;
+        virtual string getLocaleDirectoryLocation() const;
     };
 }
 }

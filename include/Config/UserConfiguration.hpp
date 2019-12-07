@@ -21,6 +21,9 @@ namespace config {
     namespace userConfiguration {
         using Entry = ConfigEntry::configEntry_t;
 
+        namespace general {
+            constexpr auto language = "general.language";
+        }
         namespace graphics {
             constexpr auto resolution = "graphics.resolution";
             constexpr auto antiAliasing = "graphics.anti-aliasing";
@@ -54,6 +57,8 @@ namespace config {
         inline void populateWithDefaultValues(ConfigManager& configManager)
         {
             auto& cm = configManager;
+            cm.setEntry(ConfigEntry(general::language, Entry(string("english"))));
+
             cm.setEntry(ConfigEntry(graphics::resolution, Entry(string("1024x768@32"))));
             cm.setEntry(ConfigEntry(graphics::antiAliasing, Entry(8)));
             cm.setEntry(ConfigEntry(graphics::vsync, Entry(true)));

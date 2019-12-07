@@ -28,6 +28,7 @@ namespace core {
         , m_gameManager(m_assetManager.getNewHolder())
         , m_debugManager(*this)
         , m_guiManager(*this, m_assetManager.getNewHolder())
+        , m_translationManager(AssetPathResolver(), constants::defaultLanguage)
     {
         initialize();
     }
@@ -122,7 +123,7 @@ namespace core {
 
     const TranslationManager& Application::getTranslationManager() const
     {
-        return m_TranslationManager;
+        return m_translationManager;
     }
 
     const DebugManager& Application::getDebugManager() const
@@ -152,7 +153,7 @@ namespace core {
 
     TranslationManager& Application::getTranslationManager()
     {
-        return m_TranslationManager;
+        return m_translationManager;
     }
 
     DebugManager& Application::getDebugManager()

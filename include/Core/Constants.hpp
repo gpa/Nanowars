@@ -21,6 +21,7 @@ namespace core {
         constexpr auto windowTitle = "NANOWARS";
         constexpr auto meterToPixelRatio = 100.0f;
         constexpr auto userConfigFilename = "userconfig.json";
+        constexpr auto defaultLanguage = "english";
         constexpr float defaultGravityX = 0.0f;
         constexpr float defaultGravityY = 20.8f;
         const sf::Color BackgroundColor = sf::Color(128, 128, 128);

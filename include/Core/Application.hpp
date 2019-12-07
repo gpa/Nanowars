@@ -84,7 +84,7 @@ namespace core {
 
         Mouse m_mouse;
         Keyboard m_keyboard;
-        TranslationManager m_TranslationManager;
+        TranslationManager m_translationManager;
 
         friend class debug::DebugManager;
     };

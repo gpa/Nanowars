@@ -1,0 +1,50 @@
+// English translation
+// -
+
+// menu buttons
+
+000 Online Game
+001 LAN Game
+002 Local Game
+003 Settings
+004 Exit
+005 Exit NANOWARS
+006 Resume
+007 Return to main menu
+008 Do you want to exit the game and return to main menu?
+009 Do you want to exit the game and return to desktop?
+
+010 OK
+011 Cancel
+
+// settings
+
+012 NANOWARS Settings
+013 Graphics
+014 Audio
+015 Controls
+016 Network
+017 Apply changes
+018 Restore defaults
+019 Screen resolution
+020 Fullscreen
+021 V-Sync
+022 Anti-Aliasing
+023 Show FPS
+024 Menu Sound Effects
+025 Game Sound Effects
+026 Menu Music
+027 Game Music
+028 Main
+029 Alternative
+030 Thrust
+031 Left
+032 Right
+033 Shoot
+034 Chat
+035 Network name
+036 <<PRESS>>
+037 Do you want to reset all settings to default values?
+038 Do you want to apply made changes?
+039 Discard changes
+040 Unsaved changes

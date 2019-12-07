@@ -12,56 +12,59 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Globalization/TranslationManager.hpp"
+#include <filesystem>
+#include <fstream>
+#include <sstream>
+#include <boost/algorithm/string.hpp>
 
 namespace nanowars {
 namespace globalization {
-    std::string TranslationManager::getTranslation(StringTranslation translation) const
+
+    TranslationManager::TranslationManager(AssetPathResolver assetPathResolver, std::string language)
     {
-        // obviously @TODO
-        const char* strings[] = {
-            "Online Game",
-            "LAN Game",
-            "Local Game",
-            "Settings",
-            "Exit",
-            "Exit NANOWARS",
-            "Resume",
-            "Return to main menu",
-            "Do you want to exit the game and return to main menu?",
-            "Do you want to exit the game and return to desktop?",
-            "OK",
-            "NANOWARS Settings",
-            "Graphics",
-            "Audio",
-            "Controls",
-            "Network",
-            "Apply changes",
-            "Restore defaults",
-            "Screen resolution",
-            "Fullscreen",
-            "V-Sync",
-            "Anti-Aliasing",
-            "Show FPS",
-            "Menu Sound Effects",
-            "Game Sound Effects",
-            "Menu Music",
-            "Game Music",
-            "Main",
-            "Alternative",
-            "Thrust",
-            "Left",
-            "Right",
-            "Shoot",
-            "Chat",
-            "Network name",
-            "<<PRESS>>",
-            "Do you want to reset all settings to default values?",
-            "Cancel",
-            "Do you want to apply made changes?",
-            "Discard changes",
-            "Unsaved changes"
-        };
-        return string(strings[(int)translation]);
+        load(assetPathResolver, language);
+    }
+
+    void TranslationManager::load(AssetPathResolver assetPathResolver, std::string language)
+    {
+        m_translationStrings.resize(static_cast<int>(StringTranslation::_StringTranslationCount));
+        auto localeFile = std::filesystem::path(assetPathResolver.getLocaleDirectoryLocation()) / std::filesystem::path(language + string(".txt"));
+
+        std::ifstream fileStream(localeFile.c_str());
+        if (!fileStream.is_open())
+            throw new std::invalid_argument("Failed to open the localization file " + localeFile.string());
+
+        std::string line;
+        while (std::getline(fileStream, line, '\n'))
+        {
+            boost::algorithm::trim_right_if(line, [](char x) { return x == '\r'; });
+
+            int i = 0;
+            for (; i < line.size(); ++i)
+            {
+                if (!(line[i] >= '0' && line[i] <= '9'))
+                    break;
+            }
+
+            if (i > 0 && line[i] == ' ')
+            {
+                int translationId = std::stoi(line.substr(0, i));
+                std::string translation = line.substr(i + 1, line.size());
+                m_translationStrings[translationId] = sf::String(translation);
+            }
+        }
+
+        fileStream.close();
+    }
+
+    TranslationManager::WideString TranslationManager::getTranslation(StringTranslation translation) const
+    {
+        return m_translationStrings[static_cast<int>(translation)];
+    }
+
+    const LanguageConfiguration& TranslationManager::getConfiguration() const
+    {
+        return m_languageConfiguration;
     }
 }
 }

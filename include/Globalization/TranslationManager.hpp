@@ -14,16 +14,17 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Globalization/StringTranslations.hpp"
+#include "Asset/AssetPathResolver.hpp"
 #include "Asset/Assets.hpp"
+
+#include <SFML/System/String.hpp>
 #include <vector>
-#include <string>
 
 namespace nanowars {
 namespace globalization {
 
-    using std::string;
     using std::vector;
-    using asset::FontAsset;
+    using namespace asset;
 
     struct LanguageConfiguration
     {
@@ -34,7 +35,17 @@ namespace globalization {
     class TranslationManager
     {
     public:
-        string getTranslation(StringTranslation translation) const;
+        typedef sf::String WideString;
+        TranslationManager(AssetPathResolver assetPathResolver, std::string language);
+
+        const LanguageConfiguration& getConfiguration() const;
+        WideString getTranslation(StringTranslation translation) const;
+
+    private:
+        void load(AssetPathResolver assetPathResolver, std::string language);
+
+        LanguageConfiguration m_languageConfiguration;
+        vector<WideString> m_translationStrings;
     };
 }
 }
