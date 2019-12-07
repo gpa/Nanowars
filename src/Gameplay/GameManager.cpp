@@ -12,19 +12,16 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Gameplay/GameManager.hpp"
-#include "Gameplay/Factories/RocketFactory.hpp"
-#include "Gameplay/Factories/LandscapeFactory.hpp"
-#include "Gameplay/Factories/BulletFactory.hpp"
+#include "Gameplay/Games/DeathmatchGame.hpp"
 
 namespace nanowars {
 namespace gameplay {
 
     using namespace factories;
-    using namespace entities;
+    using namespace games;
 
     GameManager::GameManager(AssetHolder&& assetHolder)
         : m_assetHolder(std::move(assetHolder))
-        , m_keyboardRocketController(KeyboardRocketControllerConfiguration())
     {
     }
 
@@ -34,25 +31,18 @@ namespace gameplay {
             throw new std::logic_error("A game is already running.");
 
         m_gameWorld = std::make_shared<GameWorld>(m_assetHolder);
-        m_gameWorld->registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
-        m_gameWorld->registerFactory<Rocket>(std::make_shared<RocketFactory>());
-        m_gameWorld->registerFactory<Bullet>(std::make_shared<BulletFactory>());
+        DeathmatchGame game(*this, *m_gameWorld.get(), m_assetHolder, GameInfo());
+        game.initialize();
 
-        Landscape* landscape = m_gameWorld->spawn<Landscape>();
-        for (auto& area : landscape->getAreas())
-        {
-            Rocket* rocket = m_gameWorld->spawn<Rocket>();
-            rocket->getBody().SetTransform(area.area.GetCenter(), 0.0f);
-
-            m_activeCamera = std::make_shared<FollowingCamera>(40.0f);
-            static_cast<FollowingCamera*>(m_activeCamera.get())->follow(rocket);
-            m_keyboardRocketController.setRocket(rocket);
-        }
+        /*auto rocketController = static_cast<RocketController*>(game.getEntityControllers()[0].get());
+		auto rocket = static_cast<Rocket*>(game.getEntityControllers()[0]->getEntity());
+        m_activeCamera = std::make_shared<FollowingCamera>(40.0f);
+        static_cast<FollowingCamera*>(m_activeCamera.get())->follow(rocket);
+        m_inputMapping.addRealtimeMapping(sf::Keyboard::Up, std::bind(&RocketController::fly, this, std::placeholders::_1);*/
     }
 
     void GameManager::exitGame()
     {
-        m_keyboardRocketController.setRocket(nullptr);
         m_gameWorld = nullptr;
     }
 
@@ -74,7 +64,7 @@ namespace gameplay {
 
     bool GameManager::handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard)
     {
-        return m_keyboardRocketController.handleContinuousEvent(mouse, keyboard);
+        return false;
     }
 
     void GameManager::render(RenderWindow& window)

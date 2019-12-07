@@ -15,7 +15,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Core/GameLoopParticipant.hpp"
 #include "Graphics/FollowingCamera.hpp"
-#include "Input/KeyboardRocketController.hpp"
 #include "Gameplay/GameWorld.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -29,7 +28,6 @@ namespace gameplay {
     using namespace gameplay;
     using namespace core;
     using namespace graphics;
-    using namespace input;
     using namespace sf;
 
     class GameManager : public GameLoopParticipant
@@ -51,8 +49,6 @@ namespace gameplay {
         shared_ptr<GameWorld> m_gameWorld;
         shared_ptr<Camera> m_activeCamera;
         AssetHolder m_assetHolder;
-        
-		KeyboardRocketController m_keyboardRocketController;
         
 		friend class debug::DebugManager;
     };

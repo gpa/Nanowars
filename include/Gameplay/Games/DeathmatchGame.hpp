@@ -13,48 +13,19 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Core/GameLoopParticipant.hpp"
-#include "Graphics/FollowingCamera.hpp"
-#include "Input/KeyboardRocketController.hpp"
-#include "Gameplay/GameWorld.hpp"
-
-#include <SFML/Graphics.hpp>
+#include "Gameplay/Games/Game.hpp"
 
 namespace nanowars {
-namespace debug {
-    class DebugConsole;
-}
 namespace gameplay {
+    namespace games {
+     
+		class DeathmatchGame : public Game
+        {
+          public:
+            DeathmatchGame(GameManager& gameManager, GameWorld& gameWorld, AssetHolder& assetHolder, GameInfo gameInfo);
 
-    using namespace gameplay;
-    using namespace core;
-    using namespace graphics;
-    using namespace input;
-    using namespace sf;
-
-    class GameManager : public GameLoopParticipant
-    {
-    public:
-        GameManager(AssetHolder&& assetHolder);
-
-        void update(float dt) override;
-        void render(RenderWindow& window) override;
-
-        bool handleEvent(const Event& event) override;
-        bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
-
-        void startGame();
-        void exitGame();
-        bool isGameRunning();
-
-    private:
-        shared_ptr<GameWorld> m_gameWorld;
-        shared_ptr<Camera> m_activeCamera;
-        AssetHolder m_assetHolder;
-        
-		KeyboardRocketController m_keyboardRocketController;
-        
-		friend class debug::DebugManager;
-    };
+			void initialize() override;
+        };
+    }
 }
 }

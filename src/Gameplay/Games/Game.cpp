@@ -13,16 +13,20 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Gameplay/Games/GameType.hpp"
+#include "Gameplay/Games/Game.hpp"
+#include "Gameplay/GameManager.hpp"
 
 namespace nanowars {
 namespace gameplay {
     namespace games {
- 
-		class GameInfo
+
+        Game::Game(GameManager& gameManager, GameWorld& gameWorld, AssetHolder& assetHolder, GameInfo gameInfo)
+            : m_gameInfo(gameInfo)
+            , m_gameManager(gameManager)
+            , m_assetHolder(assetHolder)
+            , m_gameWorld(gameWorld)
         {
-			GameType type;
-		};
-	}
+        }
+    }
 }
 }

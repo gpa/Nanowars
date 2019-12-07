@@ -11,10 +11,30 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Input/EventSystem.hpp"
+#pragma once
+
+#include "Gameplay/Games/GameInfo.hpp"
+#include "Gameplay/GameWorld.hpp"
+#include "Gameplay/EntityController.hpp"
 
 namespace nanowars {
-namespace input {
+namespace gameplay {
 
+    class GameManager;
+    namespace games {
+     
+		class Game
+        {
+        public:
+            Game(GameManager& gameManager, GameWorld& gameWorld, AssetHolder& assetHolder, GameInfo gameInfo);
+            virtual void initialize() = 0;
+
+		protected:
+            GameInfo m_gameInfo;
+            GameManager& m_gameManager;
+            GameWorld& m_gameWorld;
+            AssetHolder& m_assetHolder;
+        };
+    }
 }
 }

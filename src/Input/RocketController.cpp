@@ -11,47 +11,40 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include <Input/RocketController.hpp>
+#include "Input/RocketController.hpp"
+#include "Gameplay/Entities/Rocket.hpp"
 
 namespace nanowars {
 namespace input {
 
-    RocketController::RocketController()
-    {
-        m_controlledRocket = nullptr;
-    }
-
-    void RocketController::setRocket(Rocket* rocket)
-    {
-        m_controlledRocket = rocket;
-    }
+    using namespace gameplay::entities;
 
     void RocketController::fly()
     {
-        if (m_controlledRocket == nullptr)
+        if (m_controlledEntity == nullptr)
             return;
-        m_controlledRocket->applyMainThrust();
+        static_cast<Rocket*>(m_controlledEntity)->applyMainThrust();
     }
 
     void RocketController::flyLeft()
     {
-        if (m_controlledRocket == nullptr)
+        if (m_controlledEntity == nullptr)
             return;
-        m_controlledRocket->applyRightThrust();
+        static_cast<Rocket*>(m_controlledEntity)->applyRightThrust();
     }
 
     void RocketController::flyRight()
     {
-        if (m_controlledRocket == nullptr)
+        if (m_controlledEntity == nullptr)
             return;
-        m_controlledRocket->applyLeftThrust();
+        static_cast<Rocket*>(m_controlledEntity)->applyLeftThrust();
     }
 
     void RocketController::shoot()
     {
-        if (m_controlledRocket == nullptr)
+        if (m_controlledEntity == nullptr)
             return;
-        m_controlledRocket->shoot();
+        static_cast<Rocket*>(m_controlledEntity)->shoot();
     }
 }
 }

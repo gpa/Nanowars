@@ -13,16 +13,20 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Gameplay/Games/GameType.hpp"
+#include "Gameplay/Entity.hpp"
 
 namespace nanowars {
 namespace gameplay {
-    namespace games {
- 
-		class GameInfo
-        {
-			GameType type;
-		};
-	}
+
+    class EntityController
+    {
+    public:
+        EntityController() : m_controlledEntity(nullptr) { }
+        inline void setEntity(Entity* entity) { m_controlledEntity = entity; }
+        inline Entity* getEntity() { return m_controlledEntity; }
+
+    protected:
+        Entity* m_controlledEntity;
+    };
 }
 }
