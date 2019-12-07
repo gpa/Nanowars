@@ -19,6 +19,8 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Graphics/FreeCamera.hpp"
 #include "Graphics/Camera.hpp"
 
+#include <memory>
+
 namespace nanowars {
 namespace core {
     class Application;
@@ -29,6 +31,7 @@ namespace debug {
     using core::GameLoopParticipant;
     using graphics::FreeCamera;
     using graphics::Camera;
+	using std::shared_ptr;
 
     class DebugManager : public GameLoopParticipant
     {
@@ -48,7 +51,8 @@ namespace debug {
         Application& m_application;
         DebugConsole m_debugConsole;
         DebugRenderer m_debugRenderer;
-        FreeCamera m_freeCamera;
+        shared_ptr<Camera> m_originalCamera;
+        shared_ptr<Camera> m_debugCamera;
 
         void initializeCommands();
         void toggleFreeCamera(DebugConsole::args_t);

@@ -6,8 +6,8 @@ namespace debug {
 
     DebugManager::DebugManager(Application& application)
         : m_application(application)
-        , m_debugRenderer(application.m_gameManager.m_gameWorld.m_world)
         , m_debugConsole(*this)
+        , m_debugCamera(std::make_shared<FreeCamera>())
     {
         initializeCommands();
     }
@@ -29,7 +29,9 @@ namespace debug {
 
     bool DebugManager::handleEvent(const Event& event)
     {
-        m_freeCamera.handleEvent(event);
+        if (m_debugCamera)
+            static_cast<FreeCamera*>(m_debugCamera.get())->handleEvent(event);
+        
         return false;
     }
 
@@ -40,14 +42,15 @@ namespace debug {
 
     void DebugManager::toggleFreeCamera(DebugConsole::args_t)
     {
-        if (m_application.m_gameManager.m_activeCamera == static_cast<Camera*>(&m_freeCamera))
-            m_application.m_gameManager.m_activeCamera = &m_application.m_gameManager.m_followingCamera;
+        if (m_application.m_gameManager.m_activeCamera.get() != m_originalCamera.get())
+            m_application.m_gameManager.m_activeCamera = m_originalCamera;
         else
-            m_application.m_gameManager.m_activeCamera = &m_freeCamera;
+            m_application.m_gameManager.m_activeCamera = m_debugCamera;
     }
 
     void DebugManager::toggleDebugDraw(DebugConsole::args_t args)
     {
+        m_debugRenderer = DebugRenderer(&m_application.m_gameManager.m_gameWorld.get()->m_world);
         m_debugRenderer.setOptions(args);
     }
 }

@@ -20,7 +20,12 @@ namespace debug {
     using namespace util;
     using namespace core;
 
-    DebugRenderer::DebugRenderer(b2World& world)
+    DebugRenderer::DebugRenderer()
+        : DebugRenderer(nullptr)
+    {
+    }
+
+    DebugRenderer::DebugRenderer(b2World* world)
         : m_world(world)
         , m_cacheCircle(sf::CircleShape())
         , m_window(nullptr)
@@ -30,8 +35,11 @@ namespace debug {
     void DebugRenderer::render(RenderWindow& window)
     {
         m_window = &window;
-        m_world.SetDebugDraw(this);
-        m_world.DrawDebugData();
+        if (m_world != nullptr)
+        {
+            m_world->SetDebugDraw(this);
+            m_world->DrawDebugData();
+        }
     }
 
     void DebugRenderer::setOptions(vector<string> args)

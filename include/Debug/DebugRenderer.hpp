@@ -33,7 +33,8 @@ namespace debug {
     class DebugRenderer : public b2Draw
     {
     public:
-        DebugRenderer(b2World& gameWorld);
+        DebugRenderer();
+        DebugRenderer(b2World* gameWorld);
         void render(RenderWindow& window);
 
         void setOptions(vector<string> options);
@@ -47,7 +48,7 @@ namespace debug {
         void DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count) override;
 
     private:
-        b2World& m_world;
+        b2World* m_world;
         sf::RenderTarget* m_window;
         sf::CircleShape m_cacheCircle;
     };

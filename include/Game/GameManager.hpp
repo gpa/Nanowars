@@ -48,16 +48,13 @@ namespace game {
         bool isGameRunning();
 
     private:
-        GameWorld m_gameWorld;
-
-        Camera* m_activeCamera;
-        FollowingCamera m_followingCamera;
-
-        bool m_isGameInProgress;
-        KeyboardRocketController m_keyboardRocketController;
+        shared_ptr<GameWorld> m_gameWorld;
+        shared_ptr<Camera> m_activeCamera;
         AssetHolder m_assetHolder;
-
-        friend class debug::DebugManager;
+        
+		KeyboardRocketController m_keyboardRocketController;
+        
+		friend class debug::DebugManager;
     };
 }
 }

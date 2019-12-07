@@ -23,54 +23,47 @@ namespace game {
 
     GameManager::GameManager(AssetHolder&& assetHolder)
         : m_assetHolder(std::move(assetHolder))
-        , m_gameWorld(m_assetHolder)
-        , m_followingCamera(40.0f)
         , m_keyboardRocketController(KeyboardRocketControllerConfiguration())
-        , m_activeCamera(nullptr)
-        , m_isGameInProgress(false)
     {
-        m_gameWorld.registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
-        m_gameWorld.registerFactory<Rocket>(std::make_shared<RocketFactory>());
-        m_gameWorld.registerFactory<Bullet>(std::make_shared<BulletFactory>());
     }
 
     void GameManager::startGame()
     {
-        if (m_isGameInProgress)
-            return;
+        if (isGameRunning())
+            throw new std::logic_error("A game is already running.");
 
-        Landscape* landscape = m_gameWorld.spawn<Landscape>();
+        m_gameWorld = std::make_shared<GameWorld>(m_assetHolder);
+		m_gameWorld->registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
+        m_gameWorld->registerFactory<Rocket>(std::make_shared<RocketFactory>());
+        m_gameWorld->registerFactory<Bullet>(std::make_shared<BulletFactory>());
 
+        Landscape* landscape = m_gameWorld->spawn<Landscape>();
         for (auto& area : landscape->getAreas())
         {
-            Rocket* rocket = m_gameWorld.spawn<Rocket>();
+            Rocket* rocket = m_gameWorld->spawn<Rocket>();
             rocket->getBody().SetTransform(area.area.GetCenter(), 0.0f);
 
-            // @TODO
-            m_followingCamera.follow(rocket);
+			m_activeCamera = std::make_shared<FollowingCamera>(40.0f);
+            static_cast<FollowingCamera*>(m_activeCamera.get())->follow(rocket);
             m_keyboardRocketController.setRocket(rocket);
         }
-
-        m_activeCamera = &m_followingCamera;
-        m_isGameInProgress = true;
     }
 
     void GameManager::exitGame()
     {
-        m_followingCamera.follow(nullptr);
         m_keyboardRocketController.setRocket(nullptr);
-        m_gameWorld.reset();
-        m_isGameInProgress = false;
+        m_gameWorld = nullptr;
     }
 
     bool GameManager::isGameRunning()
     {
-        return m_isGameInProgress;
+        return m_gameWorld.get() != nullptr;
     }
 
     void GameManager::update(float dt)
     {
-        m_gameWorld.step(dt);
+        if (m_gameWorld)
+			m_gameWorld->step(dt);
     }
 
     bool GameManager::handleEvent(const Event& event)
@@ -85,13 +78,14 @@ namespace game {
 
     void GameManager::render(RenderWindow& window)
     {
-        if (m_activeCamera != nullptr)
+        if (!m_gameWorld)
+            return;
+		
+		if (m_activeCamera)
             window.setView(m_activeCamera->getView());
 
-        for (const auto& gameObject : m_gameWorld.getGameObjects())
-        {
+        for (const auto& gameObject : m_gameWorld->getGameObjects())
             window.draw(*gameObject.get());
-        }
     }
 }
 }

@@ -27,6 +27,13 @@ namespace game {
         m_world.SetContactListener(&m_contactManager);
     }
 
+    GameWorld::~GameWorld()
+    {
+		// our objects have to be deallocated before b2World
+        m_objects.clear();
+        m_objectsToRemoveCache.clear();
+	}
+
     void GameWorld::step(float dt)
     {
         beforeStep();
@@ -61,15 +68,6 @@ namespace game {
                 m_objects.erase(m_objects.begin() + index);
             }
         }
-        m_objectsToRemoveCache.clear();
-    }
-
-    void GameWorld::reset()
-    {
-        for (auto& body : m_objects)
-            m_world.DestroyBody(&body->getBody());
-
-        m_objects.clear();
         m_objectsToRemoveCache.clear();
     }
 }
