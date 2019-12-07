@@ -13,22 +13,29 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Util/ImageAccessor.hpp"
-#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics.hpp>
+#include <Box2D/Box2D.h>
 
 namespace nanowars {
-namespace util {
+namespace gameplay {
+    namespace particles {
 
-    class SubImageAccessor : public ImageAccessor
-    {
-    public:
-        SubImageAccessor(const ImageAccessor& originalAccessor, sf::Rect<unsigned> region);
-        Vector2u getSize() const override;
-        Color getPixel(unsigned x, unsigned y) const override;
+		using sf::Drawable;
 
-    private:
-        const ImageAccessor& m_originalAccessor;
-        const sf::Rect<unsigned> m_region;
-    };
+        class ThrustParticleSystem : public sf::Drawable
+        {
+        public:
+            ThrustParticleSystem(b2Body& parent);
+            ~ThrustParticleSystem();
+
+            void fire(b2Vec2 pos, b2Vec2 vel);
+            virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+        private:
+            b2ParticleSystem* m_system;
+            b2Body& m_parent;
+        };
+
+    }
 }
 }

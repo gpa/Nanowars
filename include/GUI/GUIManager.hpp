@@ -16,7 +16,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Core/GameLoopParticipant.hpp"
 #include "Asset/AssetHolder.hpp"
 #include "Globalization/TranslationManager.hpp"
-#include "Game/GameManager.hpp"
+#include "Gameplay/GameManager.hpp"
 #include "Config/PersistentConfigManager.hpp"
 
 #include "GUI/Window.hpp"
@@ -37,7 +37,7 @@ namespace gui {
     using namespace std;
     using namespace core;
     using namespace config;
-    using namespace game;
+    using namespace gameplay;
     using namespace globalization;
 
     class GUIManager : public GameLoopParticipant

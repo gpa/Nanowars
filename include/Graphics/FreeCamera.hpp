@@ -12,7 +12,7 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
-#include "Game/GameObject.hpp"
+#include "Gameplay/Entity.hpp"
 #include "Graphics/Camera.hpp"
 #include "Math/Vector2.hpp"
 
@@ -22,7 +22,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace graphics {
 
-    using namespace game;
+    using namespace gameplay;
     using namespace math;
 
     class FreeCamera : public Camera

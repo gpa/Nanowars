@@ -13,22 +13,24 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Util/ImageAccessor.hpp"
-#include <SFML/Graphics/Rect.hpp>
+#include "Util/ImageAccessorSfmlImpl.hpp"
 
 namespace nanowars {
 namespace util {
 
-    class SubImageAccessor : public ImageAccessor
+    ImageAccessorSfmlImpl::ImageAccessorSfmlImpl(const sf::Image& sfImage)
+        : m_sfImage(sfImage)
     {
-    public:
-        SubImageAccessor(const ImageAccessor& originalAccessor, sf::Rect<unsigned> region);
-        Vector2u getSize() const override;
-        Color getPixel(unsigned x, unsigned y) const override;
+    }
 
-    private:
-        const ImageAccessor& m_originalAccessor;
-        const sf::Rect<unsigned> m_region;
-    };
+    Vector2u ImageAccessorSfmlImpl::getSize() const
+    {
+        return m_sfImage.getSize();
+    }
+
+    Color ImageAccessorSfmlImpl::getPixel(unsigned x, unsigned y) const
+    {
+        return m_sfImage.getPixel(x, y);
+    }
 }
 }

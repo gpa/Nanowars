@@ -11,32 +11,31 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#include "Graphics/FollowingCamera.hpp"
+#include "Gameplay/Factories/BulletFactory.hpp"
+#include "Gameplay/Entities/Bullet.hpp"
 #include "Core/Constants.hpp"
 
 namespace nanowars {
-namespace graphics {
+namespace gameplay {
+    namespace factories {
 
-    FollowingCamera::FollowingCamera(float startZoom)
-    {
-        m_view.zoom(startZoom);
-        m_followedEntity = nullptr;
-    }
+        using namespace entities;
 
-    void FollowingCamera::follow(Entity* Entity)
-    {
-        m_followedEntity = Entity;
-    }
-
-    const View& FollowingCamera::getView() const
-    {
-        if (m_followedEntity != nullptr)
+        void BulletFactory::build(GameWorld& gameWorld, AssetHolder& assetHolder, Entity& Entity)
         {
-            auto rp = m_followedEntity->getBody().GetPosition();
-            m_view.setCenter(rp.x * core::constants::meterToPixelRatio, rp.y * core::constants::meterToPixelRatio);
-        }
+            Bullet* bullet = static_cast<Bullet*>(&Entity);
+            b2Body& body = bullet->getBody();
 
-        return m_view;
+            float radius = 100.0f / core::constants::meterToPixelRatio;
+            b2FixtureDef def;
+            body.SetGravityScale(0.0f);
+            def.density = 0.3f;
+            def.friction = 0.f;
+            b2CircleShape c;
+            c.m_radius = radius;
+            def.shape = &c;
+            body.CreateFixture(&def);
+        }
     }
 }
 }

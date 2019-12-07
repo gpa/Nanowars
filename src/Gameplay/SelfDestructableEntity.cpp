@@ -11,24 +11,22 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#pragma once
-
-#include "Util/ImageAccessor.hpp"
-#include <SFML/Graphics/Rect.hpp>
+#include "Gameplay/SelfDestructableEntity.hpp"
+#include "Gameplay/GameWorld.hpp"
 
 namespace nanowars {
-namespace util {
+namespace gameplay {
 
-    class SubImageAccessor : public ImageAccessor
+    SelfDestructableEntity::SelfDestructableEntity(GameWorld& parent, b2Body& body, EntityType type, float lifetimeInSeconds)
+        : Entity(parent, body, type)
+        , m_lifetimeInSeconds(lifetimeInSeconds)
     {
-    public:
-        SubImageAccessor(const ImageAccessor& originalAccessor, sf::Rect<unsigned> region);
-        Vector2u getSize() const override;
-        Color getPixel(unsigned x, unsigned y) const override;
+    }
 
-    private:
-        const ImageAccessor& m_originalAccessor;
-        const sf::Rect<unsigned> m_region;
-    };
+    void SelfDestructableEntity::update(float dt)
+    {
+        if (m_lifetimeClock.getElapsedTime().asSeconds() > m_lifetimeInSeconds)
+            m_parent.kill(*this);
+    }
 }
 }

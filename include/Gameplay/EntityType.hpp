@@ -13,22 +13,14 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Util/ImageAccessor.hpp"
-#include <SFML/Graphics/Rect.hpp>
-
 namespace nanowars {
-namespace util {
+namespace gameplay {
 
-    class SubImageAccessor : public ImageAccessor
+    enum class EntityType
     {
-    public:
-        SubImageAccessor(const ImageAccessor& originalAccessor, sf::Rect<unsigned> region);
-        Vector2u getSize() const override;
-        Color getPixel(unsigned x, unsigned y) const override;
-
-    private:
-        const ImageAccessor& m_originalAccessor;
-        const sf::Rect<unsigned> m_region;
+        Rocket = 0x0001,
+        Landscape = 0x0002,
+        Bullet = 0x0004
     };
 }
 }

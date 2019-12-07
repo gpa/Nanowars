@@ -12,23 +12,28 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
-
-#include "Util/ImageAccessor.hpp"
-#include <SFML/Graphics/Rect.hpp>
+#include "Gameplay/Entity.hpp"
+#include <Box2D/Box2D.h>
+#include <vector>
 
 namespace nanowars {
-namespace util {
+namespace gameplay {
 
-    class SubImageAccessor : public ImageAccessor
+    using std::vector;
+    using std::pair;
+
+    class GameWorldContactManager : public b2ContactFilter, public b2ContactListener
     {
     public:
-        SubImageAccessor(const ImageAccessor& originalAccessor, sf::Rect<unsigned> region);
-        Vector2u getSize() const override;
-        Color getPixel(unsigned x, unsigned y) const override;
+        bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB) override;
+        bool ShouldCollide(b2Fixture* fixture, b2ParticleSystem* particleSystem, int32 particleIndex) override;
+        bool ShouldCollide(b2ParticleSystem* particleSystem, int32 particleIndexA, int32 particleIndexB) override;
+
+        void BeginContact(b2Contact* c) override;
+        void ProcessContacts();
 
     private:
-        const ImageAccessor& m_originalAccessor;
-        const sf::Rect<unsigned> m_region;
+        vector<pair<Entity*, Entity*>> m_collisionCache;
     };
 }
 }

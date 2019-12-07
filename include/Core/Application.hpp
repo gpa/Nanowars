@@ -19,7 +19,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Asset/AssetManager.hpp"
 #include "Debug/DebugManager.hpp"
 #include "GUI/GUIManager.hpp"
-#include "Game/GameManager.hpp"
+#include "Gameplay/GameManager.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -39,7 +39,7 @@ namespace core {
 
     using namespace asset;
     using namespace config;
-    using namespace game;
+    using namespace gameplay;
     using namespace gui;
     using namespace debug;
     using namespace globalization;

@@ -13,22 +13,18 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Util/ImageAccessor.hpp"
-#include <SFML/Graphics/Rect.hpp>
+#include "Gameplay/GameWorld.hpp"
+#include "Gameplay/Factories/EntityFactory.hpp"
+#include "Gameplay/Entities/Rocket.hpp"
 
 namespace nanowars {
-namespace util {
-
-    class SubImageAccessor : public ImageAccessor
-    {
-    public:
-        SubImageAccessor(const ImageAccessor& originalAccessor, sf::Rect<unsigned> region);
-        Vector2u getSize() const override;
-        Color getPixel(unsigned x, unsigned y) const override;
-
-    private:
-        const ImageAccessor& m_originalAccessor;
-        const sf::Rect<unsigned> m_region;
-    };
+namespace gameplay {
+    namespace factories {
+        class RocketFactory : public EntityFactory
+        {
+        public:
+            void build(GameWorld& gameWorld, AssetHolder& assetHolder, Entity& Entity) override;
+        };
+    }
 }
 }

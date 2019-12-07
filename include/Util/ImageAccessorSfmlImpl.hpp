@@ -22,13 +22,10 @@ namespace util {
     class ImageAccessorSfmlImpl : public ImageAccessor
     {
     public:
-        ImageAccessorSfmlImpl(const sf::Image& sfImage)
-            : m_sfImage(sfImage)
-        {
-        }
+        ImageAccessorSfmlImpl(const sf::Image& sfImage);
 
-        inline Vector2u getSize() const override { return m_sfImage.getSize(); }
-        inline Color getPixel(unsigned x, unsigned y) const override { return m_sfImage.getPixel(x, y); }
+        Vector2u getSize() const override;
+        Color getPixel(unsigned x, unsigned y) const override;
 
     private:
         const sf::Image& m_sfImage;

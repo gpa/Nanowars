@@ -13,12 +13,12 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Game/GameObjects/Rocket.hpp"
+#include "Gameplay/Entities/Rocket.hpp"
 
 namespace nanowars {
 namespace input {
 
-    using game::Rocket;
+    using gameplay::entities::Rocket;
 
     class RocketController
     {

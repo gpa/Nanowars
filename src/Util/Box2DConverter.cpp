@@ -33,7 +33,7 @@ namespace util {
         float t = 0.0f;
         float y = 0.0f;
         float x = radius;
-        for (float i = 0; i < vertices.size(); i++)
+        for (size_t i = 0; i < vertices.size(); i++)
         {
             float vx = x + position.x;
             float vy = y + position.y;

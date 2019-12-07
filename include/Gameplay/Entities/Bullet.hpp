@@ -12,24 +12,32 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
+
 #include "Gameplay/Entity.hpp"
-#include "Graphics/Camera.hpp"
-#include <SFML/Graphics/View.hpp>
+#include "Gameplay/SelfDestructableEntity.hpp"
+#include "Gameplay/DestructableEntityDestroyer.hpp"
 
 namespace nanowars {
-namespace graphics {
+namespace gameplay {
+    class GameWorld;
 
-    using namespace gameplay;
+    namespace entities {
+        class Rocket;
+        class Bullet : public SelfDestructableEntity, public DestructableEntityDestroyer
+        {
+        public:
+            Bullet(GameWorld& parent, b2Body& body, Rocket* firedBy, b2Vec2 position, b2Vec2 velocity);
 
-    class FollowingCamera : public Camera
-    {
-    public:
-        FollowingCamera(float startZoom);
-        void follow(Entity* Entity);
-        virtual const View& getView() const override;
+            void onCollision(Entity& other) override;
+            CollisionRing getCollisionRing() const override;
 
-    private:
-        Entity* m_followedEntity;
-    };
+            Rocket* getFiredBy();
+
+        private:
+            void draw(RenderTarget& target, RenderStates states) const override;
+
+            Rocket* m_firedBy;
+        };
+    }
 }
 }
