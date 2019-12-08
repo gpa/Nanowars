@@ -49,7 +49,7 @@ namespace gameplay {
         GameWorld(AssetHolder& assetHolder);
         ~GameWorld();
 
-		GameWorld(const GameWorld& other) = delete;
+        GameWorld(const GameWorld& other) = delete;
         GameWorld& operator=(const GameWorld& other) = delete;
 
         void step(float dt);

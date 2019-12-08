@@ -73,7 +73,7 @@ namespace core {
         {
             (*iter)->handleInput(m_inputQueue);
             m_inputQueue.resetPosition();
-		}
+        }
     }
 
     void Application::render()

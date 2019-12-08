@@ -26,8 +26,8 @@ namespace gameplay {
 
         void RespawnJob::execute(GameWorld& gameWorld)
         {
-			// @TODO
-		}
+            // @TODO
+        }
     }
 }
 }

@@ -26,7 +26,7 @@ namespace graphics {
     void GameRenderer::setPointOfInterest(Entity* entity)
     {
         static_cast<FollowingCamera*>(m_activeCamera.get())->follow(entity);
-	}
+    }
 
     void GameRenderer::render(sf::RenderWindow& window)
     {

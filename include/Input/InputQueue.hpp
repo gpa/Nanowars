@@ -31,7 +31,7 @@ namespace input {
     {
     public:
         InputQueue();
-		void consume(Window& window);
+        void consume(Window& window);
 
         bool canConsumeRealtimeMouseInput();
         sf::Mouse& consumeRealtimeMouseInput();

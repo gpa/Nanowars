@@ -242,7 +242,7 @@ namespace gui {
         if (button.get() != nullptr)
         {
             button->SetLabel(tx(StringTranslation::PressKey));
-			m_controlsModified = true;
+            m_controlsModified = true;
         }
     }
 

@@ -24,7 +24,7 @@ namespace gameplay {
         public:
             RespawnJob(float respawnInSeconds);
 
-			void execute(GameWorld&) override;
+            void execute(GameWorld&) override;
         };
     }
 }

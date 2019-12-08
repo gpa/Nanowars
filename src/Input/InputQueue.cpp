@@ -37,8 +37,8 @@ namespace input {
         while (window.pollEvent(event))
         {
             m_events.push_back(event);
-            m_handled.push_back(false); 
-		}
+            m_handled.push_back(false);
+        }
     }
 
     void InputQueue::resetPosition()
@@ -103,7 +103,7 @@ namespace input {
     {
         m_currentEventIndex++;
         while (m_currentEventIndex < m_events.size() && m_handled[m_currentEventIndex])
-			m_currentEventIndex++;
+            m_currentEventIndex++;
     }
 }
 }

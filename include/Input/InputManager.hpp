@@ -29,7 +29,7 @@ namespace input {
     using sf::Window;
     using std::tuple;
 
-    class InputManager
+    class
     {
     public:
         typedef std::function<void()> inputHandler_t;
@@ -52,7 +52,7 @@ namespace input {
         void removeRealtimeBinding(Keyboard::Key key);
         void removeRealtimeBinding(Mouse::Button button);
 
-		void clear();
+        void clear();
 
     private:
         std::multimap<Keyboard::Key, inputHandler_t> m_realtimeKeyboardBindings;
@@ -61,7 +61,7 @@ namespace input {
 
         void add(Event::EventType type, int classifier, eventHandler_t handler);
         void remove(Event::EventType type, int classifier);
-        bool pushEvent(Event& event);
+        bool processEvent(Event& event);
     };
 }
 }

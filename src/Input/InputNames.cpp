@@ -19,9 +19,7 @@ namespace input {
     std::string InputNames::toString(sf::Keyboard::Key key)
     {
         static_assert(sf::Keyboard::KeyCount == 101);
-#define insert_case(id)    \
-    case sf::Keyboard::id: \
-        return #id
+#define insert_case(id) case sf::Keyboard::id: return #id
         switch (key)
         {
             insert_case(Unknown);
@@ -135,7 +133,6 @@ namespace input {
     {
         static_assert(sf::Keyboard::KeyCount == 101);
 #define insert_if(id) else if (key == #id) return sf::Keyboard::Key::id
-
         if (key == "A")
             return sf::Keyboard::Key::A;
         insert_if(B);

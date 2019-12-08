@@ -23,10 +23,10 @@ namespace gameplay {
     {
     public:
         SelfDestructableEntity(GameWorld& parent, b2Body& body, EntityType type, float lifetimeInSeconds);
-		void update(float dt) override;
+        void update(float dt) override;
 
     private:
-		sf::Clock m_lifetimeClock;
+        sf::Clock m_lifetimeClock;
         float m_lifetimeInSeconds;
     };
 }

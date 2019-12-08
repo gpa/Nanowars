@@ -93,7 +93,7 @@ namespace input {
 
     void InputManager::processEvent(Event& event)
     {
-        pushEvent(event);
+        processEvent(event);
     }
 
     void InputManager::processInput(InputQueue& inputQueue)
@@ -117,14 +117,14 @@ namespace input {
         while (inputQueue.hasEvent())
         {
             Event event = inputQueue.getEvent();
-            if (pushEvent(event))
+            if (processEvent(event))
                 inputQueue.consumeEvent();
             else
                 inputQueue.skipEvent();
         }
     }
 
-    bool InputManager::pushEvent(Event& event)
+    bool InputManager::processEvent(Event& event)
     {
         bool handled = false;
         for (const auto& binding : m_eventBindings)
