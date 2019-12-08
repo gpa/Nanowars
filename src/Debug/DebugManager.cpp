@@ -33,8 +33,11 @@ namespace debug {
         {
             while (inputQueue.hasEvent())
             {
-                static_cast<FreeCamera*>(m_debugCamera.get())->handleEvent(inputQueue.getEvent());
-                inputQueue.consumeEvent();
+                auto* camera = static_cast<FreeCamera*>(m_debugCamera.get());
+                if (camera->handleEvent(inputQueue.getEvent()))
+                    inputQueue.consumeEvent();
+                else
+                    inputQueue.skipEvent();
             }
         }
     }

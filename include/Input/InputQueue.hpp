@@ -30,7 +30,8 @@ namespace input {
     class InputQueue
     {
     public:
-        InputQueue(Window& window);
+        InputQueue();
+		void consume(Window& window);
 
         bool canConsumeRealtimeMouseInput();
         sf::Mouse& consumeRealtimeMouseInput();
@@ -44,14 +45,17 @@ namespace input {
         void consumeEvent();
         void skipEvent();
 
+        void resetPosition();
+
     private:
-        Window& m_inputSource;
-        bool m_hasEvent;
+        void moveNext();
+
         bool m_realtimeMouseConsumed;
         bool m_realtimeKeyboardConsumed;
+        int m_currentEventIndex;
 
-        Event m_currentEvent;
-        vector<Event> m_skippedEvents;
+        vector<Event> m_events;
+        vector<bool> m_handled;
 
         Keyboard m_keyboard;
         Mouse m_mouse;

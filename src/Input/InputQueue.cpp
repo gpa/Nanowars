@@ -16,12 +16,34 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace input {
 
-    InputQueue::InputQueue(Window& inputSource)
-        : m_inputSource(inputSource)
-        , m_hasEvent(false)
+    InputQueue::InputQueue()
+        : m_currentEventIndex(0)
         , m_realtimeKeyboardConsumed(false)
         , m_realtimeMouseConsumed(false)
     {
+        m_events.reserve(15);
+        m_handled.reserve(15);
+    }
+
+    void InputQueue::consume(Window& window)
+    {
+        m_realtimeKeyboardConsumed = false;
+        m_realtimeMouseConsumed = false;
+        m_currentEventIndex = 0;
+        m_events.clear();
+        m_handled.clear();
+
+        Event event;
+        while (window.pollEvent(event))
+        {
+            m_events.push_back(event);
+            m_handled.push_back(false); 
+		}
+    }
+
+    void InputQueue::resetPosition()
+    {
+        m_currentEventIndex = 0;
     }
 
     bool InputQueue::canConsumeRealtimeMouseInput()
@@ -54,10 +76,7 @@ namespace input {
 
     bool InputQueue::hasEvent()
     {
-        if (!m_hasEvent)
-            m_hasEvent = m_inputSource.pollEvent(m_currentEvent);
-
-        return m_hasEvent;
+        return m_currentEventIndex < m_events.size();
     }
 
     const Event& InputQueue::getEvent()
@@ -65,18 +84,26 @@ namespace input {
         if (!hasEvent())
             throw new std::logic_error("No event in the queue.");
 
-        return m_currentEvent;
+        return m_events[m_currentEventIndex];
     }
 
     void InputQueue::consumeEvent()
     {
-        m_hasEvent = false;
+        m_handled[m_currentEventIndex] = true;
+        moveNext();
     }
 
     void InputQueue::skipEvent()
     {
-        m_skippedEvents.push_back(m_currentEvent);
-        m_hasEvent = false;
+        m_handled[m_currentEventIndex] = false;
+        moveNext();
+    }
+
+    void InputQueue::moveNext()
+    {
+        m_currentEventIndex++;
+        while (m_currentEventIndex < m_events.size() && m_handled[m_currentEventIndex])
+			m_currentEventIndex++;
     }
 }
 }

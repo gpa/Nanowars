@@ -68,9 +68,12 @@ namespace core {
 
     void Application::handleEvents()
     {
-        InputQueue inputQueue(m_window);
+        m_inputQueue.consume(m_window);
         for (auto iter = m_gameLoopParticipants.rbegin(); iter != m_gameLoopParticipants.rend(); ++iter)
-            (*iter)->handleInput(inputQueue);
+        {
+            (*iter)->handleInput(m_inputQueue);
+            m_inputQueue.resetPosition();
+		}
     }
 
     void Application::render()

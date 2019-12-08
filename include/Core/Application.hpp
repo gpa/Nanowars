@@ -20,6 +20,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Debug/DebugManager.hpp"
 #include "GUI/GUIManager.hpp"
 #include "Gameplay/GameManager.hpp"
+#include "Input/InputQueue.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <memory>
@@ -35,6 +36,7 @@ namespace core {
     using namespace config;
     using namespace gameplay;
     using namespace gui;
+	using namespace input;
     using namespace debug;
     using namespace globalization;
 
@@ -74,6 +76,7 @@ namespace core {
         GUIManager m_guiManager;
         DebugManager m_debugManager;
         TranslationManager m_translationManager;
+        InputQueue m_inputQueue;
 
         vector<GameLoopParticipant*> m_gameLoopParticipants;
 
