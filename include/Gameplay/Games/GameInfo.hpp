@@ -18,11 +18,31 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gameplay {
     namespace games {
- 
-		class GameInfo
+
+        enum class GameState
         {
-			GameType type;
-		};
-	}
+            HasNotStarted,
+            IsRunning,
+            IsFinished,
+            IsPaused
+        };
+
+        struct GameInfo
+        {
+            GameType type;
+            GameState state;
+
+            GameInfo()
+                : GameInfo(GameType::NoGame)
+            {
+            }
+
+            GameInfo(GameType type)
+                : type(type)
+                , state(GameState::HasNotStarted)
+            {
+            }
+        };
+    }
 }
 }

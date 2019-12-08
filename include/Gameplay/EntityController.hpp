@@ -21,9 +21,14 @@ namespace gameplay {
     class EntityController
     {
     public:
-        EntityController() : m_controlledEntity(nullptr) { }
+        EntityController()
+            : m_controlledEntity(nullptr)
+        {
+        }
+
         inline void setEntity(Entity* entity) { m_controlledEntity = entity; }
         inline Entity* getEntity() { return m_controlledEntity; }
+        inline bool hasEntity() const { return m_controlledEntity != nullptr; }
 
     protected:
         Entity* m_controlledEntity;

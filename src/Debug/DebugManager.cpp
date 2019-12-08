@@ -42,15 +42,20 @@ namespace debug {
 
     void DebugManager::toggleFreeCamera(DebugConsole::args_t)
     {
-        if (m_application.m_gameManager.m_activeCamera.get() != m_originalCamera.get())
-            m_application.m_gameManager.m_activeCamera = m_originalCamera;
+        if (m_application.m_gameManager.m_gameRenderer.m_activeCamera.get() == m_debugCamera.get())
+            m_application.m_gameManager.m_gameRenderer.m_activeCamera = m_originalCamera;
         else
-            m_application.m_gameManager.m_activeCamera = m_debugCamera;
+        {
+            m_originalCamera = m_application.m_gameManager.m_gameRenderer.m_activeCamera;
+            m_application.m_gameManager.m_gameRenderer.m_activeCamera = m_debugCamera;
+            m_debugCamera->setView(m_originalCamera->getView());
+        }
     }
 
     void DebugManager::toggleDebugDraw(DebugConsole::args_t args)
     {
-        m_debugRenderer = DebugRenderer(&m_application.m_gameManager.m_gameWorld.get()->m_world);
+        b2World* world = const_cast<b2World*>(&m_application.m_gameManager.m_game->getGameWorld().m_world);
+        m_debugRenderer = DebugRenderer(world);
         m_debugRenderer.setOptions(args);
     }
 }

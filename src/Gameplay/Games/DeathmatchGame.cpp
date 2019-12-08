@@ -17,29 +17,34 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Gameplay/Factories/RocketFactory.hpp"
 #include "Gameplay/Factories/LandscapeFactory.hpp"
 #include "Gameplay/Factories/BulletFactory.hpp"
+#include "Gameplay/Controllers/RocketController.hpp"
 
 namespace nanowars {
 namespace gameplay {
     namespace games {
 
         using namespace entities;
+        using namespace controllers;
 
-        DeathmatchGame::DeathmatchGame(GameManager& gameManager, GameWorld& gameWorld, AssetHolder& assetHolder, GameInfo gameInfo)
-            : Game(gameManager, gameWorld, assetHolder, gameInfo)
+        DeathmatchGame::DeathmatchGame(AssetHolder& assetHolder, GameInfo gameInfo)
+            : Game(assetHolder, gameInfo)
         {
         }
 
         void DeathmatchGame::initialize()
         {
-            m_gameWorld.registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
-            m_gameWorld.registerFactory<Rocket>(std::make_shared<RocketFactory>());
-            m_gameWorld.registerFactory<Bullet>(std::make_shared<BulletFactory>());
+            m_gameWorld = std::make_shared<GameWorld>(m_assetHolder);
+            m_gameWorld->registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
+            m_gameWorld->registerFactory<Rocket>(std::make_shared<RocketFactory>());
+            m_gameWorld->registerFactory<Bullet>(std::make_shared<BulletFactory>());
 
-            Landscape* landscape = m_gameWorld.spawn<Landscape>();
+            Landscape* landscape = m_gameWorld->spawn<Landscape>();
             for (auto& area : landscape->getAreas())
             {
-                Rocket* rocket = m_gameWorld.spawn<Rocket>();
+                Rocket* rocket = m_gameWorld->spawn<Rocket>();
                 rocket->getBody().SetTransform(area.area.GetCenter(), 0.0f);
+                m_entityControllers.push_back(std::make_shared<RocketController>());
+                m_entityControllers.back()->setEntity(rocket);
             }
         }
     }

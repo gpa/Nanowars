@@ -13,19 +13,28 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Gameplay/EntityController.hpp"
-#include "Gameplay/Entities/Rocket.hpp"
+#include "Gameplay/Games/Game.hpp"
+#include "Debug/DebugManager.hpp"
+#include "Graphics/Camera.hpp"
+#include <SFML/Graphics.hpp>
+#include <memory>
 
 namespace nanowars {
-namespace input {
+namespace graphics {
 
-    class RocketController : public gameplay::EntityController
+    using namespace games;
+
+    class GameRenderer
     {
     public:
-        void fly();
-        void flyLeft();
-        void flyRight();
-        void shoot();
+        GameRenderer(shared_ptr<Game> game, Entity* focusedEntity);
+        void render(sf::RenderWindow& window);
+
+    private:
+        shared_ptr<Game> m_game;
+        shared_ptr<Camera> m_activeCamera;
+
+        friend class debug::DebugManager;
     };
 }
 }

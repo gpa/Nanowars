@@ -11,22 +11,26 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#pragma once
-#include <SFML/Graphics/View.hpp>
+#include "Graphics/GameRenderer.hpp"
+#include "Graphics/FollowingCamera.hpp"
 
 namespace nanowars {
 namespace graphics {
 
-    using sf::View;
-
-    class Camera
+    GameRenderer::GameRenderer(shared_ptr<Game> game, Entity* focusedEntity)
+        : m_game(game)
     {
-    public:
-        virtual inline const View& getView() const { return m_view; }
-        virtual inline void setView(const View& view) { m_view = view; }
+        m_activeCamera = std::make_shared<FollowingCamera>(40.f);
+        static_cast<FollowingCamera*>(m_activeCamera.get())->follow(focusedEntity);
+    }
 
-    protected:
-        mutable View m_view;
-    };
+    void GameRenderer::render(sf::RenderWindow& window)
+    {
+        if (m_activeCamera)
+            window.setView(m_activeCamera->getView());
+
+        for (const auto& Entity : m_game->getGameWorld().getEntities())
+            window.draw(*Entity.get());
+    }
 }
 }

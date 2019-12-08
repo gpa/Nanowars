@@ -22,39 +22,35 @@ namespace gameplay {
 
     GameManager::GameManager(AssetHolder&& assetHolder)
         : m_assetHolder(std::move(assetHolder))
+        , m_gameRenderer(nullptr, nullptr)
     {
     }
 
-    void GameManager::startGame()
+    void GameManager::setGame(GameInfo gameInfo)
     {
-        if (isGameRunning())
-            throw new std::logic_error("A game is already running.");
+        if (gameInfo.type == GameType::NoGame)
+        {
+            m_game = nullptr;
+            return;
+        }
 
-        m_gameWorld = std::make_shared<GameWorld>(m_assetHolder);
-        DeathmatchGame game(*this, *m_gameWorld.get(), m_assetHolder, GameInfo());
-        game.initialize();
-
-        /*auto rocketController = static_cast<RocketController*>(game.getEntityControllers()[0].get());
-		auto rocket = static_cast<Rocket*>(game.getEntityControllers()[0]->getEntity());
-        m_activeCamera = std::make_shared<FollowingCamera>(40.0f);
-        static_cast<FollowingCamera*>(m_activeCamera.get())->follow(rocket);
-        m_inputMapping.addRealtimeMapping(sf::Keyboard::Up, std::bind(&RocketController::fly, this, std::placeholders::_1);*/
+        m_game = std::make_shared<DeathmatchGame>(m_assetHolder, gameInfo);
+        m_game->initialize();
+        m_gameRenderer = GameRenderer(m_game, m_game->getEntityControllers()[0].get()->getEntity());
     }
 
-    void GameManager::exitGame()
+    const GameInfo& GameManager::getGame() const
     {
-        m_gameWorld = nullptr;
-    }
+        if (!m_game)
+            return m_noGameInfo;
 
-    bool GameManager::isGameRunning()
-    {
-        return m_gameWorld.get() != nullptr;
+        return m_game->getGameInfo();
     }
 
     void GameManager::update(float dt)
     {
-        if (m_gameWorld)
-            m_gameWorld->step(dt);
+        if (m_game)
+            m_game->update(dt);
     }
 
     bool GameManager::handleEvent(const Event& event)
@@ -69,14 +65,10 @@ namespace gameplay {
 
     void GameManager::render(RenderWindow& window)
     {
-        if (!m_gameWorld)
+        if (!m_game)
             return;
 
-        if (m_activeCamera)
-            window.setView(m_activeCamera->getView());
-
-        for (const auto& Entity : m_gameWorld->getEntities())
-            window.draw(*Entity.get());
+        m_gameRenderer.render(window);
     }
 }
 }

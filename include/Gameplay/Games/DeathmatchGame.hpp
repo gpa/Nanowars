@@ -18,13 +18,12 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gameplay {
     namespace games {
-     
-		class DeathmatchGame : public Game
-        {
-          public:
-            DeathmatchGame(GameManager& gameManager, GameWorld& gameWorld, AssetHolder& assetHolder, GameInfo gameInfo);
 
-			void initialize() override;
+        class DeathmatchGame : public Game
+        {
+        public:
+            DeathmatchGame(AssetHolder& assetHolder, GameInfo gameInfo);
+            void initialize() override;
         };
     }
 }

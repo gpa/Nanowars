@@ -12,21 +12,25 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
-#include <SFML/Graphics/View.hpp>
+
+#include "Gameplay/EntityController.hpp"
+#include "Gameplay/Entities/Rocket.hpp"
 
 namespace nanowars {
-namespace graphics {
+namespace gameplay {
+    namespace controllers {
 
-    using sf::View;
+        class RocketController : public EntityController
+        {
+        public:
+            void fly();
+            void flyLeft();
+            void flyRight();
+            void shoot();
 
-    class Camera
-    {
-    public:
-        virtual inline const View& getView() const { return m_view; }
-        virtual inline void setView(const View& view) { m_view = view; }
-
-    protected:
-        mutable View m_view;
-    };
+        private:
+            entities::Rocket* getRocket();
+        };
+    }
 }
 }

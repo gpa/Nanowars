@@ -20,7 +20,7 @@ namespace graphics {
 
     FreeCamera::FreeCamera()
     {
-        zoom(10.f);
+        zoom(40.f);
         m_isNavigationInProgress = false;
     }
 

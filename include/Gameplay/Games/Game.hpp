@@ -20,20 +20,26 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gameplay {
 
-    class GameManager;
     namespace games {
-     
-		class Game
+
+        class Game
         {
         public:
-            Game(GameManager& gameManager, GameWorld& gameWorld, AssetHolder& assetHolder, GameInfo gameInfo);
-            virtual void initialize() = 0;
+            Game(AssetHolder& assetHolder, GameInfo gameInfo);
 
-		protected:
+            const GameInfo& getGameInfo() const;
+            const GameWorld& getGameWorld() const;
+
+            virtual void initialize() = 0;
+            virtual void update(float dt);
+
+            const vector<shared_ptr<EntityController>>& getEntityControllers() const;
+
+        protected:
             GameInfo m_gameInfo;
-            GameManager& m_gameManager;
-            GameWorld& m_gameWorld;
+            shared_ptr<GameWorld> m_gameWorld;
             AssetHolder& m_assetHolder;
+            vector<shared_ptr<EntityController>> m_entityControllers;
         };
     }
 }

@@ -11,41 +11,40 @@ more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
-#pragma once
-
-#include "Gameplay/Games/Game.hpp"
-#include "Gameplay/GameManager.hpp"
+#include "Gameplay/Controllers/RocketController.hpp"
+#include "Gameplay/Entities/Rocket.hpp"
 
 namespace nanowars {
 namespace gameplay {
-    namespace games {
+    namespace controllers {
 
-        Game::Game(AssetHolder& assetHolder, GameInfo gameInfo)
-            : m_gameInfo(gameInfo)
-            , m_assetHolder(assetHolder)
+        void RocketController::fly()
         {
-            m_gameInfo.state = GameState::IsRunning;
+            if (hasEntity())
+                getRocket()->applyMainThrust();
         }
 
-        void Game::update(float dt)
+        void RocketController::flyLeft()
         {
-            if (m_gameWorld)
-                m_gameWorld->step(dt);
+            if (hasEntity())
+                getRocket()->applyRightThrust();
         }
 
-        const GameInfo& Game::getGameInfo() const
+        void RocketController::flyRight()
         {
-            return m_gameInfo;
+            if (hasEntity())
+                getRocket()->applyLeftThrust();
         }
 
-        const GameWorld& Game::getGameWorld() const
+        void RocketController::shoot()
         {
-            return *m_gameWorld.get();
+            if (hasEntity())
+                getRocket()->shoot();
         }
 
-        const vector<shared_ptr<EntityController>>& Game::getEntityControllers() const
+        entities::Rocket* RocketController::getRocket()
         {
-            return m_entityControllers;
+            return static_cast<entities::Rocket*>(m_controlledEntity);
         }
     }
 }

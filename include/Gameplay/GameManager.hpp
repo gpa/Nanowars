@@ -14,8 +14,8 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Core/GameLoopParticipant.hpp"
-#include "Graphics/FollowingCamera.hpp"
-#include "Gameplay/GameWorld.hpp"
+#include "Graphics/GameRenderer.hpp"
+#include "Gameplay/Games/Game.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -28,6 +28,7 @@ namespace gameplay {
     using namespace gameplay;
     using namespace core;
     using namespace graphics;
+    using namespace games;
     using namespace sf;
 
     class GameManager : public GameLoopParticipant
@@ -41,16 +42,16 @@ namespace gameplay {
         bool handleEvent(const Event& event) override;
         bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
 
-        void startGame();
-        void exitGame();
-        bool isGameRunning();
+        void setGame(GameInfo gameInfo);
+        const GameInfo& getGame() const;
 
     private:
-        shared_ptr<GameWorld> m_gameWorld;
-        shared_ptr<Camera> m_activeCamera;
+        shared_ptr<Game> m_game;
+        GameRenderer m_gameRenderer;
         AssetHolder m_assetHolder;
-        
-		friend class debug::DebugManager;
+
+        GameInfo m_noGameInfo;
+        friend class debug::DebugManager;
     };
 }
 }

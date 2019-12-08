@@ -46,7 +46,6 @@ namespace core {
         m_gameLoopParticipants.push_back(&m_guiManager);
 
         m_guiManager.initializeWindows();
-        m_debugManager.getDebugConsole().execute("debug");
     }
 
     void Application::run()
