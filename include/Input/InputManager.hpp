@@ -26,8 +26,8 @@ namespace input {
     using sf::Event;
     using sf::Mouse;
     using sf::Keyboard;
-	using sf::Window;
-	using std::tuple;
+    using sf::Window;
+    using std::tuple;
 
     class InputManager
     {
@@ -38,11 +38,11 @@ namespace input {
         void processInput(InputQueue& inputQueue);
         void processEvent(Event& event);
 
-		void addBinding(Event::EventType eventType, eventHandler_t handler);
+        void addBinding(Event::EventType eventType, eventHandler_t handler);
         void addBinding(Event::EventType eventType, Keyboard::Key keyClassifier, eventHandler_t handler);
         void addBinding(Event::EventType eventType, Mouse::Button buttonClassifier, eventHandler_t handler);
-		
-		void removeBinding(Event::EventType eventType);
+
+        void removeBinding(Event::EventType eventType);
         void removeBinding(Event::EventType eventType, Keyboard::Key keyClassifier);
         void removeBinding(Event::EventType eventType, Mouse::Button buttonClassifier);
 
@@ -52,12 +52,14 @@ namespace input {
         void removeRealtimeBinding(Keyboard::Key key);
         void removeRealtimeBinding(Mouse::Button button);
 
+		void clear();
+
     private:
-        std::map<Keyboard::Key, inputHandler_t> m_realtimeKeyboardBindings;
-        std::map<Mouse::Button, inputHandler_t> m_realtimeMouseBindings;
+        std::multimap<Keyboard::Key, inputHandler_t> m_realtimeKeyboardBindings;
+        std::multimap<Mouse::Button, inputHandler_t> m_realtimeMouseBindings;
         std::vector<tuple<Event::EventType, int, eventHandler_t>> m_eventBindings;
 
-		void add(Event::EventType type, int classifier, eventHandler_t handler);
+        void add(Event::EventType type, int classifier, eventHandler_t handler);
         void remove(Event::EventType type, int classifier);
         bool pushEvent(Event& event);
     };

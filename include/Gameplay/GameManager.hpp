@@ -47,6 +47,8 @@ namespace gameplay {
         void setGame(GameInfo gameInfo);
         const GameInfo& getGame() const;
 
+		void updateControllers();
+
     private:
         shared_ptr<Game> m_game;
         GameRenderer m_gameRenderer;

@@ -13,30 +13,19 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Gameplay/Games/Game.hpp"
-#include "Debug/DebugManager.hpp"
-#include "Graphics/Camera.hpp"
-#include <SFML/Graphics.hpp>
-#include <memory>
+#include "Gameplay/Jobs/TimedJob.hpp"
 
 namespace nanowars {
-namespace graphics {
+namespace gameplay {
+    namespace jobs {
 
-    using namespace games;
+        class RespawnJob : public TimedJob
+        {
+        public:
+            RespawnJob(float respawnInSeconds);
 
-    class GameRenderer
-    {
-    public:
-        GameRenderer(shared_ptr<Game> game);
-        void render(sf::RenderWindow& window);
-
-		void setPointOfInterest(Entity* entity);
-
-    private:
-        shared_ptr<Game> m_game;
-        shared_ptr<Camera> m_activeCamera;
-
-        friend class debug::DebugManager;
-    };
+			void execute(GameWorld&) override;
+        };
+    }
 }
 }

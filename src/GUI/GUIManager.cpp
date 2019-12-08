@@ -34,7 +34,7 @@ namespace gui {
         m_inputManager.addBinding(Event::EventType::KeyReleased, Keyboard::Key::Escape, std::bind(&GUIManager::spawnMainMenu, this));
         m_inputManager.addBinding(Event::EventType::KeyReleased, Keyboard::Key::Tilde, std::bind(&GUIManager::spawnDebugConsole, this));
         m_inputManager.addBinding(Event::EventType::Closed, std::bind(&GUIManager::closeWindow, this));
-	}
+    }
 
     void GUIManager::update(float dt)
     {
@@ -54,7 +54,6 @@ namespace gui {
                     m_desktop.HandleEvent(event);
 
                 inputQueue.consumeEvent();
-
             }
 
             inputQueue.consumeRealtimeKeyboardInput();

@@ -21,8 +21,8 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace input {
 
-	using namespace config;
-	using namespace gameplay::controllers;
+    using namespace config;
+    using namespace gameplay::controllers;
 
     class ControllerAwareInputManager : public InputManager
     {

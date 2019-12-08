@@ -54,7 +54,6 @@ namespace gameplay {
             float radius = circleShape->m_radius * 2.0f;
             b2Vec2 position = m_body.GetPosition();
 
-            // @TODO cache
             return util::Box2DConverter::circleToCollisionRing(position, radius, 30);
         }
 

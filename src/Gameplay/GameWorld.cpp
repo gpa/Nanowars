@@ -64,8 +64,9 @@ namespace gameplay {
             }
             if (index != -1)
             {
-                m_world.DestroyBody(&s->getBody());
+                b2Body* body = &s->getBody();
                 m_entities.erase(m_entities.begin() + index);
+                m_world.DestroyBody(body);
             }
         }
         m_entitiesToRemoveCache.clear();

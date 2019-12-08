@@ -136,7 +136,7 @@ namespace input {
         static_assert(sf::Keyboard::KeyCount == 101);
 #define insert_if(id) else if (key == #id) return sf::Keyboard::Key::id
 
-		if (key == "A")
+        if (key == "A")
             return sf::Keyboard::Key::A;
         insert_if(B);
         insert_if(C);
@@ -240,6 +240,6 @@ namespace input {
         insert_if(Pause);
 #undef insert_if
         return sf::Keyboard::Key::Unknown;
-	}
+    }
 }
 }

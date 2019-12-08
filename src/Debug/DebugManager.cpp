@@ -4,7 +4,6 @@
 namespace nanowars {
 namespace debug {
 
-
     DebugManager::DebugManager(Application& application)
         : m_application(application)
         , m_debugConsole(*this)
@@ -30,8 +29,14 @@ namespace debug {
 
     void DebugManager::handleInput(InputQueue& inputQueue)
     {
-        //if (m_debugCamera)
-        //    static_cast<FreeCamera*>(m_debugCamera.get())->handleEvent(event);
+        if (m_debugCamera)
+        {
+            while (inputQueue.hasEvent())
+            {
+                static_cast<FreeCamera*>(m_debugCamera.get())->handleEvent(inputQueue.getEvent());
+                inputQueue.consumeEvent();
+            }
+        }
     }
 
     void DebugManager::toggleFreeCamera(DebugConsole::args_t)

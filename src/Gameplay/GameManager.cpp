@@ -22,7 +22,7 @@ namespace gameplay {
 
     GameManager::GameManager(AssetHolder&& assetHolder, const ConfigManager& configManager)
         : m_assetHolder(std::move(assetHolder))
-        , m_gameRenderer(nullptr, nullptr)
+        , m_gameRenderer(nullptr)
         , m_configManager(configManager)
     {
     }
@@ -37,10 +37,10 @@ namespace gameplay {
 
         m_game = std::make_shared<DeathmatchGame>(m_assetHolder, gameInfo);
         m_game->initialize();
-        RocketController& rocketController = *(static_cast<RocketController*>((m_game->getEntityControllers()[0].get())));
-        m_gameRenderer = GameRenderer(m_game, rocketController.getEntity());
 
-        m_inputManager.bindToControllerViaConfiguration(rocketController, m_configManager, false);
+        updateControllers();
+        m_gameRenderer = GameRenderer(m_game);
+        m_gameRenderer.setPointOfInterest(m_game->getEntityControllers()[0]->getEntity());
     }
 
     const GameInfo& GameManager::getGame() const
@@ -68,6 +68,23 @@ namespace gameplay {
             return;
 
         m_gameRenderer.render(window);
+    }
+
+    void GameManager::updateControllers()
+    {
+        m_inputManager.clear();
+        auto& controllers = m_game->getEntityControllers();
+        if (controllers.size() > 0)
+        {
+            RocketController& rocketController = *(static_cast<RocketController*>((m_game->getEntityControllers()[0].get())));
+            m_inputManager.bindToControllerViaConfiguration(rocketController, m_configManager, false);
+        }
+
+        if (controllers.size() > 1)
+        {
+            RocketController& rocketController = *(static_cast<RocketController*>((m_game->getEntityControllers()[1].get())));
+            m_inputManager.bindToControllerViaConfiguration(rocketController, m_configManager, true);
+        }
     }
 }
 }

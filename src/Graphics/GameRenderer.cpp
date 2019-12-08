@@ -17,12 +17,16 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace graphics {
 
-    GameRenderer::GameRenderer(shared_ptr<Game> game, Entity* focusedEntity)
+    GameRenderer::GameRenderer(shared_ptr<Game> game)
         : m_game(game)
     {
         m_activeCamera = std::make_shared<FollowingCamera>(40.f);
-        static_cast<FollowingCamera*>(m_activeCamera.get())->follow(focusedEntity);
     }
+
+    void GameRenderer::setPointOfInterest(Entity* entity)
+    {
+        static_cast<FollowingCamera*>(m_activeCamera.get())->follow(entity);
+	}
 
     void GameRenderer::render(sf::RenderWindow& window)
     {

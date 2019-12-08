@@ -20,19 +20,11 @@ namespace input {
 
     void InputManager::addRealtimeBinding(sf::Keyboard::Key key, inputHandler_t handler)
     {
-        auto iter = m_realtimeKeyboardBindings.find(key);
-        if (iter != m_realtimeKeyboardBindings.end())
-            throw new std::invalid_argument("A binding already exists for the given key.");
-
         m_realtimeKeyboardBindings.insert(std::make_pair(key, handler));
     }
 
     void InputManager::addRealtimeBinding(sf::Mouse::Button button, inputHandler_t handler)
     {
-        auto iter = m_realtimeMouseBindings.find(button);
-        if (iter != m_realtimeMouseBindings.end())
-            throw new std::invalid_argument("A binding already exists for the given button.");
-
         m_realtimeMouseBindings.insert(std::make_pair(button, handler));
     }
 
@@ -94,7 +86,7 @@ namespace input {
             if (std::get<0>(m_eventBindings[i]) == eventType && std::get<1>(m_eventBindings[i]) == classifier)
             {
                 m_eventBindings.erase(m_eventBindings.begin() + i);
-                break;
+                i--;
             }
         }
     }
@@ -134,6 +126,7 @@ namespace input {
 
     bool InputManager::pushEvent(Event& event)
     {
+        bool handled = false;
         for (const auto& binding : m_eventBindings)
         {
             auto type = std::get<0>(binding);
@@ -145,7 +138,7 @@ namespace input {
                 if (classifier == -1)
                 {
                     handler(event);
-                    return true;
+                    handled = true;
                 }
                 else
                 {
@@ -154,7 +147,7 @@ namespace input {
                         if (static_cast<int>(event.key.code) == classifier)
                         {
                             handler(event);
-                            return true;
+                            handled = true;
                         }
                     }
                     else if (event.type == Event::EventType::MouseButtonPressed || event.type == Event::EventType::MouseButtonReleased)
@@ -162,14 +155,21 @@ namespace input {
                         if (static_cast<int>(event.mouseButton.button) == classifier)
                         {
                             handler(event);
-                            return true;
+                            handled = true;
                         }
                     }
                 }
             }
         }
 
-		return false;
-	}
+        return handled;
+    }
+
+    void InputManager::clear()
+    {
+        m_realtimeKeyboardBindings.clear();
+        m_realtimeMouseBindings.clear();
+        m_eventBindings.clear();
+    }
 }
 }

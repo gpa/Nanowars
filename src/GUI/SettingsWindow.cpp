@@ -242,6 +242,7 @@ namespace gui {
         if (button.get() != nullptr)
         {
             button->SetLabel(tx(StringTranslation::PressKey));
+			m_controlsModified = true;
         }
     }
 
@@ -341,6 +342,11 @@ namespace gui {
         {
             ApplicationInitializer initializer;
             initializer.initWindow(m_guiManager.getWindow(), m_guiManager.getConfigManager());
+        }
+
+        if (m_controlsModified)
+        {
+            m_guiManager.getGameManager().updateControllers();
         }
 
         m_graphicsModified = m_audioModified = m_controlsModified = m_networkModified = false;

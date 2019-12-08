@@ -23,6 +23,6 @@ namespace input {
     public:
         static std::string toString(sf::Keyboard::Key);
         static sf::Keyboard::Key toKey(std::string);
-	};
+    };
 }
 }
