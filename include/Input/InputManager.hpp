@@ -29,7 +29,7 @@ namespace input {
     using sf::Window;
     using std::tuple;
 
-    class
+    class InputManager
     {
     public:
         typedef std::function<void()> inputHandler_t;
@@ -61,7 +61,7 @@ namespace input {
 
         void add(Event::EventType type, int classifier, eventHandler_t handler);
         void remove(Event::EventType type, int classifier);
-        bool processEvent(Event& event);
+        bool triggerEvent(Event& event);
     };
 }
 }
