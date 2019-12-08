@@ -16,6 +16,8 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Core/GameLoopParticipant.hpp"
 #include "Graphics/GameRenderer.hpp"
 #include "Gameplay/Games/Game.hpp"
+#include "Input/ControllerAwareInputManager.hpp"
+#include "Config/ConfigManager.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -28,19 +30,19 @@ namespace gameplay {
     using namespace gameplay;
     using namespace core;
     using namespace graphics;
+    using namespace config;
+    using namespace input;
     using namespace games;
     using namespace sf;
 
     class GameManager : public GameLoopParticipant
     {
     public:
-        GameManager(AssetHolder&& assetHolder);
+        GameManager(AssetHolder&& assetHolder, const ConfigManager& configManager);
 
         void update(float dt) override;
         void render(RenderWindow& window) override;
-
-        bool handleEvent(const Event& event) override;
-        bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
+        void handleInput(InputQueue& inputQueue) override;
 
         void setGame(GameInfo gameInfo);
         const GameInfo& getGame() const;
@@ -49,6 +51,9 @@ namespace gameplay {
         shared_ptr<Game> m_game;
         GameRenderer m_gameRenderer;
         AssetHolder m_assetHolder;
+
+        const ConfigManager& m_configManager;
+        ControllerAwareInputManager m_inputManager;
 
         GameInfo m_noGameInfo;
         friend class debug::DebugManager;

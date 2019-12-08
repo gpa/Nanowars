@@ -25,7 +25,7 @@ namespace core {
     Application::Application()
         : m_configManager(constants::userConfigFilename)
         , m_assetManager(AssetPathResolver())
-        , m_gameManager(m_assetManager.getNewHolder())
+        , m_gameManager(m_assetManager.getNewHolder(), m_configManager)
         , m_debugManager(*this)
         , m_guiManager(*this, m_assetManager.getNewHolder())
         , m_translationManager(AssetPathResolver(), constants::defaultLanguage)
@@ -68,26 +68,9 @@ namespace core {
 
     void Application::handleEvents()
     {
-        Event event;
-        while (m_window.pollEvent(event))
-        {
-            if (event.type == Event::Closed)
-                shutdown();
-            else
-            {
-                for (auto iter = m_gameLoopParticipants.rbegin(); iter != m_gameLoopParticipants.rend(); ++iter)
-                {
-                    if ((*iter)->handleEvent(event))
-                        break;
-                }
-            }
-        }
-
+        InputQueue inputQueue(m_window);
         for (auto iter = m_gameLoopParticipants.rbegin(); iter != m_gameLoopParticipants.rend(); ++iter)
-        {
-            if ((*iter)->handleContinuousEvent(m_mouse, m_keyboard))
-                break;
-        }
+            (*iter)->handleInput(inputQueue);
     }
 
     void Application::render()

@@ -16,12 +16,12 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gameplay {
     namespace games {
- 
-		enum class GameType
+
+        enum class GameType
         {
-			NoGame,
-			Deathmatch
-		};
-	}
+            NoGame,
+            Deathmatch
+        };
+    }
 }
 }

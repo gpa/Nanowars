@@ -20,9 +20,10 @@ namespace gameplay {
     using namespace factories;
     using namespace games;
 
-    GameManager::GameManager(AssetHolder&& assetHolder)
+    GameManager::GameManager(AssetHolder&& assetHolder, const ConfigManager& configManager)
         : m_assetHolder(std::move(assetHolder))
         , m_gameRenderer(nullptr, nullptr)
+        , m_configManager(configManager)
     {
     }
 
@@ -36,7 +37,10 @@ namespace gameplay {
 
         m_game = std::make_shared<DeathmatchGame>(m_assetHolder, gameInfo);
         m_game->initialize();
-        m_gameRenderer = GameRenderer(m_game, m_game->getEntityControllers()[0].get()->getEntity());
+        RocketController& rocketController = *(static_cast<RocketController*>((m_game->getEntityControllers()[0].get())));
+        m_gameRenderer = GameRenderer(m_game, rocketController.getEntity());
+
+        m_inputManager.bindToControllerViaConfiguration(rocketController, m_configManager, false);
     }
 
     const GameInfo& GameManager::getGame() const
@@ -53,14 +57,9 @@ namespace gameplay {
             m_game->update(dt);
     }
 
-    bool GameManager::handleEvent(const Event& event)
+    void GameManager::handleInput(InputQueue& inputQueue)
     {
-        return false;
-    }
-
-    bool GameManager::handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard)
-    {
-        return false;
+        m_inputManager.processInput(inputQueue);
     }
 
     void GameManager::render(RenderWindow& window)

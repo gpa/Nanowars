@@ -31,43 +31,38 @@ namespace gui {
     void GUIManager::initializeWindows()
     {
         spawnMainMenu();
-    }
+        m_inputManager.addBinding(Event::EventType::KeyReleased, Keyboard::Key::Escape, std::bind(&GUIManager::spawnMainMenu, this));
+        m_inputManager.addBinding(Event::EventType::KeyReleased, Keyboard::Key::Tilde, std::bind(&GUIManager::spawnDebugConsole, this));
+        m_inputManager.addBinding(Event::EventType::Closed, std::bind(&GUIManager::closeWindow, this));
+	}
 
     void GUIManager::update(float dt)
     {
         m_desktop.Update(dt);
     }
 
-    bool GUIManager::handleEvent(const Event& event)
+    void GUIManager::handleInput(InputQueue& inputQueue)
     {
         if (m_windows.size() > 0)
         {
-            m_desktop.HandleEvent(event);
+            while (inputQueue.hasEvent())
+            {
+                auto& event = inputQueue.getEvent();
+                if (event.type == Event::EventType::Closed)
+                    closeWindow();
+                else
+                    m_desktop.HandleEvent(event);
+
+                inputQueue.consumeEvent();
+
+            }
+
+            inputQueue.consumeRealtimeKeyboardInput();
+            inputQueue.consumeRealtimeMouseInput();
             processRemoved();
-            return true;
         }
 
-        if (event.type == sf::Event::KeyReleased)
-        {
-            if (event.key.code == sf::Keyboard::Key::Escape)
-            {
-                spawnMainMenu();
-                return true;
-            }
-
-            if (event.key.code == sf::Keyboard::Key::Tilde)
-            {
-                spawnDebugConsole();
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    bool GUIManager::handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard)
-    {
-        return m_windows.size() > 0;
+        m_inputManager.processInput(inputQueue);
     }
 
     void GUIManager::render(RenderWindow& window)
@@ -129,6 +124,11 @@ namespace gui {
         auto& debugConsole = m_application.getDebugManager().getDebugConsole();
         auto consoleWindow = std::shared_ptr<ConsoleWindow>(new ConsoleWindow(*this, m_assetHolder.getNewHolder(), debugConsole));
         makeTopMost(consoleWindow);
+    }
+
+    void GUIManager::closeWindow()
+    {
+        m_application.getWindow().close();
     }
 
     RenderWindow& GUIManager::getWindow()

@@ -14,48 +14,47 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Window/Window.hpp>
 #include <SFML/Window/Event.hpp>
-
-#include <functional>
-#include <map>
+#include <vector>
 
 namespace nanowars {
 namespace input {
 
+    using sf::Window;
     using sf::Event;
     using sf::Mouse;
     using sf::Keyboard;
+    using std::vector;
 
-    enum class InputMappingType
-    {
-        Press,
-        Release,
-        Hold
-    };
-
-    class InputMapping
+    class InputQueue
     {
     public:
-        typedef std::function<void()> eventHandler_t;
+        InputQueue(Window& window);
 
-        void processInput(sf::Window& window);
+        bool canConsumeRealtimeMouseInput();
+        sf::Mouse& consumeRealtimeMouseInput();
 
-        void addRealtimeMapping(sf::Keyboard::Key key, eventHandler_t handler);
-        void addRealtimeMapping(sf::Mouse::Button button, eventHandler_t handler);
+        bool canConsumeRealtimeKeyboardInput();
+        sf::Keyboard& consumeRealtimeKeyboardInput();
 
-        void removeRealtimeMapping(sf::Keyboard::Key key, InputMappingType inputMappingType);
-        void removeRealtimeMapping(sf::Mouse::Button button, InputMappingType inputMappingType);
+        bool hasEvent();
+        const Event& getEvent();
+
+        void consumeEvent();
+        void skipEvent();
 
     private:
-        template <typename T>
-        struct InputBinding
-        {
-            T trigger;
-            eventHandler_t handler;
-        };
+        Window& m_inputSource;
+        bool m_hasEvent;
+        bool m_realtimeMouseConsumed;
+        bool m_realtimeKeyboardConsumed;
 
-        std::vector<InputBinding<sf::Keyboard::Key>> m_realtimeKeyboardMapping;
-        std::vector<InputBinding<sf::Mouse::Button>> m_realtimeMouseMapping;
+        Event m_currentEvent;
+        vector<Event> m_skippedEvents;
+
+        Keyboard m_keyboard;
+        Mouse m_mouse;
     };
 }
 }

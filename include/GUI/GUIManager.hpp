@@ -17,6 +17,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Asset/AssetHolder.hpp"
 #include "Globalization/TranslationManager.hpp"
 #include "Gameplay/GameManager.hpp"
+#include "Input/InputManager.hpp"
 #include "Config/PersistentConfigManager.hpp"
 
 #include "GUI/Window.hpp"
@@ -37,6 +38,7 @@ namespace gui {
     using namespace std;
     using namespace core;
     using namespace config;
+	using namespace input;
     using namespace gameplay;
     using namespace globalization;
 
@@ -49,9 +51,7 @@ namespace gui {
 
         void update(float dt) override;
         void render(RenderWindow& window) override;
-
-        bool handleEvent(const Event& event) override;
-        bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
+        void handleInput(InputQueue& inputQueue);
 
         RenderWindow& getWindow();
         PersistentConfigManager& getConfigManager();
@@ -69,9 +69,11 @@ namespace gui {
         AssetHolder m_assetHolder;
         vector<shared_ptr<Window>> m_windows;
         vector<shared_ptr<Window>> m_removed;
+		InputManager m_inputManager;
 
         void spawnMainMenu();
         void spawnDebugConsole();
+        void closeWindow();
 		void processRemoved();
     };
 }

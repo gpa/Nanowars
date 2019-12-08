@@ -12,17 +12,22 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
-#include <SFML/Window/Keyboard.hpp>
-#include <string>
+
+#include "InputManager.hpp"
+#include "Gameplay/Controllers/RocketController.hpp"
+#include "Config/ConfigManager.hpp"
+#include "Config/UserConfiguration.hpp"
 
 namespace nanowars {
 namespace input {
 
-    class InputNames
+	using namespace config;
+	using namespace gameplay::controllers;
+
+    class ControllerAwareInputManager : public InputManager
     {
     public:
-        static std::string toString(sf::Keyboard::Key);
-        static sf::Keyboard::Key toKey(std::string);
-	};
+        void bindToControllerViaConfiguration(RocketController& rocketController, const ConfigManager& configManager, bool useAlternativeConfig);
+    };
 }
 }

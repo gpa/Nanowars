@@ -130,5 +130,116 @@ namespace input {
 #undef insert_case
         return "Unknown";
     }
+
+    sf::Keyboard::Key InputNames::toKey(std::string key)
+    {
+        static_assert(sf::Keyboard::KeyCount == 101);
+#define insert_if(id) else if (key == #id) return sf::Keyboard::Key::id
+
+		if (key == "A")
+            return sf::Keyboard::Key::A;
+        insert_if(B);
+        insert_if(C);
+        insert_if(D);
+        insert_if(E);
+        insert_if(F);
+        insert_if(G);
+        insert_if(H);
+        insert_if(I);
+        insert_if(J);
+        insert_if(K);
+        insert_if(L);
+        insert_if(M);
+        insert_if(N);
+        insert_if(O);
+        insert_if(P);
+        insert_if(Q);
+        insert_if(R);
+        insert_if(S);
+        insert_if(T);
+        insert_if(U);
+        insert_if(V);
+        insert_if(W);
+        insert_if(X);
+        insert_if(Y);
+        insert_if(Z);
+        insert_if(Num0);
+        insert_if(Num1);
+        insert_if(Num2);
+        insert_if(Num3);
+        insert_if(Num4);
+        insert_if(Num5);
+        insert_if(Num6);
+        insert_if(Num7);
+        insert_if(Num8);
+        insert_if(Num9);
+        insert_if(Escape);
+        insert_if(LControl);
+        insert_if(LShift);
+        insert_if(LAlt);
+        insert_if(LSystem);
+        insert_if(RControl);
+        insert_if(RShift);
+        insert_if(RAlt);
+        insert_if(RSystem);
+        insert_if(Menu);
+        insert_if(LBracket);
+        insert_if(RBracket);
+        insert_if(SemiColon);
+        insert_if(Comma);
+        insert_if(Period);
+        insert_if(Quote);
+        insert_if(Slash);
+        insert_if(BackSlash);
+        insert_if(Tilde);
+        insert_if(Equal);
+        insert_if(Dash);
+        insert_if(Space);
+        insert_if(Return);
+        insert_if(BackSpace);
+        insert_if(Tab);
+        insert_if(PageUp);
+        insert_if(PageDown);
+        insert_if(End);
+        insert_if(Home);
+        insert_if(Insert);
+        insert_if(Delete);
+        insert_if(Add);
+        insert_if(Subtract);
+        insert_if(Multiply);
+        insert_if(Divide);
+        insert_if(Left);
+        insert_if(Right);
+        insert_if(Up);
+        insert_if(Down);
+        insert_if(Numpad0);
+        insert_if(Numpad1);
+        insert_if(Numpad2);
+        insert_if(Numpad3);
+        insert_if(Numpad4);
+        insert_if(Numpad5);
+        insert_if(Numpad6);
+        insert_if(Numpad7);
+        insert_if(Numpad8);
+        insert_if(Numpad9);
+        insert_if(F1);
+        insert_if(F2);
+        insert_if(F3);
+        insert_if(F4);
+        insert_if(F5);
+        insert_if(F6);
+        insert_if(F7);
+        insert_if(F8);
+        insert_if(F9);
+        insert_if(F10);
+        insert_if(F11);
+        insert_if(F12);
+        insert_if(F13);
+        insert_if(F14);
+        insert_if(F15);
+        insert_if(Pause);
+#undef insert_if
+        return sf::Keyboard::Key::Unknown;
+	}
 }
 }

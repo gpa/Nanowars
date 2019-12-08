@@ -14,23 +14,20 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Input/InputQueue.hpp"
 
 namespace nanowars {
 namespace core {
 
     using sf::RenderWindow;
-    using sf::Event;
-    using sf::Mouse;
-    using sf::Keyboard;
+	using input::InputQueue;
 
     class GameLoopParticipant
     {
     public:
         virtual void update(float dt) = 0;
         virtual void render(RenderWindow& window) = 0;
-
-        virtual bool handleEvent(const Event& event) = 0;
-        virtual bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) = 0;
+        virtual void handleInput(InputQueue& inputQueue) = 0;
     };
 }
 }

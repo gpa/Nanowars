@@ -22,18 +22,12 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Gameplay/GameManager.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/Keyboard.hpp>
-#include <SFML/Window/Mouse.hpp>
-
 #include <memory>
 
 namespace nanowars {
 namespace core {
 
     using sf::RenderWindow;
-    using sf::Keyboard;
-    using sf::Mouse;
-
     using std::unique_ptr;
     using std::vector;
 
@@ -79,12 +73,9 @@ namespace core {
         GameManager m_gameManager;
         GUIManager m_guiManager;
         DebugManager m_debugManager;
+        TranslationManager m_translationManager;
 
         vector<GameLoopParticipant*> m_gameLoopParticipants;
-
-        Mouse m_mouse;
-        Keyboard m_keyboard;
-        TranslationManager m_translationManager;
 
         friend class debug::DebugManager;
     };

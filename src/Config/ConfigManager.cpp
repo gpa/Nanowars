@@ -33,22 +33,22 @@ namespace config {
         m_entries[entryId].value = m_entries[entryId].defaultValue;
     }
 
-    bool ConfigManager::getBool(string entryId)
+    bool ConfigManager::getBool(string entryId) const
     {
         return boost::get<bool>(m_entries[entryId].value);
     }
 
-    int ConfigManager::getInt(string entryId)
+    int ConfigManager::getInt(string entryId) const
     {
         return boost::get<int>(m_entries[entryId].value);
     }
 
-    float ConfigManager::getFloat(string entryId)
+    float ConfigManager::getFloat(string entryId) const
     {
         return boost::get<float>(m_entries[entryId].value);
     }
 
-    string ConfigManager::getString(string entryId)
+    string ConfigManager::getString(string entryId) const
     {
         return boost::get<string>(m_entries[entryId].value);
     }

@@ -31,6 +31,7 @@ namespace debug {
     using core::GameLoopParticipant;
     using graphics::FreeCamera;
     using graphics::Camera;
+	using input::InputQueue;
 	using std::shared_ptr;
 
     class DebugManager : public GameLoopParticipant
@@ -40,9 +41,7 @@ namespace debug {
 
         void update(float dt) override;
         void render(RenderWindow& window) override;
-
-        bool handleEvent(const Event& event) override;
-        bool handleContinuousEvent(const Mouse& mouse, const Keyboard& keyboard) override;
+        void handleInput(InputQueue& inputQueue) override;
 
         inline DebugRenderer& getDebugRenderer() { return m_debugRenderer; }
         inline DebugConsole& getDebugConsole() { return m_debugConsole; }

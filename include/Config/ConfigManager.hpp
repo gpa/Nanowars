@@ -30,13 +30,13 @@ namespace config {
         void setEntry(const ConfigEntry& entry);
         void resetEntry(string entryId);
 
-        bool getBool(string entryId);
-        int getInt(string entryId);
-        float getFloat(string entryId);
-        string getString(string entryId);
+        bool getBool(string entryId) const;
+        int getInt(string entryId) const;
+        float getFloat(string entryId) const;
+        string getString(string entryId) const;
 
     protected:
-        map<string, ConfigEntry> m_entries;
+        mutable map<string, ConfigEntry> m_entries;
     };
 }
 }
