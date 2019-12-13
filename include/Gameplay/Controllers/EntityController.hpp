@@ -42,6 +42,8 @@ namespace gameplay {
             inline bool hasEntity() const { return m_controlledEntity != nullptr; }
             inline void resetEntity() { m_controlledEntity = nullptr; }
 
+            inline Player& getPlayer() { return m_owner.get(); }
+
         protected:
             shared_ptr<Player> m_owner;
             Entity* m_controlledEntity;

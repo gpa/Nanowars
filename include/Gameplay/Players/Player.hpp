@@ -19,10 +19,13 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 namespace nanowars {
 namespace gameplay {
     namespace players {
+        
+        using std::string;
+
         class Player
         {
         public:
-            Player(std::string name)
+            Player(string name)
                 : m_name(name)
                 , m_team(nullptr)
                 , m_kills(0)
@@ -31,8 +34,18 @@ namespace gameplay {
             {
             }
 
+            inline string getName() { return m_name; }
+            inline Team* getTeam() { return m_team; }
+            inline int getKills() { return m_kills; }
+            inline int getDeaths() { return m_deaths; }
+            inline int getCapturedFlags() { return m_capturedFlags; }
+            
+            inline void addKill() { m_kills++; }
+            inline void addDeath() { m_deaths++; }
+            inline void addCapturedFlag() { m_capturedFlags++; }
+
         private:
-            std::string m_name;
+            string m_name;
             Team* m_team;
             int m_kills;
             int m_deaths;

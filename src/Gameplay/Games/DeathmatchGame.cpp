@@ -38,6 +38,20 @@ namespace gameplay {
             }
         }
 
+        void DeathmatchGame::update(float dt)
+        {
+            if (m_gameClock.getElapsedTime().asSeconds() > m_gameInfo.deathmatchGameInfo.gameTimeout)
+                m_gameInfo.state = GameState::Finished;
+
+            for (auto& controllerInfo : m_controllerInfos)
+            {
+                if (controllerInfo.controller->getPlayer().getKills() >= m_gameInfo.deathmatchGameInfo.killsTimeout)
+                    m_gameInfo.state = GameState::Finished;
+            }
+
+            Game::update(dt);
+        }
+
         void DeathmatchGame::initialize()
         {
             m_gameWorld = std::make_shared<GameWorld>(m_assetHolder);
@@ -72,8 +86,14 @@ namespace gameplay {
                     if (controllerInfo.controller->getEntity() == &entity)
                     {
                         controllerInfo.controller->resetEntity();
-                        m_jobs.push_back(std::make_shared<RespawnJob>(*m_gameWorld.get(), entity.getType(), 
-                            controllerInfo.controller.get(), controllerInfo.launchpad.area, m_gameInfo.deathmatchGameInfo.respawnTimeout));
+                        auto& gameWorld = *m_gameWorld.get();
+                        auto* controller = controllerInfo.controller.get();
+                        auto entityType = entity.getType();
+                        auto respawnArea = controllerInfo.launchpad.area;
+                        auto respawnTimeout = m_gameInfo.deathmatchGameInfo.respawnTimeout;
+
+                        auto respawnJob = std::make_shared<RespawnJob>(gameWorld, entityType, controller, respawnArea, respawnTimeout);
+                        m_jobs.push_back(respawnJob);
                     }
                 }
             }

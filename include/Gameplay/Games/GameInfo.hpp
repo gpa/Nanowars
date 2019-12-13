@@ -27,10 +27,10 @@ namespace gameplay {
 
         enum class GameState
         {
-            HasNotStarted,
-            IsRunning,
-            IsFinished,
-            IsPaused
+            NotStarted,
+            InProgress,
+            Finished,
+            Paused
         };
 
         enum class GameType
@@ -64,7 +64,7 @@ namespace gameplay {
 
             GameInfo(GameType type)
                 : type(type)
-                , state(GameState::HasNotStarted)
+                , state(GameState::NotStarted)
             {
             }
         };

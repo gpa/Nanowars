@@ -24,7 +24,7 @@ namespace gameplay {
             : m_gameInfo(gameInfo)
             , m_assetHolder(assetHolder)
         {
-            m_gameInfo.state = GameState::IsRunning;
+            m_gameInfo.state = GameState::InProgress;
         }
 
         void Game::update(float dt)

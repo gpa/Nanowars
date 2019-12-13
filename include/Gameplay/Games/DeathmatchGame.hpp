@@ -13,7 +13,6 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-
 #include "Gameplay/Entities/Landscape.hpp"
 #include "Gameplay/Games/Game.hpp"
 #include "Gameplay/Controllers/EntityController.hpp"
@@ -32,8 +31,9 @@ namespace gameplay {
         public:
             DeathmatchGame(AssetHolder& assetHolder, GameInfo gameInfo, vector<shared_ptr<EntityController>> controllers);
             void initialize() override;
+            void update(float dt) override;
 
-        private:
+        private: 
             void onEntitySpawned(GameWorld& gameWorld, Entity& entity);
             void onEntityKilled(GameWorld& gameWorld, Entity& entity);
 

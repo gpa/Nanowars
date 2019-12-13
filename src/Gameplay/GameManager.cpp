@@ -58,7 +58,12 @@ namespace gameplay {
     void GameManager::update(float dt)
     {
         if (m_game)
+        {
             m_game->update(dt);
+
+            if (m_game->getGameInfo().state == GameState::Finished)
+                setGame(GameInfo(GameType::NoGame));
+        }
     }
 
     void GameManager::handleInput(InputQueue& inputQueue)

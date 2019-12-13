@@ -47,7 +47,7 @@ namespace gui {
         auto menuBox = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15.f);
 
         auto gameState = m_guiManager.getGameManager().getGame().state;
-        if (gameState == GameState::IsRunning || gameState == GameState::IsPaused)
+        if (gameState == GameState::InProgress || gameState == GameState::Paused)
         {
             auto resumeButton = sfg::Button::Create(tx(StringTranslation::Resume));
             auto quitToMainMenuButton = sfg::Button::Create(tx(StringTranslation::ReturnToMainMenu));
@@ -92,7 +92,7 @@ namespace gui {
         {
             if (event.key.code == sf::Keyboard::Key::Escape)
             {
-                if (m_guiManager.getGameManager().getGame().state == GameState::IsRunning)
+                if (m_guiManager.getGameManager().getGame().state == GameState::InProgress)
                     m_guiManager.removeTopMost();
             }
         }
@@ -105,6 +105,9 @@ namespace gui {
         GameInfo gameInfo;
         gameInfo.type = GameType::Deathmatch;
         gameInfo.deathmatchGameInfo.respawnTimeout = 5.0f;
+        gameInfo.deathmatchGameInfo.gameTimeout = 8 * 60;
+        gameInfo.deathmatchGameInfo.killsTimeout = 15;
+        
         gameInfo.players.push_back(std::make_shared<Player>(tx(StringTranslation::Player1)));
         gameInfo.players.push_back(std::make_shared<Player>(tx(StringTranslation::Player2)));
 
@@ -129,7 +132,7 @@ namespace gui {
     void MainWindow::onExitButtonClicked()
     {
         auto gameState = m_guiManager.getGameManager().getGame().state;
-        if (gameState != GameState::IsRunning && gameState != GameState::IsPaused)
+        if (gameState != GameState::InProgress && gameState != GameState::Paused)
         {
             exitApplication();
             return;
