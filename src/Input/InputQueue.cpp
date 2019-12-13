@@ -44,6 +44,8 @@ namespace input {
     void InputQueue::resetPosition()
     {
         m_currentEventIndex = 0;
+        if (m_handled.size() > 0 && m_handled[m_currentEventIndex])
+            moveNext();
     }
 
     bool InputQueue::canConsumeRealtimeMouseInput()
@@ -76,7 +78,7 @@ namespace input {
 
     bool InputQueue::hasEvent()
     {
-        return m_currentEventIndex < m_events.size();
+        return m_currentEventIndex < m_events.size() && !m_handled[m_currentEventIndex];
     }
 
     const Event& InputQueue::getEvent()
@@ -89,12 +91,18 @@ namespace input {
 
     void InputQueue::consumeEvent()
     {
+        if (!hasEvent())
+            throw new std::logic_error("No event in the queue.");
+
         m_handled[m_currentEventIndex] = true;
         moveNext();
     }
 
     void InputQueue::skipEvent()
     {
+        if (!hasEvent())
+            throw new std::logic_error("No event in the queue.");
+
         m_handled[m_currentEventIndex] = false;
         moveNext();
     }
