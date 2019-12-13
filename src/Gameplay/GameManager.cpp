@@ -13,6 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Gameplay/GameManager.hpp"
 #include "Gameplay/Games/DeathmatchGame.hpp"
+#include "Core/Constants.hpp"
 
 namespace nanowars {
 namespace gameplay {
@@ -35,12 +36,15 @@ namespace gameplay {
             return;
         }
 
-        m_game = std::make_shared<DeathmatchGame>(m_assetHolder, gameInfo);
+        for (auto& player : gameInfo.players)
+            m_controllers.push_back(std::make_shared<RocketController>(player));
+
+        m_game = std::make_shared<DeathmatchGame>(m_assetHolder, gameInfo, m_controllers);
         m_game->initialize();
 
         updateControllers();
         m_gameRenderer = GameRenderer(m_game);
-        m_gameRenderer.setPointOfInterest(m_game->getEntityControllers()[0]->getEntity());
+        m_gameRenderer.setView(m_controllers[0].get());
     }
 
     const GameInfo& GameManager::getGame() const
@@ -73,17 +77,18 @@ namespace gameplay {
     void GameManager::updateControllers()
     {
         m_inputManager.clear();
-        auto& controllers = m_game->getEntityControllers();
-        if (controllers.size() > 0)
+        if (m_controllers.size() > 0)
         {
-            RocketController& rocketController = *(static_cast<RocketController*>((m_game->getEntityControllers()[0].get())));
-            m_inputManager.bindToControllerViaConfiguration(rocketController, m_configManager, false);
+            EntityController* entityController = m_controllers[0].get();
+            RocketController* rocketController = static_cast<RocketController*>(entityController);
+            m_inputManager.bindToControllerViaConfiguration(*rocketController, m_configManager, false);
         }
 
-        if (controllers.size() > 1)
+        if (m_controllers.size() > 1)
         {
-            RocketController& rocketController = *(static_cast<RocketController*>((m_game->getEntityControllers()[1].get())));
-            m_inputManager.bindToControllerViaConfiguration(rocketController, m_configManager, true);
+            EntityController* entityController = m_controllers[1].get();
+            RocketController* rocketController = static_cast<RocketController*>(entityController);
+            m_inputManager.bindToControllerViaConfiguration(*rocketController, m_configManager, true);
         }
     }
 }

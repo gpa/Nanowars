@@ -18,6 +18,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include "Gameplay/Factories/LandscapeFactory.hpp"
 #include "Gameplay/Factories/BulletFactory.hpp"
 #include "Gameplay/Controllers/RocketController.hpp"
+#include "Gameplay/Jobs/RespawnJob.hpp"
 
 namespace nanowars {
 namespace gameplay {
@@ -26,25 +27,55 @@ namespace gameplay {
         using namespace entities;
         using namespace controllers;
 
-        DeathmatchGame::DeathmatchGame(AssetHolder& assetHolder, GameInfo gameInfo)
+        DeathmatchGame::DeathmatchGame(AssetHolder& assetHolder, GameInfo gameInfo, vector<shared_ptr<EntityController>> controllers)
             : Game(assetHolder, gameInfo)
         {
+            for (auto& controller : controllers)
+            {
+                ControllerWithInfo controllerWithInfo;
+                controllerWithInfo.controller = controller;
+                m_controllerInfos.push_back(controllerWithInfo);
+            }
         }
 
         void DeathmatchGame::initialize()
         {
             m_gameWorld = std::make_shared<GameWorld>(m_assetHolder);
-            m_gameWorld->registerFactory<Landscape>(std::make_shared<LandscapeFactory>());
-            m_gameWorld->registerFactory<Rocket>(std::make_shared<RocketFactory>());
-            m_gameWorld->registerFactory<Bullet>(std::make_shared<BulletFactory>());
+            m_gameWorld->registerFactory(EntityType::Landscape, std::make_shared<LandscapeFactory>());
+            m_gameWorld->registerFactory(EntityType::Rocket, std::make_shared<RocketFactory>());
+            m_gameWorld->registerFactory(EntityType::Bullet, std::make_shared<BulletFactory>());
 
-            Landscape* landscape = m_gameWorld->spawn<Landscape>();
-            for (auto& area : landscape->getAreas())
+            auto* landscape = m_gameWorld->spawn<Landscape>();
+            auto& areas = landscape->getAreas();
+            for (int i = 0; i < areas.size(); ++i)
             {
-                Rocket* rocket = m_gameWorld->spawn<Rocket>();
-                rocket->getBody().SetTransform(area.area.GetCenter(), 0.0f);
-                m_entityControllers.push_back(std::make_shared<RocketController>());
-                m_entityControllers.back()->setEntity(rocket);
+                m_controllerInfos[i].launchpad = areas[i];
+                RespawnJob respawnJob(*(m_gameWorld.get()), EntityType::Rocket, m_controllerInfos[i].controller.get(), areas[i].area, 0.0f);
+                respawnJob.execute();
+            }
+
+            m_gameWorld->addEntitySpawnedSlot(std::bind(&DeathmatchGame::onEntitySpawned, this, std::placeholders::_1, std::placeholders::_2));
+            m_gameWorld->addEntityKilledSlot(std::bind(&DeathmatchGame::onEntityKilled, this, std::placeholders::_1, std::placeholders::_2));
+            m_gameClock.restart();
+        }
+
+        void DeathmatchGame::onEntitySpawned(GameWorld& gameWorld, Entity& entity)
+        {
+        }
+
+        void DeathmatchGame::onEntityKilled(GameWorld& gameWorld, Entity& entity)
+        {
+            if (entity.getType() == EntityType::Rocket)
+            {
+                for (auto& controllerInfo : m_controllerInfos)
+                {
+                    if (controllerInfo.controller->getEntity() == &entity)
+                    {
+                        controllerInfo.controller->resetEntity();
+                        m_jobs.push_back(std::make_shared<RespawnJob>(*m_gameWorld.get(), entity.getType(), 
+                            controllerInfo.controller.get(), controllerInfo.launchpad.area, m_gameInfo.deathmatchGameInfo.respawnTimeout));
+                    }
+                }
             }
         }
     }

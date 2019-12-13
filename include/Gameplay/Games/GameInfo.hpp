@@ -13,11 +13,17 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Gameplay/Games/GameType.hpp"
+#include "Gameplay/Players/Player.hpp"
+#include <memory>
+#include <vector>
 
 namespace nanowars {
 namespace gameplay {
     namespace games {
+
+        using std::vector;
+        using std::shared_ptr;
+        using players::Player;
 
         enum class GameState
         {
@@ -27,10 +33,29 @@ namespace gameplay {
             IsPaused
         };
 
+        enum class GameType
+        {
+            NoGame,
+            Deathmatch
+        };
+
+        struct DeathmatchGameInfo
+        {
+            float gameTimeout;
+            float respawnTimeout;
+            int killsTimeout;
+        };
+
         struct GameInfo
         {
             GameType type;
             GameState state;
+            vector<shared_ptr<Player>> players;
+
+         //   union
+          //  {
+                DeathmatchGameInfo deathmatchGameInfo;
+          //  };
 
             GameInfo()
                 : GameInfo(GameType::NoGame)

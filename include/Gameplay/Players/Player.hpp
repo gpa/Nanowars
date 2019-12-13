@@ -13,14 +13,30 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
+#include "Gameplay/Players/Team.hpp"
+#include <string>
+
 namespace nanowars {
 namespace gameplay {
-    namespace games {
-
-        enum class GameType
+    namespace players {
+        class Player
         {
-            NoGame,
-            Deathmatch
+        public:
+            Player(std::string name)
+                : m_name(name)
+                , m_team(nullptr)
+                , m_kills(0)
+                , m_deaths(0)
+                , m_capturedFlags(0)
+            {
+            }
+
+        private:
+            std::string m_name;
+            Team* m_team;
+            int m_kills;
+            int m_deaths;
+            int m_capturedFlags;
         };
     }
 }

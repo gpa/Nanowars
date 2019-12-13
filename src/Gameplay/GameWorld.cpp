@@ -47,6 +47,16 @@ namespace gameplay {
     {
     }
 
+    signals2::connection GameWorld::addEntitySpawnedSlot(entityLifetimeSignal_t::slot_type slot)
+    {
+        return m_entitySpawnedSignal.connect(slot);
+    }
+
+    signals2::connection GameWorld::addEntityKilledSlot(entityLifetimeSignal_t::slot_type slot)
+    {
+        return m_entityKilledSignal.connect(slot);
+    }
+
     void GameWorld::afterStep()
     {
         m_contactManager.ProcessContacts();

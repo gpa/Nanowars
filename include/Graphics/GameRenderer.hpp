@@ -15,6 +15,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Gameplay/Games/Game.hpp"
 #include "Debug/DebugManager.hpp"
+#include "Gameplay/Controllers/EntityController.hpp"
 #include "Graphics/Camera.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -23,6 +24,7 @@ namespace nanowars {
 namespace graphics {
 
     using namespace games;
+    using namespace controllers;
 
     class GameRenderer
     {
@@ -30,7 +32,7 @@ namespace graphics {
         GameRenderer(shared_ptr<Game> game);
         void render(sf::RenderWindow& window);
 
-		void setPointOfInterest(Entity* entity);
+        void setView(EntityController* entityController);
 
     private:
         shared_ptr<Game> m_game;

@@ -15,13 +15,15 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Gameplay/Games/GameInfo.hpp"
 #include "Gameplay/GameWorld.hpp"
-#include "Gameplay/EntityController.hpp"
+#include "Gameplay/Jobs/Job.hpp"
 
 namespace nanowars {
 namespace gameplay {
 
     namespace games {
 
+        using namespace jobs;
+        
         class Game
         {
         public:
@@ -33,13 +35,12 @@ namespace gameplay {
             virtual void initialize() = 0;
             virtual void update(float dt);
 
-            const vector<shared_ptr<EntityController>>& getEntityControllers() const;
-
         protected:
             GameInfo m_gameInfo;
             shared_ptr<GameWorld> m_gameWorld;
             AssetHolder& m_assetHolder;
-            vector<shared_ptr<EntityController>> m_entityControllers;
+
+            vector<shared_ptr<Job>> m_jobs;
         };
     }
 }

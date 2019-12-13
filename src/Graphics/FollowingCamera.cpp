@@ -23,17 +23,28 @@ namespace graphics {
         m_followedEntity = nullptr;
     }
 
-    void FollowingCamera::follow(Entity* Entity)
+    void FollowingCamera::follow(Entity* entity)
     {
-        m_followedEntity = Entity;
+        m_followedEntity = entity;
+        m_followedController = nullptr;
+    }
+
+    void FollowingCamera::follow(EntityController* controller)
+    {
+        m_followedController = controller;
+        m_followedEntity = nullptr;
     }
 
     const View& FollowingCamera::getView() const
     {
-        if (m_followedEntity != nullptr)
+        auto* entity = m_followedEntity;
+        if (entity == nullptr && m_followedController != nullptr)
+            entity = m_followedController->getEntity();
+
+        if (entity != nullptr)
         {
-            auto rp = m_followedEntity->getBody().GetPosition();
-            m_view.setCenter(rp.x * core::constants::meterToPixelRatio, rp.y * core::constants::meterToPixelRatio);
+            auto position = entity->getBody().GetPosition();
+            m_view.setCenter(position.x * core::constants::meterToPixelRatio, position.y * core::constants::meterToPixelRatio);
         }
 
         return m_view;

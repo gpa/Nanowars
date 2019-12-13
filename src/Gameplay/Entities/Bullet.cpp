@@ -27,6 +27,7 @@ namespace gameplay {
         Bullet::Bullet(GameWorld& parent, b2Body& body, Rocket* firedBy, b2Vec2 position, b2Vec2 velocity)
             : SelfDestructableEntity(parent, body, EntityType::Bullet, 2.0f)
             , m_firedBy(firedBy)
+            , m_damagePotential(5.0f)
         {
             body.SetTransform(position, 0.0f);
             body.SetLinearVelocity(velocity);
@@ -48,6 +49,11 @@ namespace gameplay {
             return m_firedBy;
         }
 
+        float Bullet::getDamagePotential()
+        {
+            return m_damagePotential;
+        }
+
         CollisionRing Bullet::getCollisionRing() const
         {
             b2CircleShape* circleShape = static_cast<b2CircleShape*>(m_body.GetFixtureList()->GetShape());
@@ -58,7 +64,14 @@ namespace gameplay {
         }
 
         void Bullet::draw(sf::RenderTarget& target, sf::RenderStates) const
-        {
+         {
+            // @TODO
+            static sf::CircleShape circle;
+            circle.setFillColor(sf::Color::Red);
+            circle.setRadius(20.0f);
+            b2Vec2 position = m_body.GetPosition();
+            circle.setPosition(m_body.GetPosition().x * core::constants::meterToPixelRatio, m_body.GetPosition().y * core::constants::meterToPixelRatio);
+            target.draw(circle);
         }
     }
 }

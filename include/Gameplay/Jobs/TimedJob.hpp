@@ -25,8 +25,9 @@ namespace gameplay {
         class TimedJob : public Job
         {
         public:
-            TimedJob(float executionTimeout)
-                : m_executionTimeout(executionTimeout)
+            TimedJob(GameWorld& gameWorld, float executionTimeout)
+                : Job(gameWorld)
+                , m_executionTimeout(executionTimeout)
             {
             }
 

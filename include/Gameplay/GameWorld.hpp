@@ -27,6 +27,8 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
+#include <functional>
+#include <boost/signals2.hpp>
 
 namespace nanowars {
 namespace debug {
@@ -38,8 +40,9 @@ namespace gameplay {
     using std::shared_ptr;
     using std::vector;
     using std::unordered_map;
+    using std::function;
     using math::AABB;
-
+    using namespace boost;
     using namespace factories;
     using namespace asset;
 
@@ -61,10 +64,12 @@ namespace gameplay {
         T* spawn(Args... args);
         void kill(Entity& Entity);
 
-        template <typename TEntityType>
-        void registerFactory(shared_ptr<EntityFactory> factory);
-        template <typename TEntityType>
-        void deregisterFactory();
+        void registerFactory(EntityType entityType, shared_ptr<EntityFactory> factory);
+        void deregisterFactory(EntityType entityType);
+
+        typedef signals2::signal<void(GameWorld&, Entity&)>  entityLifetimeSignal_t;
+        signals2::connection addEntitySpawnedSlot(entityLifetimeSignal_t::slot_type slot);
+        signals2::connection addEntityKilledSlot(entityLifetimeSignal_t::slot_type slot);
 
     private:
         void beforeStep();
@@ -75,7 +80,10 @@ namespace gameplay {
         GameWorldContactManager m_contactManager;
 
         vector<unique_ptr<Entity>> m_entities;
-        unordered_map<std::type_index, shared_ptr<EntityFactory>> m_factories;
+        unordered_map<EntityType, shared_ptr<EntityFactory>> m_factories;
+
+        entityLifetimeSignal_t m_entitySpawnedSignal;
+        entityLifetimeSignal_t m_entityKilledSignal;
 
         vector<Entity*> m_entitiesToRemoveCache;
         friend class debug::DebugManager;
@@ -87,29 +95,27 @@ namespace gameplay {
         static_assert(std::is_base_of<Entity, T>::value);
         auto bodyDef = b2BodyDef();
         b2Body* body = m_world.CreateBody(&bodyDef);
-        T* Entity = new T(*this, *body, args...);
-        m_entities.push_back(std::move(unique_ptr<T>(Entity)));
-        m_factories[typeid(T)]->build(*this, m_assetHolder, *Entity);
-        return Entity;
+        T* entity = new T(*this, *body, args...);
+        m_entities.push_back(std::move(unique_ptr<T>(entity)));
+        m_factories[entity->getType()]->build(*this, m_assetHolder, *entity);
+        m_entitySpawnedSignal(*this, *entity);
+        return entity;
     }
 
-    inline void GameWorld::kill(Entity& Entity)
+    inline void GameWorld::kill(Entity& entity)
     {
-        m_entitiesToRemoveCache.push_back(&Entity);
+        m_entitiesToRemoveCache.push_back(&entity);
+        m_entityKilledSignal(*this, entity);
     }
 
-    template <typename TEntityType>
-    void GameWorld::registerFactory(shared_ptr<EntityFactory> factory)
+    inline void GameWorld::registerFactory(EntityType entityType, shared_ptr<EntityFactory> factory)
     {
-        static_assert(std::is_base_of<Entity, TEntityType>::value);
-        m_factories[typeid(TEntityType)] = factory;
+        m_factories[entityType] = factory;
     }
 
-    template <typename TEntityType>
-    void GameWorld::deregisterFactory()
+    inline void GameWorld::deregisterFactory(EntityType entityType)
     {
-        static_assert(std::is_base_of<Entity, TEntityType>::value);
-        m_factories.erase(typeid(TEntityType));
+        m_factories.erase(entityType);
     }
 
     inline const vector<unique_ptr<Entity>>& GameWorld::getEntities() const

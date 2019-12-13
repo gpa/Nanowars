@@ -55,6 +55,8 @@ namespace gameplay {
             void applyLeftThrust();
             void applyRightThrust();
 
+            void onCollision(Entity& other) override;
+
         private:
             void applyThrustFromEngines(RocketEngine::EngineType type);
             void draw(RenderTarget& target, RenderStates states) const override;
@@ -62,6 +64,9 @@ namespace gameplay {
             vector<RocketEngine> m_engines;
             vector<RocketWeaponSlot> m_weaponSlots;
             ThrustParticleSystem m_thrustParticleSystem;
+
+            float m_remainingFuel;
+            float m_remainingHealth;
         };
     }
 }

@@ -21,8 +21,16 @@ namespace gameplay {
         class Job
         {
         public:
-            virtual void execute(GameWorld& gameWorld) = 0;
+            Job(GameWorld& gameWorld)
+                : m_gameWorld(gameWorld)
+            {
+            }
+
+            virtual void execute() = 0;
             virtual bool shouldExecute() = 0;
+
+        protected:
+            GameWorld& m_gameWorld;
         };
     }
 }

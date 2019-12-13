@@ -13,6 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 #include "Gameplay/Entity.hpp"
+#include "Gameplay/Controllers/EntityController.hpp"
 #include "Graphics/Camera.hpp"
 #include <SFML/Graphics/View.hpp>
 
@@ -20,16 +21,21 @@ namespace nanowars {
 namespace graphics {
 
     using namespace gameplay;
+    using namespace controllers;
 
     class FollowingCamera : public Camera
     {
     public:
         FollowingCamera(float startZoom);
+        
         void follow(Entity* Entity);
+        void follow(EntityController* entityController);
+        
         virtual const View& getView() const override;
 
     private:
         Entity* m_followedEntity;
+        EntityController* m_followedController;
     };
 }
 }

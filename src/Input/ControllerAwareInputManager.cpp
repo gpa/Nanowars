@@ -41,10 +41,10 @@ namespace input {
         auto rightThrustKey = InputNames::toKey(configManager.getString(rightThrust));
         auto shootKey = InputNames::toKey(configManager.getString(shoot));
 
-        addRealtimeBinding(mainThrustKey, std::bind(&RocketController::fly, rocketController));
-        addRealtimeBinding(leftThrustKey, std::bind(&RocketController::flyLeft, rocketController));
-        addRealtimeBinding(rightThrustKey, std::bind(&RocketController::flyRight, rocketController));
-        addRealtimeBinding(shootKey, std::bind(&RocketController::shoot, rocketController));
+        addRealtimeBinding(mainThrustKey, std::bind(&RocketController::fly, std::ref(rocketController)));
+        addRealtimeBinding(leftThrustKey, std::bind(&RocketController::flyLeft, std::ref(rocketController)));
+        addRealtimeBinding(rightThrustKey, std::bind(&RocketController::flyRight, std::ref(rocketController)));
+        addRealtimeBinding(shootKey, std::bind(&RocketController::shoot, std::ref(rocketController)));
     }
 }
 }

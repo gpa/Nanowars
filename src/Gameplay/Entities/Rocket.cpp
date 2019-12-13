@@ -22,6 +22,8 @@ namespace gameplay {
         Rocket::Rocket(GameWorld& parent, b2Body& body)
             : Entity(parent, body, EntityType::Rocket)
             , m_thrustParticleSystem(body)
+            , m_remainingFuel(100.0f)
+            , m_remainingHealth(100.0f)
         {
         }
 
@@ -53,6 +55,16 @@ namespace gameplay {
                 auto v = m_body.GetWorldVector(w.direction);
                 auto p = m_body.GetWorldPoint(w.position);
                 m_parent.spawn<Bullet>(this, p, v);
+            }
+        }
+
+        void Rocket::onCollision(Entity& other)
+        {
+            if (other.getType() == EntityType::Bullet)
+            {
+                m_remainingHealth -= static_cast<Bullet*>(&other)->getDamagePotential();
+                if (m_remainingHealth < 0)
+                    m_parent.kill(*this);
             }
         }
 

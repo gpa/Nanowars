@@ -32,11 +32,13 @@ namespace gameplay {
             CollisionRing getCollisionRing() const override;
 
             Rocket* getFiredBy();
+            float getDamagePotential();
 
         private:
             void draw(RenderTarget& target, RenderStates states) const override;
 
             Rocket* m_firedBy;
+            float m_damagePotential;
         };
     }
 }

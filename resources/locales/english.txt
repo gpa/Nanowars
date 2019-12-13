@@ -1,7 +1,7 @@
 // English translation
 // -
 
-// menu buttons
+// Menu buttons
 
 000 Online Game
 001 LAN Game
@@ -17,7 +17,7 @@
 010 OK
 011 Cancel
 
-// settings
+// Settings
 
 012 NANOWARS Settings
 013 Graphics
@@ -48,3 +48,7 @@
 038 Do you want to apply made changes?
 039 Discard changes
 040 Unsaved changes
+
+// Game
+041 Player 1
+042 Player 2

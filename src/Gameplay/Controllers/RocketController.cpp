@@ -18,6 +18,11 @@ namespace nanowars {
 namespace gameplay {
     namespace controllers {
 
+        RocketController::RocketController(shared_ptr<Player> owner)
+            : EntityController(owner)
+        {
+        }
+
         void RocketController::fly()
         {
             if (hasEntity())

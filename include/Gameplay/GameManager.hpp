@@ -15,9 +15,11 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #include "Core/GameLoopParticipant.hpp"
 #include "Graphics/GameRenderer.hpp"
-#include "Gameplay/Games/Game.hpp"
 #include "Input/ControllerAwareInputManager.hpp"
 #include "Config/ConfigManager.hpp"
+#include "Gameplay/Games/Game.hpp"
+#include "Gameplay/Players/Player.hpp"
+#include "Gameplay/Controllers/EntityController.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -30,8 +32,10 @@ namespace gameplay {
     using namespace gameplay;
     using namespace core;
     using namespace graphics;
+    using namespace controllers;
     using namespace config;
     using namespace input;
+    using namespace players;
     using namespace games;
     using namespace sf;
 
@@ -48,12 +52,13 @@ namespace gameplay {
         const GameInfo& getGame() const;
 
         void updateControllers();
-
     private:
         shared_ptr<Game> m_game;
+        vector<shared_ptr<EntityController>> m_controllers;
+        
         GameRenderer m_gameRenderer;
         AssetHolder m_assetHolder;
-
+        
         const ConfigManager& m_configManager;
         ControllerAwareInputManager m_inputManager;
 

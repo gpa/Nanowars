@@ -13,7 +13,7 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Gameplay/EntityController.hpp"
+#include "Gameplay/Controllers/EntityController.hpp"
 #include "Gameplay/Entities/Rocket.hpp"
 
 namespace nanowars {
@@ -23,14 +23,16 @@ namespace gameplay {
         class RocketController : public EntityController
         {
         public:
+            RocketController(shared_ptr<Player> owner);
+             
             void fly();
             void flyLeft();
             void flyRight();
             void shoot();
 
-        private:
-            entities::Rocket* getRocket();
-        };
+            private:
+                entities::Rocket* getRocket();
+            };
+        }
     }
-}
 }

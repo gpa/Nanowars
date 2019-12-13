@@ -28,7 +28,7 @@ namespace globalization {
         ReturnToMainMenu,
         ExitGameAndReturnToMainMenu,
         ExitGameAndReturnToDesktop,
-		OK,
+        OK,
         Cancel,
 
         // Settings
@@ -61,7 +61,11 @@ namespace globalization {
         ApplyMadeChanges,
         DiscardChanges,
         UnsavedChanges,
-		_StringTranslationCount
+
+        // Game
+        Player1,
+        Player2,
+        _StringTranslationCount
     };
 }
 }

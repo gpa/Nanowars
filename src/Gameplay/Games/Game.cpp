@@ -31,6 +31,16 @@ namespace gameplay {
         {
             if (m_gameWorld)
                 m_gameWorld->step(dt);
+
+            for (int i = 0; i < m_jobs.size(); ++i)
+            {
+                if (m_jobs[i]->shouldExecute())
+                {
+                    m_jobs[i]->execute();
+                    m_jobs.erase(m_jobs.begin() + i);
+                    i--;
+                }
+            }
         }
 
         const GameInfo& Game::getGameInfo() const
@@ -41,11 +51,6 @@ namespace gameplay {
         const GameWorld& Game::getGameWorld() const
         {
             return *m_gameWorld.get();
-        }
-
-        const vector<shared_ptr<EntityController>>& Game::getEntityControllers() const
-        {
-            return m_entityControllers;
         }
     }
 }

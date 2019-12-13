@@ -13,25 +13,28 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
-#include "Gameplay/Entity.hpp"
+#include <vector>
 
 namespace nanowars {
 namespace gameplay {
-
-    class EntityController
-    {
-    public:
-        EntityController()
-            : m_controlledEntity(nullptr)
+    namespace players {
+        class Player;
+        class Team
         {
-        }
+        public:
+            Team()
+                : m_kills(0)
+                , m_deaths(0)
+                , m_capturedFlags(0)
+            {
+            }
 
-        inline void setEntity(Entity* entity) { m_controlledEntity = entity; }
-        inline Entity* getEntity() { return m_controlledEntity; }
-        inline bool hasEntity() const { return m_controlledEntity != nullptr; }
-
-    protected:
-        Entity* m_controlledEntity;
-    };
+        private:
+            int m_kills;
+            int m_deaths;
+            int m_capturedFlags;
+            std::vector<Player*> m_players;
+        };
+    }
 }
 }

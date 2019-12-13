@@ -14,19 +14,28 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Gameplay/Jobs/RespawnJob.hpp"
+#include "Gameplay/GameWorld.hpp"
+#include "Gameplay/Entities/Rocket.hpp"
 
 namespace nanowars {
 namespace gameplay {
     namespace jobs {
 
-        RespawnJob::RespawnJob(float respawnTimeout)
-            : TimedJob(respawnTimeout)
+        using namespace entities;
+
+        RespawnJob::RespawnJob(GameWorld& gameWorld, EntityType entityType, EntityController* entityController, b2AABB respawnArea, float respawnInSeconds)
+            : TimedJob(gameWorld, respawnInSeconds)
+            , m_entityController(entityController)
+            , m_entityType(entityType)
+            , m_respawnArea(respawnArea)
         {
         }
 
-        void RespawnJob::execute(GameWorld& gameWorld)
+        void RespawnJob::execute()
         {
-            // @TODO
+            Rocket* rocket = m_gameWorld.spawn<Rocket>();
+            rocket->getBody().SetTransform(m_respawnArea.GetCenter(), 0.0f);
+            m_entityController->setEntity(rocket);
         }
     }
 }

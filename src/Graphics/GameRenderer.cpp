@@ -23,9 +23,9 @@ namespace graphics {
         m_activeCamera = std::make_shared<FollowingCamera>(40.f);
     }
 
-    void GameRenderer::setPointOfInterest(Entity* entity)
+    void GameRenderer::setView(EntityController* entityController)
     {
-        static_cast<FollowingCamera*>(m_activeCamera.get())->follow(entity);
+        static_cast<FollowingCamera*>(m_activeCamera.get())->follow(entityController);
     }
 
     void GameRenderer::render(sf::RenderWindow& window)

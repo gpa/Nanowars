@@ -13,17 +13,38 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 
 #pragma once
 
+
+#include "Gameplay/Entities/Landscape.hpp"
 #include "Gameplay/Games/Game.hpp"
+#include "Gameplay/Controllers/EntityController.hpp"
+#include <SFML/System/Clock.hpp>
 
 namespace nanowars {
 namespace gameplay {
     namespace games {
 
+        using controllers::EntityController;
+        using namespace entities;
+        using sf::Clock;
+
         class DeathmatchGame : public Game
         {
         public:
-            DeathmatchGame(AssetHolder& assetHolder, GameInfo gameInfo);
+            DeathmatchGame(AssetHolder& assetHolder, GameInfo gameInfo, vector<shared_ptr<EntityController>> controllers);
             void initialize() override;
+
+        private:
+            void onEntitySpawned(GameWorld& gameWorld, Entity& entity);
+            void onEntityKilled(GameWorld& gameWorld, Entity& entity);
+
+            struct ControllerWithInfo
+            {
+                shared_ptr<EntityController> controller;
+                LandscapeArea launchpad;
+            };
+
+            Clock m_gameClock;
+            vector<ControllerWithInfo> m_controllerInfos;
         };
     }
 }

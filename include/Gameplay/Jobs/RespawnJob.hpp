@@ -14,17 +14,26 @@ this program. If not, see <http://www.gnu.org/licenses/>. */
 #pragma once
 
 #include "Gameplay/Jobs/TimedJob.hpp"
+#include "Gameplay/Controllers/EntityController.hpp"
+#include <typeinfo>
 
 namespace nanowars {
 namespace gameplay {
     namespace jobs {
 
+        using controllers::EntityController;
+
         class RespawnJob : public TimedJob
         {
         public:
-            RespawnJob(float respawnInSeconds);
+            RespawnJob(GameWorld& gameWorld, EntityType entityType, EntityController* controller, b2AABB respawnArea, float respawnInSeconds);
 
-            void execute(GameWorld&) override;
+            void execute() override;
+
+        private:
+            EntityController* m_entityController;
+            b2AABB m_respawnArea;
+            EntityType m_entityType;
         };
     }
 }

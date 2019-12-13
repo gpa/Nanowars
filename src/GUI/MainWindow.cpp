@@ -102,7 +102,13 @@ namespace gui {
 
     void MainWindow::onOnlineButtonClicked()
     {
-        m_guiManager.getGameManager().setGame(GameInfo(GameType::Deathmatch));
+        GameInfo gameInfo;
+        gameInfo.type = GameType::Deathmatch;
+        gameInfo.deathmatchGameInfo.respawnTimeout = 5.0f;
+        gameInfo.players.push_back(std::make_shared<Player>(tx(StringTranslation::Player1)));
+        gameInfo.players.push_back(std::make_shared<Player>(tx(StringTranslation::Player2)));
+
+        m_guiManager.getGameManager().setGame(gameInfo);
         m_guiManager.removeTopMost();
     }
 

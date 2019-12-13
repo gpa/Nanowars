@@ -40,6 +40,7 @@ namespace gui {
     using namespace config;
 	using namespace input;
     using namespace gameplay;
+    using std::shared_ptr;
     using namespace globalization;
 
     class GUIManager : public GameLoopParticipant
